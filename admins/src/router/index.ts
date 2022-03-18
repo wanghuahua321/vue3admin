@@ -1,25 +1,28 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import routers from './routers';
+import store from '@/store';
 
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
-
+/* hash模式中url路径中的# */
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes:routers
+})
+
+console.log("process.env.NODE_ENV",process.env.NODE_ENV);
+
+// const isDev = process.env.NODE_ENV == "development";
+router.beforeEach(async (to,from,next)=>{
+   const toName=to.name;
+   if (store.getters.token) {
+     next()
+   }else{
+     next({name:"homeindex"})
+   }
+
+   console.log("toName",toName);
+   console.log("to",to);
+   
+   next()
 })
 
 export default router
