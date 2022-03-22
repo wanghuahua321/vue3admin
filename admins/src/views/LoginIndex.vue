@@ -1,6 +1,9 @@
 <template>
   <div class="LoginIndex">
-    <div class="lleft"></div>
+    <div class="lleft">
+      <svg-icon iconName="baobiao"></svg-icon>
+      <!-- <svg-icon v-if="!isedits" @click="b_handle" iconName="bianji" /> -->
+    </div>
     <div class="lrig">
       <div>
         用户名:
