@@ -14,14 +14,13 @@ console.log("process.env.NODE_ENV",process.env.NODE_ENV);
 router.beforeEach(async (to,from,next)=>{
    const toName=to.name;
    if (store.getters.token) {
-     next()
+     console.log("123");
+     
+    //  next()
    }else{
-     next({name:"homeindex"})
+    console.log("234");
+    //  next({name:"logins"})
    }
-
-   console.log("toName",toName);
-   console.log("to",to);
-   
    next()
 })
 
