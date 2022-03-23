@@ -7,6 +7,8 @@ import 'ant-design-vue/dist/antd.css';
 import SvgIcon from '@/components/svg-icon/index.vue';
 // import axios from 'axios';
 
+import "./assets/aliicon/iconfont.css"
+
 const app =createApp(App)
 
 app.use(store).use(router).use(antd).mount('#app')
