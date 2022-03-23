@@ -1,8 +1,7 @@
 <template>
   <div class="LoginIndex">
     <div class="lleft">
-      <svg-icon iconName="baobiao" />
-      <!-- <svg-icon v-if="!isedits" @click="b_handle" iconName="bianji" /> -->
+      <!-- <svg-icon iconName="baobiao" /> -->
     </div>
     <div class="lrig">
       <div>
