@@ -1,7 +1,6 @@
 <template>
   <svg class="svg-icon" aria-hidden="true">
-    <!-- <use :href="'#icon-'+iconName" /> -->
-    <use href="#icon-baobiao" />
+    <use :href="'#icon-'+iconName" />
   </svg>
 </template>
 
