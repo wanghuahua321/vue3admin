@@ -1,7 +1,7 @@
 <template>
   <div class="LoginIndex">
     <div class="lleft">
-      <!-- <svg-icon iconName="baobiao" /> -->
+
     </div>
     <div class="lrig">
       <div>
