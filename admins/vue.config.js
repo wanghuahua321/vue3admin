@@ -12,9 +12,9 @@ module.exports = defineConfig({
   outputDir: isLinux
     ? path.resolve(
       __dirname,
-      "/var/lib/ebistrategy/earth/resources/ui/default/mobile"
+      "/var/lib/ebistrategy/earth/resources/ui/default/wadmins"
     )
-    : path.resolve(__dirname, "D:/EarthResource/ui/default/mobile"),
+    : path.resolve(__dirname, "D:/EarthResource/ui/default/wadmins"),
   // 生产环境是否生成 sourceMap 文件
   chainWebpack: config => {
     config.plugin('html').tap(args => { console.log('[ args ] >', args); args[0].title = "观数台"; return args })

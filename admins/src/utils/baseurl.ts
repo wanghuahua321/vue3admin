@@ -6,7 +6,7 @@
  let baseUrl = "..";
 
  if (process.env.NODE_ENV == "development") {
-   baseUrl = "https://dev.ebistrategy.com";
+   baseUrl = "https://192.168.0.120";
  }
  
  export { baseUrl };

@@ -8,9 +8,12 @@ import SvgIcon from '@/components/svg-icon/index.vue';
 // import axios from 'axios';
 
 import "./assets/aliicon/iconfont.css"
+import VueCookies  from 'vue-cookies'
 
 const app =createApp(App)
 
 app.use(store).use(router).use(antd).mount('#app')
 
 app.component('svg-icon', SvgIcon) // 全局注册组件
+
+app.provide('$cookies',VueCookies)

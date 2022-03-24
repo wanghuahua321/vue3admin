@@ -10,18 +10,25 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'logins',
-    component: () => import(/* webpackChunkName: "about" */ '../views/LoginIndex.vue')
+    component: () => import(/* webpackChunkName: "logins" */ '../views/login.vue')
   },
   {
-    path: '/home/index',
-    name: 'homeindex',
-    component: () => import(/* webpackChunkName: "about" */ '../views/home/index.vue')
+    path: '/homepage',
+    name: 'homepage',
+    component: () => import(/* webpackChunkName: "homePage" */ '../views/homePage.vue'),
+    redirect: { name: "Home" },
+    children: [
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import(/* webpackChunkName: "about" */ '../views/home/leftpannel.vue'),
+        meta: {
+          TabbarShow: true //需要显示底部导航
+        }
+      }
+    ]
   },
-  {
-    path: '/about',
-    name: 'about',
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+
 ]
 
 

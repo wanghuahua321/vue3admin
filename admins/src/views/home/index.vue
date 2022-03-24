@@ -1,18 +1,14 @@
 <template>
-  <div>
-    homeIndex
-  </div>
-</template>
+  <div>111</div>
 
+</template>
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+// import { reactive, onMounted, toRefs } from "vue";
+import { reactive, toRefs, watch } from "vue";
+
 export default {
   name: "homeIndex",
-  components: {},
   setup() {
-    onMounted(() => {
-      console.log("11");
-    });
     return {};
   },
 };

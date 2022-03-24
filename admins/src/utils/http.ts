@@ -15,6 +15,9 @@ axios.interceptors.request.use((config:any)=>{
   /* 这里的config 包含每次请求的内容 */
   config.headers.Authorization = store.getters.token;
   console.log("config",config);
+  // if (config.url.indexOf("?") < 0)
+  // config.url = config.url + "?r=" + Math.random();
+  // else config.url = config.url + "&r=" + Math.random(); //IE对API有缓存，要加随机参数
   return config;
 },(error)=>{
   return Promise.reject(error);
@@ -22,6 +25,8 @@ axios.interceptors.request.use((config:any)=>{
 
 /* 响应拦截器 */
 axios.interceptors.response.use((response)=>{
+  console.log("response",response);
+  
   return response;
 },(error)=>{
   if (error.response) {
@@ -48,8 +53,7 @@ function checkStatus(response:any) {
     return response.data;
   } else if (
     response &&
-    response.status === 200 &&
-    response.data.isSuccess == true
+    response.status === 200
   ) {
     /**如果当前操作是成功的，判断isSuccess
      * 为true时则直接返回response
@@ -102,6 +106,7 @@ export default {
         return checkCode(res);
       });
   },
+
   postfile(url:string, params?:any) {
     return axios({
       method: "post",
