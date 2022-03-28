@@ -4,6 +4,7 @@
       <leftpannel @menuSel="menuSel"></leftpannel>
     </div>
     <div class="con-rig">
+      <Navbar></Navbar>
       <router-view></router-view>
     </div>
   </div>
@@ -14,11 +15,12 @@
 import { reactive, toRefs, watch } from "vue";
 import leftpannel from "./leftpannel.vue";
 import { useRouter } from "vue-router";
-
+import Navbar from "./Navbar.vue";
 export default {
   name: "homeIndex",
   components: {
     leftpannel,
+    Navbar,
   },
   setup() {
     const router = useRouter();
@@ -39,5 +41,12 @@ export default {
 <style scoped lang="scss">
 .manage-container {
   display: flex;
+  width: 100%;
+  .con-left {
+    width: 130px;
+  }
+  .con-rig {
+    width: 100%;
+  }
 }
 </style>

@@ -35,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children:[
       {
-        path: '/chatinx',
+        path: '/chat',
         name: 'chatinx',
         component: () => import(/* webpackChunkName: "homehomerig" */ '../views/chat/index.vue'),
       }
