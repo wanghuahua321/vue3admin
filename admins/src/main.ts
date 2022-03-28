@@ -7,6 +7,8 @@ import 'ant-design-vue/dist/antd.css';
 import SvgIcon from '@/components/svg-icon/index.vue';
 // import axios from 'axios';
 
+import "lib-flexible/flexible"
+
 import "./assets/aliicon/iconfont.css"
 import VueCookies  from 'vue-cookies'
 
