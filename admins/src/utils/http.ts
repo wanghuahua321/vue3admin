@@ -15,9 +15,9 @@ axios.interceptors.request.use((config:any)=>{
   /* 这里的config 包含每次请求的内容 */
   config.headers.Authorization = store.getters.token;
   console.log("config",config);
-  // if (config.url.indexOf("?") < 0)
-  // config.url = config.url + "?r=" + Math.random();
-  // else config.url = config.url + "&r=" + Math.random(); //IE对API有缓存，要加随机参数
+  if (config.url.indexOf("?") < 0)
+  config.url = config.url + "?r=" + Math.random();
+  else config.url = config.url + "&r=" + Math.random(); //IE对API有缓存，要加随机参数
   return config;
 },(error)=>{
   return Promise.reject(error);

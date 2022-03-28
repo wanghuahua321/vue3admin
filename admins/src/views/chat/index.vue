@@ -1,13 +1,13 @@
 <template>
   <div>
-    9999
+    chatindexdd
   </div>
 </template>
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
 export default {
-  name: "homeRig",
+  name: "chatindex",
   components: {},
   setup() {
     onMounted(() => {});

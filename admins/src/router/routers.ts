@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import HomeView from '../views/HomeView.vue';
+const routerView = import('@/layout/index.vue')
 
 const routes: Array<RouteRecordRaw> = [
   // {
@@ -8,26 +8,39 @@ const routes: Array<RouteRecordRaw> = [
   //   component: HomeView
   // },
   {
-    path: '/',
+    path: '/login',
     name: 'logins',
     component: () => import(/* webpackChunkName: "logins" */ '../views/login.vue')
   },
   {
-    path: '/homepage',
-    name: 'homepage',
-    component: () => import(/* webpackChunkName: "homePage" */ '../views/homePage.vue'),
-    redirect: { name: "Home" },
+    path: '/',
+    name: 'home',
+    component: routerView,
+    redirect: { name: "homeinx" },
     children: [
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import(/* webpackChunkName: "about" */ '../views/home/leftpannel.vue'),
-        meta: {
-          TabbarShow: true //需要显示底部导航
-        }
-      }
+     {
+      path: '/home',
+      name: 'homeinx',
+      component: () => import(/* webpackChunkName: "homehomerig" */ '@/views/home/index.vue'),
+     }
     ]
   },
+  {
+    path: '/chat',
+    name: 'chat',
+    component: routerView,
+    redirect: { name: "chatinx" },
+    meta: {
+      TabbarShow: true //需要显示底部导航
+    },
+    children:[
+      {
+        path: '/chatinx',
+        name: 'chatinx',
+        component: () => import(/* webpackChunkName: "homehomerig" */ '../views/chat/index.vue'),
+      }
+    ]
+  }
 
 ]
 
