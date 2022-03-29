@@ -4,7 +4,9 @@
       <leftpannel @menuSel="menuSel"></leftpannel>
     </div>
     <div class="con-rig">
-      <Navbar></Navbar>
+      <div class="cont_tit">
+        <Navbar></Navbar>
+      </div>
       <router-view></router-view>
     </div>
   </div>
@@ -47,6 +49,9 @@ export default {
   }
   .con-rig {
     width: 100%;
+    .cont_tit {
+      width: 100%;
+    }
   }
 }
 </style>

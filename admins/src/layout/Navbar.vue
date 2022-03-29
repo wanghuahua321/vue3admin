@@ -1,60 +1,63 @@
 <template>
-  <a-layout-header class="header-main">
-    <div class="header-left">
-      <menu-unfold-outlined v-if="isCollapsed" class="trigger" @click="handleIconClick" />
-      <menu-fold-outlined v-else class="trigger" @click="handleIconClick" />
-    </div>
-
-    <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
-
-    <div class="header-right">
-      <div class="header-right-info">
-        <a-popover placement="bottom" trigger="click" :overlayClassName="jcMsgPopover">
-          <template #content>
-            <a-list :dataSource="data">
-              <template #renderItem="{ item }">
-                <a-list-item>
-                  <a-list-item-meta description="这是一条消息内容">
-                    <template #title>
-                      <a href="#">{{ item.title }}</a>
-                    </template>
-                    <template #avatar>
-                      <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png" />
-                    </template>
-                  </a-list-item-meta>
-                </a-list-item>
-              </template>
-            </a-list>
-          </template>
-          <a-badge dot class="jc-header-badge">
-            <BellOutlined class="info-icon" />
-          </a-badge>
-        </a-popover>
+  <div class="cont_header">
+    <div class="searchs"> sousuo </div>
+    <a-layout-header class="header-main">
+      <div class="header-left">
+        <menu-unfold-outlined v-if="isCollapsed" class="trigger" @click="handleIconClick" />
+        <menu-fold-outlined v-else class="trigger" @click="handleIconClick" />
       </div>
-      <a-dropdown placement="bottomRight" overlayClassName="jc-dropdown-menu">
-        <div class="user-info">
-          <a-avatar class="user-avatar" :size="24" :src="avatarUrl">
-            <template #icon>
-              <UserOutlined />
+
+      <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
+
+      <div class="header-right">
+        <div class="header-right-info">
+          <a-popover placement="bottom" trigger="click" :overlayClassName="jcMsgPopover">
+            <template #content>
+              <a-list :dataSource="data">
+                <template #renderItem="{ item }">
+                  <a-list-item>
+                    <a-list-item-meta description="这是一条消息内容">
+                      <template #title>
+                        <a href="#">{{ item.title }}</a>
+                      </template>
+                      <template #avatar>
+                        <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png" />
+                      </template>
+                    </a-list-item-meta>
+                  </a-list-item>
+                </template>
+              </a-list>
             </template>
-          </a-avatar>
-          <span class="user-name">Jason Chen</span>
+            <a-badge dot class="jc-header-badge">
+              <BellOutlined class="info-icon" />
+            </a-badge>
+          </a-popover>
         </div>
-        <template #overlay>
-          <a-menu>
-            <a-menu-item @click="handleToUserCenter">
-              <UserOutlined />
-              个人中心
-            </a-menu-item>
-            <a-menu-item @click="handleLoginOut">
-              <LoginOutlined />
-              退出
-            </a-menu-item>
-          </a-menu>
-        </template>
-      </a-dropdown>
-    </div>
-  </a-layout-header>
+        <a-dropdown placement="bottomRight" overlayClassName="jc-dropdown-menu">
+          <div class="user-info">
+            <a-avatar class="user-avatar" :size="24" :src="avatarUrl">
+              <template #icon>
+                <UserOutlined />
+              </template>
+            </a-avatar>
+            <span class="user-name">Jason Chen</span>
+          </div>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item @click="handleToUserCenter">
+                <UserOutlined />
+                个人中心
+              </a-menu-item>
+              <a-menu-item @click="handleLoginOut">
+                <LoginOutlined />
+                退出
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
+    </a-layout-header>
+  </div>
 </template>
 
 <script>
@@ -149,6 +152,13 @@ export default {
 </script>
 
 <style lang="scss">
+.cont_header {
+  width: 100%;
+  height: 50px;
+  background: red;
+  margin-top: 37px;
+  position: relative;
+}
 .jc-dropdown-menu {
   .ant-dropdown-menu {
     li.ant-dropdown-menu-item {
@@ -169,7 +179,7 @@ export default {
   height: 48px;
   line-height: 48px;
   display: flex;
-  position: fixed;
+  position: absolute;
   z-index: 100;
   right: 0;
   top: 0;

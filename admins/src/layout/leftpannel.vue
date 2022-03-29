@@ -4,9 +4,8 @@
       <MenuUnfoldOutlined v-if="collapsed" />
       <MenuFoldOutlined v-else />
     </a-button> -->
-    <a-menu class="menus" mode="inline" theme="dark" :inline-collapsed="collapsed" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys"
-      @click='selects' @openChange='openChange'>
-
+    <a-menu class="menus" mode="inline" :inline-collapsed="collapsed" v-model:openKeys="openKeys" v-model:selectedKeys="selectedKeys" @click='selects'
+      @openChange='openChange'>
       <template v-for="items in menuList">
         <a-menu-item v-if="!items.children" :key="items.key">
           <template #icon>
