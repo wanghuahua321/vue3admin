@@ -1,5 +1,15 @@
 <template>
   <div class="leftpannel">
+    <div class="layout-logo" v-if="!collapsed">
+      <router-link to="/">
+        <img alt="JC Admin" src="../assets/images/logo-jc.png" />
+      </router-link>
+    </div>
+    <div class="layout-logo-collapsed" v-else>
+      <router-link to="/">
+        <img alt="JC Admin" src="../assets/images/logo-jc.png" />
+      </router-link>
+    </div>
     <!-- <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
       <MenuUnfoldOutlined v-if="collapsed" />
       <MenuFoldOutlined v-else />
@@ -165,6 +175,31 @@ export default {
     :deep(.ant-menu-item) {
       height: 80px;
     }
+  }
+}
+
+.layout-logo {
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  span {
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    display: inline-block;
+    padding-left: 8px;
+    vertical-align: middle;
+  }
+  img {
+    height: 30px;
+    vertical-align: middle;
+  }
+}
+.layout-logo-collapsed {
+  text-align: center;
+  line-height: 48px;
+  img {
+    height: 30px;
   }
 }
 </style>

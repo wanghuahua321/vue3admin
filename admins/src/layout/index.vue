@@ -7,7 +7,9 @@
       <div class="cont_tit">
         <Navbar></Navbar>
       </div>
-      <router-view></router-view>
+      <div class="conRig_con">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 
@@ -49,8 +51,17 @@ export default {
   }
   .con-rig {
     width: 100%;
+    background: #f8f9fb;
     .cont_tit {
       width: 100%;
+    }
+
+    .conRig_con {
+      width: 89%;
+      margin: 0 auto;
+      box-sizing: border-box;
+      padding-right: 1%;
+      margin-top: 30px;
     }
   }
 }

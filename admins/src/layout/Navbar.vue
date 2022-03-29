@@ -1,46 +1,66 @@
 <template>
   <div class="cont_header">
-    <div class="searchs"> sousuo </div>
+    <div class="searchs">
+      <a-input class="searchsinp" placeholder="Basic usage" v-model:value="userName">
+        <template #prefix>
+          <user-outlined type="user" />
+        </template>
+
+      </a-input>
+
+    </div>
+
+    <!-- <div class="header-left">
+      <menu-unfold-outlined v-if="isCollapsed" class="trigger" @click="handleIconClick" />
+      <menu-fold-outlined v-else class="trigger" @click="handleIconClick" />
+    </div> -->
+
+    <div class="header-right-info">
+      <a-popover placement="bottom" trigger="click" :overlayClassName="jcMsgPopover">
+        <template #content>
+          <a-list :dataSource="data">
+            <template #renderItem="{ item }">
+              <a-list-item>
+                <a-list-item-meta description="这是一条消息内容">
+                  <template #title>
+                    <a href="#">{{ item.title }}</a>
+                  </template>
+                  <template #avatar>
+                    <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png" />
+                  </template>
+                </a-list-item-meta>
+              </a-list-item>
+            </template>
+          </a-list>
+        </template>
+        <a-badge dot class="jc-header-badge">
+          <BellOutlined class="info-icon" />
+        </a-badge>
+      </a-popover>
+    </div>
+
     <a-layout-header class="header-main">
-      <div class="header-left">
-        <menu-unfold-outlined v-if="isCollapsed" class="trigger" @click="handleIconClick" />
-        <menu-fold-outlined v-else class="trigger" @click="handleIconClick" />
-      </div>
 
       <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
 
       <div class="header-right">
-        <div class="header-right-info">
-          <a-popover placement="bottom" trigger="click" :overlayClassName="jcMsgPopover">
-            <template #content>
-              <a-list :dataSource="data">
-                <template #renderItem="{ item }">
-                  <a-list-item>
-                    <a-list-item-meta description="这是一条消息内容">
-                      <template #title>
-                        <a href="#">{{ item.title }}</a>
-                      </template>
-                      <template #avatar>
-                        <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png" />
-                      </template>
-                    </a-list-item-meta>
-                  </a-list-item>
-                </template>
-              </a-list>
-            </template>
-            <a-badge dot class="jc-header-badge">
-              <BellOutlined class="info-icon" />
-            </a-badge>
-          </a-popover>
-        </div>
+
         <a-dropdown placement="bottomRight" overlayClassName="jc-dropdown-menu">
+          <!-- <a class="ant-dropdown-link" @click.prevent>
+            Click me
+            <DownOutlined />
+          </a> -->
           <div class="user-info">
-            <a-avatar class="user-avatar" :size="24" :src="avatarUrl">
+            <a-avatar class="user-avatar" :size="48" :src="avatarUrl">
               <template #icon>
                 <UserOutlined />
               </template>
             </a-avatar>
-            <span class="user-name">Jason Chen</span>
+            <div class="user-name">
+              <span>Jason Chen</span>
+              <DownOutlined />
+            </div>
+
           </div>
           <template #overlay>
             <a-menu>
@@ -71,7 +91,8 @@ import {
   UserOutlined,
   LoginOutlined,
   ExclamationCircleOutlined,
-  BellOutlined
+  BellOutlined,
+  DownOutlined
 } from '@ant-design/icons-vue'
 // import Breadcrumb from '@/components/Breadcrumb'
 
@@ -83,7 +104,8 @@ export default {
     UserOutlined,
     LoginOutlined,
     // Breadcrumb,
-    BellOutlined
+    BellOutlined,
+    DownOutlined
   },
   props: {
     isCollapsed: {
@@ -153,11 +175,44 @@ export default {
 
 <style lang="scss">
 .cont_header {
-  width: 100%;
-  height: 50px;
-  background: red;
-  margin-top: 37px;
+  width: 95%;
+  height: 48px;
+  margin-top: 36px;
   position: relative;
+  display: flex;
+  justify-content: flex-end;
+  .searchs {
+    width: 384px;
+    .searchsinp {
+      border-radius: 5px !important;
+      line-height: 36px;
+    }
+  }
+
+  .header-right-info {
+    width: 45px;
+    height: 45px;
+    background: #fff;
+    margin: 0 30px 0px 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    .jc-header-badge {
+      height: 45px;
+      line-height: 45px;
+      >>> .ant-badge-dot {
+        top: 36% !important;
+        right: 30% !important;
+      }
+    }
+    .info-icon {
+      font-size: 24px;
+      vertical-align: middle;
+      padding: 0 4px;
+      cursor: pointer;
+    }
+  }
 }
 .jc-dropdown-menu {
   .ant-dropdown-menu {
@@ -178,13 +233,16 @@ export default {
   padding: 0 15px;
   height: 48px;
   line-height: 48px;
-  display: flex;
-  position: absolute;
-  z-index: 100;
-  right: 0;
-  top: 0;
+  // display: flex;
+  // position: absolute;
+  // z-index: 100;
+  // right: 0;
+  // top: 0;
   transition: left 0.2s;
   box-shadow: 0 1px 4px #eee;
+  :deep(.ant-input-affix-wrapper .ant-input) {
+    line-height: 46px;
+  }
   .user-info {
     cursor: pointer;
     .user-avatar {
@@ -192,6 +250,10 @@ export default {
     }
     .user-name {
       vertical-align: middle;
+      display: inline-block;
+      span {
+        padding-left: 12px;
+      }
     }
   }
   .header-right {
@@ -199,25 +261,19 @@ export default {
     display: flex;
     .header-right-info {
       margin-right: 20px;
-      height: 48px;
-      line-height: 48px;
+      height: 46px;
+      line-height: 46px;
       .jc-header-badge {
-        height: 48px;
-        line-height: 48px;
+        height: 46px;
+        line-height: 46px;
         :deep(.ant-badge-dot) {
           top: 14px;
         }
       }
-      .info-icon {
-        font-size: 16px;
-        vertical-align: middle;
-        padding: 0 4px;
-        cursor: pointer;
-      }
     }
   }
   .breadcrumb-container {
-    line-height: 48px;
+    line-height: 46px;
     margin-left: 20px;
   }
 }
