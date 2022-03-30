@@ -13,9 +13,11 @@
           <p>最新信息</p>
           <div class="newsInfo_cons">
             <!-- <a-carousel> -->
-            <div class="person_info" v-for="item in 5" :key="item">
+            <div class="person_info" v-for="item in 4" :key="item">
               <span class="points"></span>
-              <div class="p_info_left"> tupian </div>
+              <div class="p_info_left">
+                <img src="@/assets/images/person.png" alt="" />
+              </div>
               <div class="p_info_rig">
                 <div class="prig_tit">
                   <p>雒君山</p>
@@ -32,7 +34,9 @@
           <p>集成平台</p>
           <div class="platform_con">
             <div class="platform_item" v-for="items in 5" :key="items">
-              <div class="plat_img"></div>
+              <div class="plat_img">
+                <img src="@/assets/images/facebook.png" alt="" />
+              </div>
               <span class="plat_span">dsadsa;dkada</span>
             </div>
           </div>
@@ -47,8 +51,10 @@
       </div>
       <div class="recommend">
         <p class="recommend_p">2022年1月13日 推送</p>
-        <div class="recommend_item" v-for="items in 5" :key="items">
-          <div class="r_item_imgs">tupian </div>
+        <div class="recommend_item" v-for="items in 2" :key="items">
+          <div class="r_item_imgs">
+            <img src="@/assets/images/phone.png" alt="" />
+          </div>
           <div class="r_item_conts">
             <p>FB-messenger</p>
             <span>发布5条帖子</span>
@@ -177,9 +183,13 @@ export default {
         .p_info_left {
           width: 34px;
           height: 34px;
-          border: 1px solid;
+          // border: 1px solid;
           margin: 0px 16px;
           border-radius: 5px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
         .p_info_rig {
           // padding-left: 16px;
@@ -226,9 +236,14 @@ export default {
             .plat_img {
               width: 46px;
               height: 46px;
-              border: 1px solid;
+              // border: 1px solid;
+              img {
+                width: 100%;
+                height: 100%;
+              }
             }
             .plat_span {
+              padding-top: 8px;
             }
           }
         }
@@ -266,8 +281,12 @@ export default {
         .r_item_imgs {
           width: 40px;
           height: 40px;
-          border: 1px solid;
+          // border: 1px solid;
           margin: 0% 25px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
         }
         .r_item_conts {
           display: flex;

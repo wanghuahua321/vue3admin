@@ -15,40 +15,42 @@
       聊天
     </div>
     <div class="msgPage">
-      <div class="pageInfo">
-        <div class="pageimg"></div>
-        <b>宰妍琬</b>
-        <a-button type="primary" :size="size" style="width:78%">
-          <template #icon>
-            <DownloadOutlined />
-          </template>
-        </a-button>
+      <div class="msgPagecon">
+        <div class="pageInfo">
+          <div class="pageimg"></div>
+          <b>宰妍琬</b>
+          <a-button type="primary" :size="size" style="width:78%">
+            <template #icon>
+              <DownloadOutlined />
+            </template>
+          </a-button>
+        </div>
+        <span class="small_tit">备注</span>
+        <div class="note">
+          <a-textarea readOnly v-model:value="value1" placeholder="Basic usage" :rows="3" />
+        </div>
+        <span class="small_tit">会员信息</span>
+        <dl>
+          <dt>姓名</dt>
+          <dd>
+            <a-input readOnly placeholder="请选择随访人员" />
+          </dd>
+        </dl>
+        <span class="small_tit">社交信息</span>
+        <dl>
+          <dt>微博</dt>
+          <dd>
+            <a-input readOnly v-model:value="value2" placeholder="Basic usage" />
+          </dd>
+        </dl>
+        <span class="small_tit">购买信息</span>
+        <dl>
+          <dt>累计消费</dt>
+          <dd>
+            <a-input readOnly v-model:value="value3" placeholder="Basic usage" />
+          </dd>
+        </dl>
       </div>
-      <span class="small_tit">备注</span>
-      <div class="note">
-        <a-textarea readOnly v-model:value="value" placeholder="Basic usage" :rows="3" />
-      </div>
-      <span class="small_tit">会员信息</span>
-      <dl>
-        <dt>姓名</dt>
-        <dd>
-          <a-input readOnly placeholder="请选择随访人员" />
-        </dd>
-      </dl>
-      <span class="small_tit">社交信息</span>
-      <dl>
-        <dt>微博</dt>
-        <dd>
-          <a-input readOnly v-model:value="value" placeholder="Basic usage" />
-        </dd>
-      </dl>
-      <span class="small_tit">购买信息</span>
-      <dl>
-        <dt>累计消费</dt>
-        <dd>
-          <a-input readOnly v-model:value="value" placeholder="Basic usage" />
-        </dd>
-      </dl>
 
     </div>
 
@@ -66,6 +68,10 @@ export default {
   setup() {
     const pagesDatas = reactive<any>({
       selectinx: 0,
+      value1: "value1",
+      value2: "value2",
+      value3: "value3",
+      value4: "value4",
     });
     const fences = (item) => {
       pagesDatas.selectinx = item;
@@ -83,7 +89,8 @@ export default {
 .message {
   margin-top: 12px;
   display: flex;
-  min-height: 616px;
+  // min-height: 616px;
+  height: 100%;
   .fence {
     flex: 1;
     background: #fff;
@@ -149,8 +156,11 @@ export default {
   .msgPage {
     flex: 1;
     background: #fff;
-    box-sizing: border-box;
-    padding: 0px 4%;
+    .msgPagecon {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0px 4%;
+    }
     .small_tit {
       font-size: 12px;
       color: $elementMine;
@@ -183,6 +193,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin: 24px 0px;
       .pageimg {
         width: 64px;
         height: 64px;
@@ -193,6 +204,7 @@ export default {
         font-size: 16px;
         color: $cFontcolor;
         font-weight: 600;
+        margin: 12px 0px;
       }
     }
   }

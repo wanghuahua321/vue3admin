@@ -24,14 +24,18 @@ export default ({
   width: 100%;
   height: 100%;
   body,
+  h2,
   ul,
   ol,
   dl,
   dd,
-  h1,
-  p {
+  h1 {
     margin: 0;
     padding: 0;
+  }
+
+  p {
+    margin: 0;
   }
 }
 

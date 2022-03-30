@@ -171,7 +171,7 @@ export default {
   height: 100vh;
   .menus {
     width: 100%;
-    height: 100%;
+    // height: 100%;
     :deep(.ant-menu-item) {
       height: 80px;
     }
@@ -179,8 +179,8 @@ export default {
 }
 
 .layout-logo {
-  height: 48px;
-  line-height: 48px;
+  height: 42px;
+  line-height: 42px;
   text-align: center;
   span {
     color: #fff;
@@ -197,7 +197,7 @@ export default {
 }
 .layout-logo-collapsed {
   text-align: center;
-  line-height: 48px;
+  line-height: 42px;
   img {
     height: 30px;
   }

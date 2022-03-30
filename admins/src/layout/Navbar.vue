@@ -1,7 +1,7 @@
 <template>
   <div class="cont_header">
     <div class="searchs">
-      <a-input class="searchsinp" placeholder="Basic usage" v-model:value="userName">
+      <a-input class="searchsinp" placeholder="Basic usage">
         <template #prefix>
           <user-outlined type="user" />
         </template>
@@ -23,7 +23,7 @@
               <a-list-item>
                 <a-list-item-meta description="这是一条消息内容">
                   <template #title>
-                    <a href="#">{{ item.title }}</a>
+                    <a href="#">{{ item.title }}66</a>
                   </template>
                   <template #avatar>
                     <a-avatar src="https://gw.alipayobjects.com/zos/rmsportal/OKJXDXrmkNshAMvwtvhu.png" />
@@ -51,7 +51,7 @@
             <DownOutlined />
           </a> -->
           <div class="user-info">
-            <a-avatar class="user-avatar" :size="48" :src="avatarUrl">
+            <a-avatar class="user-avatar" :size="40" :src="avatarUrl">
               <template #icon>
                 <UserOutlined />
               </template>
@@ -119,7 +119,7 @@ export default {
     const store = useStore()
     const router = useRouter()
 
-    const avatarUrl = ref(require('@/assets/images/logo-jc.png'))
+    const avatarUrl = ref(require('@/assets/images/person.png'))
     const jcMsgPopover = ref('jc-msg-popover')
     const data = ref([
       {
@@ -176,8 +176,8 @@ export default {
 <style lang="scss">
 .cont_header {
   width: 95%;
-  height: 48px;
-  margin-top: 36px;
+  height: 42px;
+  margin-top: 32px;
   position: relative;
   display: flex;
   justify-content: flex-end;
@@ -185,13 +185,13 @@ export default {
     width: 384px;
     .searchsinp {
       border-radius: 5px !important;
-      line-height: 36px;
+      line-height: 32px;
     }
   }
 
   .header-right-info {
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     background: #fff;
     margin: 0 30px 0px 21px;
     display: flex;
@@ -199,15 +199,15 @@ export default {
     align-items: center;
     border-radius: 5px;
     .jc-header-badge {
-      height: 45px;
-      line-height: 45px;
+      height: 42px;
+      line-height: 42px;
       >>> .ant-badge-dot {
         top: 36% !important;
         right: 30% !important;
       }
     }
     .info-icon {
-      font-size: 24px;
+      font-size: 22px;
       vertical-align: middle;
       padding: 0 4px;
       cursor: pointer;
@@ -229,19 +229,19 @@ export default {
 
 <style lang="scss" scoped>
 .header-main {
-  background: #fff;
+  background: #f8f9fb;
   padding: 0 15px;
-  height: 48px;
-  line-height: 48px;
+  height: 42px;
+  line-height: 42px;
   // display: flex;
   // position: absolute;
   // z-index: 100;
   // right: 0;
   // top: 0;
   transition: left 0.2s;
-  box-shadow: 0 1px 4px #eee;
+  // box-shadow: 0 1px 4px #eee;
   :deep(.ant-input-affix-wrapper .ant-input) {
-    line-height: 46px;
+    line-height: 40px;
   }
   .user-info {
     cursor: pointer;

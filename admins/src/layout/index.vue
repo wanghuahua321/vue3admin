@@ -62,6 +62,7 @@ export default {
       box-sizing: border-box;
       padding-right: 1%;
       margin-top: 30px;
+      height: calc(100vh - 115px);
     }
   }
 }
