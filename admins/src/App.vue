@@ -23,6 +23,16 @@ export default ({
   // color: #2c3e50;
   width: 100%;
   height: 100%;
+  body,
+  ul,
+  ol,
+  dl,
+  dd,
+  h1,
+  p {
+    margin: 0;
+    padding: 0;
+  }
 }
 
 nav {

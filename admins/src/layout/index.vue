@@ -57,7 +57,7 @@ export default {
     }
 
     .conRig_con {
-      width: 89%;
+      width: 93%;
       margin: 0 auto;
       box-sizing: border-box;
       padding-right: 1%;

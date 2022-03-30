@@ -113,6 +113,7 @@ export default {
 .calendar :deep(.ant-fullcalendar-header) {
   display: flex;
   padding: 0px 16px 11px 0;
+  justify-content: space-between;
 }
 .calendar :deep(.ant-fullcalendar-calendar-body) {
   padding: 2px 0px !important;
