@@ -49,8 +49,17 @@ module.exports = defineConfig({
       sass: {
         additionalData: `
               @import "@/assets/css/common.scss";
-          `
-      }
+          `},
+      less: {
+        lessOptions: {
+          modifyVars: {
+            'primary-color': '#ff6b48',
+            'link-color': '#ff6b48',
+            'border-radius-base': '2px',
+          },
+          javascriptEnabled: true,
+        },
+      },
     }
   }
 
