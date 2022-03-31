@@ -37,7 +37,7 @@
               <div class="plat_img">
                 <img src="@/assets/images/facebook.png" alt="" />
               </div>
-              <span class="plat_span">dsadsa;dkada</span>
+              <span class="plat_span">dsadsa;dkagdgdgdgdgdgdgdda</span>
             </div>
           </div>
         </div>
@@ -244,6 +244,9 @@ export default {
             }
             .plat_span {
               padding-top: 8px;
+              width: 68%;
+              word-break: break-all;
+              text-align: center;
             }
           }
         }
@@ -266,6 +269,7 @@ export default {
         color: $mFontcolor;
         font-size: 14px;
         font-weight: 700;
+        padding: 20px 0px;
       }
       .recommend_item {
         width: 100%;

@@ -12,16 +12,19 @@ console.log("process.env.NODE_ENV",process.env.NODE_ENV);
 
 // const isDev = process.env.NODE_ENV == "development";
 router.beforeEach(async (to,from,next)=>{
-   const toName=to.name;
-   if (store.getters.token) {
-     console.log("123");
-     
-    //  next()
+  const tokens=store.getters.token
+   if(to.path==='/login'){
+    console.log("tokens",tokens);
+     next()
    }else{
-    console.log("234");
-    //  next({name:"logins"})
+      if (tokens) {
+        console.log("tokens",tokens);
+        next()
+      }else{
+      next('/login')
+      }
    }
-   next()
+  
 })
 
 export default router

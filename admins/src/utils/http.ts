@@ -13,7 +13,7 @@ const httpTimeout = 100000;
 /* 请求拦截器 */
 axios.interceptors.request.use((config:any)=>{
   /* 这里的config 包含每次请求的内容 */
-  config.headers.Authorization = store.getters.token;
+  config.headers.token = store.getters.token;
   console.log("config",config);
   if (config.url.indexOf("?") < 0)
   config.url = config.url + "?r=" + Math.random();
