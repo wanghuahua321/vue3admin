@@ -8,3 +8,7 @@ export const LoginInfo={
   getUserinfo: () => http.get(portalBasicApi + "/identity/my-profile"),
   getApplication: () => http.get(portalBasicApi + "/abp/application-configuration"),
 }
+
+export const Message={
+  contacts: () => http.get(portalBasicApi + "/app/facebook-operation/contacts"), // 左侧联系人列表
+}

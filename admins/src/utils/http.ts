@@ -4,7 +4,7 @@ import qs from 'qs'
 import store from "@/store";
 import { message } from 'ant-design-vue'
 
-const httpTimeout = 100000;
+const httpTimeout = 1000000;
 // const https=axios.create({
 //   baseURL:baseUrl,
 //   timeout:100000
@@ -134,15 +134,19 @@ export default {
     // } else {
     //   httpTimeout = 100000;
     // }
-
+const headersString:any = {
+  "X-Requested-With": "XMLHttpRequest",
+}
+// if(url.includes('facebook-operation/contacts')) {
+//   headersString = {...headersString, "accept": "*/*", RequestVerificationToken: "CfDJ8Dx0E8ZfzwBPsKhurp3byFR61YJJ4x2EUgA0JZG8wVROhQ-6b5ORZLGD38GJvLzewVJSPXmRbTL1tbWa7rEUzAnmPPsgI4a_nbFVxGqRxejJWER2BC1aItXcPQuLZd3xHw7ye-IVRpu6yqCEZaRD_rY"}
+// }
+// curl -X GET "https://192.168.0.113:5800/api/app/facebook-operation/contacts" -H  "accept: */*" -H  
     return axios({
       method: "get",
       url: baseUrl + url,
       params, // get 请求时带的参数
       timeout: httpTimeout,
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-      },
+      headers: headersString,
     })
       .then((response) => {
         return checkStatus(response);

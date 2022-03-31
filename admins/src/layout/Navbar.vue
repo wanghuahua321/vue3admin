@@ -57,7 +57,7 @@
               </template>
             </a-avatar>
             <div class="user-name">
-              <span>67676</span>
+              <span>{{UserInfo.name}}</span>
               <DownOutlined />
             </div>
 
@@ -81,11 +81,15 @@
 </template>
 
 <script>
+
+// type limitObj = {
+
+// }
+
 import { ref, createVNode, reactive, toRef, toRefs, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { Modal } from 'ant-design-vue'
-import { userInfo } from '@/interface/index'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -96,6 +100,8 @@ import {
   DownOutlined
 } from '@ant-design/icons-vue'
 // import Breadcrumb from '@/components/Breadcrumb'
+
+
 
 export default {
   name: 'NavBar',
@@ -115,11 +121,13 @@ export default {
     }
   },
   emits: ['icon-click'],
+
   setup (props, { emit }) {
     // data
+
     const store = useStore()
     const router = useRouter()
-    const pageDatas = reactive < { UserInfo: userInfo } > ({
+    const pageDatas = reactive({
       UserInfo: {}
     })
     const avatarUrl = ref(require('@/assets/images/person.png'))
@@ -140,8 +148,7 @@ export default {
     ])
 
     onMounted(() => {
-      // pageDatas.UserInfo = store.getters.getUserInfo
-      console.log("000000", store.getters.getUserInfo);
+      pageDatas.UserInfo = store.getters.getUserInfo;
     })
     // methods
     const handleIconClick = () => {
