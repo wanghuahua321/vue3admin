@@ -1,17 +1,21 @@
+import { storeState } from '@/interface/index'
 const tokenAlias = btoa('token');
 const mutations = {
-  setToken(state:any,count:any){
+  setToken(state:storeState,count:string){
     state.token=count;
     localStorage[tokenAlias] = count;
-    console.log("state.token",state.token);
-    
+
   },
-  Logout: (state: any) => {
+  Logout: (state: storeState) => {
     //退出登录的操作,需要清楚的一些状态
     state.token = '';
     localStorage.removeItem(tokenAlias);
-    state.user = null;
-    state.role = "";
+    // state.user = null;
+    // state.role = "";
   },
+
+  setUserInfo(state:storeState, count:object){
+    state.userInfo=count
+  }
 };
 export default mutations;
