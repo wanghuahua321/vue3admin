@@ -60,6 +60,8 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
+import { Message } from "@/utils/api";
+
 export default {
   name: "chatIndex",
   components: {
@@ -76,10 +78,19 @@ export default {
     const fences = (item) => {
       pagesDatas.selectinx = item;
     };
-    onMounted(() => {});
+
+    const contactsLeft = () => {
+      // Message.contacts().then((res) => {
+      //   console.log(res);
+      // });
+    };
+    onMounted(() => {
+      contactsLeft();
+    });
     return {
       ...toRefs(pagesDatas),
       fences,
+      contactsLeft,
     };
   },
 };
