@@ -83,9 +83,7 @@ export default {
     const onPanelChange = (value: Moment, mode: string) => {
       console.log(value, mode);
     };
-    onMounted(() => {
-      console.log("store", store.state);
-    });
+    onMounted(() => {});
     return {
       ...toRefs(pagesDatas),
       onPanelChange,
