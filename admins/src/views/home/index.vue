@@ -71,6 +71,7 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
 import { Moment } from "moment";
+import { useStore } from "vuex";
 export default {
   name: "homeRig",
   components: {},
@@ -78,10 +79,13 @@ export default {
     const pagesDatas = reactive<any>({
       calendarValue: "",
     });
+    const store = useStore();
     const onPanelChange = (value: Moment, mode: string) => {
       console.log(value, mode);
     };
-    onMounted(() => {});
+    onMounted(() => {
+      console.log("store", store.state);
+    });
     return {
       ...toRefs(pagesDatas),
       onPanelChange,

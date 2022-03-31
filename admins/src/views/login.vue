@@ -114,6 +114,8 @@ export default {
       });
       LoginInfo.getUserinfo().then((res) => {
         store.commit("setUserInfo", res);
+        console.log("存进去了");
+
         router.push({
           path: "/home",
         });

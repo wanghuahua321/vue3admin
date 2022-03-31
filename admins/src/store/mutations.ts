@@ -16,6 +16,7 @@ const mutations = {
 
   setUserInfo(state:storeState, count:object){
     state.userInfo=count
+    localStorage.setItem('userInfo',JSON.stringify(count))
   }
 };
 export default mutations;
