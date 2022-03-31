@@ -57,7 +57,7 @@
               </template>
             </a-avatar>
             <div class="user-name">
-              <span>Jason Chen</span>
+              <span>67676</span>
               <DownOutlined />
             </div>
 
@@ -81,10 +81,11 @@
 </template>
 
 <script>
-import { ref, createVNode } from 'vue'
+import { ref, createVNode, reactive, toRef, toRefs, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { Modal } from 'ant-design-vue'
+import { userInfo } from '@/interface/index'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -118,7 +119,9 @@ export default {
     // data
     const store = useStore()
     const router = useRouter()
-
+    const pageDatas = reactive < { UserInfo: userInfo } > ({
+      UserInfo: {}
+    })
     const avatarUrl = ref(require('@/assets/images/person.png'))
     const jcMsgPopover = ref('jc-msg-popover')
     const data = ref([
@@ -136,6 +139,10 @@ export default {
       }
     ])
 
+    onMounted(() => {
+      // pageDatas.UserInfo = store.getters.getUserInfo
+      console.log("000000", store.getters.getUserInfo);
+    })
     // methods
     const handleIconClick = () => {
       emit('icon-click')
@@ -164,7 +171,7 @@ export default {
       data,
       avatarUrl,
       jcMsgPopover,
-
+      ...toRefs(pageDatas),
       handleIconClick,
       handleLoginOut,
       handleToUserCenter

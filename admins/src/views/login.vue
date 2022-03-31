@@ -81,7 +81,7 @@ export default {
 
     // onMounted(() => {});
     const logins = () => {
-      // console.log("  loginForm.value", loginForms.value);
+      console.log("  loginForm.value", loginForms.value);
 
       loginForms.value
         .validate() /*  */
@@ -106,10 +106,6 @@ export default {
           console.log("error", error);
           console.log("请先登录");
         });
-
-      router.push({
-        name: "home",
-      });
     };
 
     const getUsers = () => {
@@ -117,7 +113,10 @@ export default {
         console.log("成员", res);
       });
       LoginInfo.getUserinfo().then((res) => {
-        console.log("成员", res);
+        store.commit("setUserInfo", res);
+        router.push({
+          path: "/home",
+        });
       });
     };
     return {

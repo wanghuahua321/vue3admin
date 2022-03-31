@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-const routerView = import('@/layout/index.vue')
+const routerView =import(/* webpackChunkName: "layout" */ '@/layout/index.vue')
 
 const routes: Array<RouteRecordRaw> = [
   // {
@@ -10,25 +10,25 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/login',
     name: 'logins',
-    component: () => import(/* webpackChunkName: "logins" */ '../views/login.vue')
+    component: () => import(/* webpackChunkName: "login" */ '../views/login.vue')
   },
   {
     path: '/',
     name: 'home',
-    component: routerView,
+    component:() => routerView,
     redirect: { name: "homeinx" },
     children: [
      {
       path: '/home',
       name: 'homeinx',
-      component: () => import(/* webpackChunkName: "homehomerig" */ '@/views/home/index.vue'),
+      component: () => import(/* webpackChunkName: "home" */ '@/views/home/index.vue'),
      }
     ]
   },
   {
     path: '/chat',
     name: 'chat',
-    component: routerView,
+    component: () =>routerView,
     redirect: { name: "chatinx" },
     meta: {
       TabbarShow: true //需要显示底部导航
@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/chat',
         name: 'chatinx',
-        component: () => import(/* webpackChunkName: "homehomerig" */ '../views/chat/index.vue'),
+        component: () => import(/* webpackChunkName: "chat" */ '../views/chat/index.vue'),
       }
     ]
   }
