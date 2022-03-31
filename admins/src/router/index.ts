@@ -13,14 +13,22 @@ console.log("process.env.NODE_ENV",process.env.NODE_ENV);
 // const isDev = process.env.NODE_ENV == "development";
 router.beforeEach(async (to,from,next)=>{
   const tokens=store.getters.token
+  const { token, userInfo } = store.state;
+ 
    if(to.path==='/login'){
-    console.log("tokens",tokens);
+    console.log("tokens",token);
      next()
    }else{
       if (tokens) {
-        console.log("tokens",tokens);
+        /* 重新发起缓存配置 */
+        if(!token){
+          store.commit("setToken",tokens)
+        }
+        if(Object.keys(userInfo).length===0){
+          await store.dispatch('getCurrentUser');  
+        }
         next()
-      }else{
+      }else{ 
       next('/login')
       }
    }
