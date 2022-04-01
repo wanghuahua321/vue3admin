@@ -5,14 +5,13 @@
         <svg-icon iconName="baobiao" />
       </div>
       <div class="defby_Self">
-        <p class="dep">{{items.channel}}</p>
+        <p class="dep">{{items.display_name}}</p>
         <div class="def_handle">
-          <span>456</span>
+          <!-- <span>{{items.lastMessage.message.text}}</span> -->
           <i class="browse">
             <svg-icon iconName="2-3liulan" />
-            777
+            {{items.lastMessage.message.lastMessageDateStr}}
           </i>
-
         </div>
 
       </div>
@@ -41,6 +40,9 @@ export default {
 
 <style scoped lang="scss">
 .grouplist {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 7%;
   .baobiao_lis {
     display: flex;
     width: 100%;

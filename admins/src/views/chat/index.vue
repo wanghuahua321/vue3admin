@@ -18,7 +18,7 @@
               <span class="span_lable">{{items.display_name}}</span>
             </div>
             <div class="rt_handle">
-              <span class="span_nums">个</span>
+              <span class="span_nums">{{items.channel_credentials.length}}条</span>
             </div>
           </div>
 
@@ -271,7 +271,6 @@ export default {
   // display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #eceef5;
   cursor: pointer;
   .reports_lis_all {
     width: 100%;

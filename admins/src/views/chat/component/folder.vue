@@ -1,13 +1,13 @@
 <template>
-  <div class="reports_li">
-    <div class="reports_lis_all" v-for="items in floderList" :key="items.appid" @click.stop="floderLists(items,inx)">
-      <div class="reports_tree">
+  <div class="reports_lis">
+    <div class="reports_lis_alls" v-for="items in floderList" :key="items.appid" @click.stop="floderLists(items,inx)">
+      <div :class="items.showChildren? 'reports_tree borders': 'reports_tree'">
         <div class="lt_icons">
           <svg-icon iconName="wenjianjia" />
-          <span class="span_lable">{{items.display_name}}</span>
+          <span class="span_lable">{{items.channel}}</span>
         </div>
         <div class="rt_handle">
-          <span class="span_nums">个</span>
+          <span class="span_nums">{{items.contacts.length}}条</span>
         </div>
       </div>
 
@@ -46,25 +46,29 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.reports_li {
+.borders {
+  border-bottom: 1px solid #eceef5;
+}
+.reports_lis {
   position: relative;
   width: 100%;
-  box-sizing: border-box;
-  padding: 0px 7%;
-  // display: flex;
+
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #eceef5;
   cursor: pointer;
-  .reports_lis_all {
+  .reports_lis_alls {
     width: 100%;
   }
   .reports_tree {
     display: flex;
     width: 100%;
+    box-sizing: border-box;
+    // display: flex;
+    padding: 0px 5%;
     height: 60px;
     align-items: center;
-    border-bottom: 1px solid #eceef5;
+
     // justify-content: space-between;
     .lt_icons {
       display: flex;
