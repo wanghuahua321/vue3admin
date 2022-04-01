@@ -11,18 +11,18 @@
       </div> -->
 
       <div class="reports_li">
-        <div class="reports_lis_all">
+        <div class="reports_lis_all" v-for="items in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
           <div class="reports_tree">
             <div class="lt_icons">
               <svg-icon iconName="wenjianjia" />
-              <span class="span_lable">123</span>
+              <span class="span_lable">{{items.display_name}}</span>
             </div>
             <div class="rt_handle">
-              <span class="span_nums">4个</span>
+              <span class="span_nums">个</span>
             </div>
           </div>
-          <files></files>
-          <!-- <grouplist v-if="items.showChildren" :grouplistData="items.children" :typesVal='types'></grouplist> -->
+
+          <folder v-if="items.showChildren" :floderList="items.channel_credentials"></folder>
         </div>
       </div>
 
@@ -77,13 +77,13 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
-import files from "./component/files.vue";
+import folder from "./component/folder.vue";
 
 export default {
   name: "chatIndex",
   components: {
     DownloadOutlined,
-    files,
+    folder,
   },
   setup() {
     const pagesDatas = reactive<any>({
@@ -92,6 +92,130 @@ export default {
       value2: "value2",
       value3: "value3",
       value4: "value4",
+      fencesData: {
+        data: [
+          {
+            appid: "01FXRNXY02TEX69Z81KJP5NKXE",
+            display_name: "facebook",
+            channel_credentials: [
+              {
+                channel: "MESSENGER",
+                status: "ACTIVE",
+                contactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
+                contacts: [
+                  {
+                    lastMessage: {
+                      message_Id: "01FZFNJ9WJS92SGMD24YZ1SHHW",
+                      messageType: "TextMessage",
+                      contact_Id: "01FXRQPFYFM66SB57D3WDG26WV",
+                      isRead: false,
+                      message: {
+                        text: "0",
+                        lastMessageDateStr: "2022/03/31",
+                      },
+                    },
+                    id: "01FXRQPFYFM66SB57D3WDG26WV",
+                    identity: "4976064819145825",
+                    language: "UNSPECIFIED",
+                    display_name: "Unknown",
+                    email: "",
+                    channel_priority: ["MESSENGER"],
+                  },
+                  {
+                    lastMessage: {
+                      message_Id: "01FYNSN000224E5V7B9GEJMMA8",
+                      messageType: "TextMessage",
+                      contact_Id: "01FYNSN02RGTW6ETXZBMSYJQRX",
+                      isRead: false,
+                      message: {
+                        text: "Youtube： #直播在线人数、#视频观看次数、#订阅、#点赞、#评论、#分享、#账号 Facebook ：#直播在线人数、#专页赞、#主页关注、#群组、#帖子赞、#帖子分享、#评论、#视频观看、#帖子展示量 Instagram ：#粉丝关注、#帖子赞、#视频观看、#评论 Twitter ：#关注者、#转推、#点赞、#评论数 、#展示量、#互动量 Tik Tok：#粉丝、#视频赞、#分享、#观看数 Shopee:#直播在线人数 微信：fensi777999",
+                        lastMessageDateStr: "2022/03/21",
+                      },
+                    },
+                    id: "01FYNSN02RGTW6ETXZBMSYJQRX",
+                    identity: "7649590338399271",
+                    language: "UNSPECIFIED",
+                    display_name: "Cheung Cheung",
+                    email: "",
+                    channel_priority: ["MESSENGER"],
+                  },
+                  {
+                    lastMessage: {
+                      message_Id: "01FYQR7YTAPQ0RB19SH4RS098B",
+                      messageType: "TextMessage",
+                      contact_Id: "01FYQR7YX49FGRMSKXYWYW9SSH",
+                      isRead: false,
+                      message: {
+                        text: "11",
+                        lastMessageDateStr: "2022/03/22",
+                      },
+                    },
+                    id: "01FYQR7YX49FGRMSKXYWYW9SSH",
+                    identity: "7177029705702467",
+                    language: "UNSPECIFIED",
+                    display_name: "Xins Misw",
+                    email: "",
+                    channel_priority: ["MESSENGER"],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            appid: "01FY8B36YY87YG9R95RWRK07M1",
+            display_name: "lilifacebook",
+            channel_credentials: [
+              {
+                channel: "MESSENGER",
+                status: "ACTIVE",
+                contactId: "01FY8B36YY87YG9R95RWRK07M1-MESSENGER",
+                contacts: [
+                  {
+                    lastMessage: {
+                      message_Id: "01FYZJX6WQKPB3NB7N4BD9HVSK",
+                      messageType: "MediaMessage",
+                      contact_Id: "01FY8BHDMXD8AE0WEF0AHXXPD3",
+                      isRead: false,
+                      message: {
+                        lastMessageDateStr: "2022/03/25",
+                        url: "https://scontent.xx.fbcdn.net/v/t1.15752-9/274738849_380559813605539_4369330687459145_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=58c789&_nc_ohc=jPvzd70iLwQAX90ewtV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVLvG6XARpzBQIl2vP4aqOwzF12WSJ0L10zUGFt63jbqJA&oe=6260E352",
+                        thumbnail_url: "",
+                      },
+                    },
+                    id: "01FY8BHDMXD8AE0WEF0AHXXPD3",
+                    identity: "5410815092263838",
+                    language: "UNSPECIFIED",
+                    display_name: "张丽",
+                    email: "",
+                    channel_priority: ["MESSENGER"],
+                  },
+                  {
+                    lastMessage: {
+                      message_Id: "01FYQRTR9S9RBNQ5R8MC1FKGX8",
+                      messageType: "TextMessage",
+                      contact_Id: "01FYQRA8FBR834J68YREV90HKB",
+                      isRead: false,
+                      message: {
+                        text: "123",
+                        lastMessageDateStr: "2022/03/22",
+                      },
+                    },
+                    id: "01FYQRA8FBR834J68YREV90HKB",
+                    identity: "5057183960971576",
+                    language: "UNSPECIFIED",
+                    display_name: "Xins Misw",
+                    email: "",
+                    channel_priority: ["MESSENGER"],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        isSuccess: true,
+        errorCode: null,
+        message: "",
+      },
     });
     const fences = (item) => {
       pagesDatas.selectinx = item;
@@ -102,13 +226,37 @@ export default {
         console.log(res);
       });
     };
+
+    const showReports = (items, inx) => {
+      if (!items.showChildren) {
+        if (items.channel_credentials) {
+          items.channel_credentials.forEach((ele) => {
+            ele.showChildren = false;
+          });
+        }
+      }
+      items.showChildren = !items.showChildren;
+      console.log("items55", items);
+    };
+
     onMounted(() => {
       contactsLeft();
+      pagesDatas.fencesData.data.map((res) => {
+        res.showChildren = false;
+        if (res.channel_credentials && res.channel_credentials.length > 0) {
+          res.channel_credentials.map((channel) => {
+            channel.showChildren = false;
+          });
+        }
+      });
+
+      console.log("fencesData", pagesDatas.fencesData);
     });
     return {
       ...toRefs(pagesDatas),
       fences,
       contactsLeft,
+      showReports,
     };
   },
 };
@@ -120,7 +268,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 0px 7%;
-  display: flex;
+  // display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #eceef5;
@@ -133,6 +281,7 @@ export default {
     width: 100%;
     height: 60px;
     align-items: center;
+    border-bottom: 1px solid #eceef5;
     // justify-content: space-between;
     .lt_icons {
       display: flex;

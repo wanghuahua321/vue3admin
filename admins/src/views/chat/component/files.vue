@@ -1,11 +1,11 @@
 <template>
   <div class="grouplist">
-    <div class="baobiao_lis">
+    <div class="baobiao_lis" v-for="items in filesList" :key="items.appid">
       <div class="lt_icons">
         <svg-icon iconName="baobiao" />
       </div>
       <div class="defby_Self">
-        <p class="dep">123</p>
+        <p class="dep">{{items.channel}}</p>
         <div class="def_handle">
           <span>456</span>
           <i class="browse">
@@ -14,6 +14,7 @@
           </i>
 
         </div>
+
       </div>
     </div>
 
@@ -24,9 +25,15 @@
 import { reactive, onMounted, toRefs } from "vue";
 export default {
   name: "fiLes",
+  props: {
+    filesList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   components: {},
   setup() {
-    onMounted(() => {});
+    // onMounted(() => {});
     return {};
   },
 };
