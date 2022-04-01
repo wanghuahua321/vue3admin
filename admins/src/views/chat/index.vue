@@ -1,13 +1,29 @@
 <template>
   <div class="message">
     <div class="fence">
-      <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(items,inx) in 5" :key="inx" @click="fences(inx)">
+      <!-- <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(items,inx) in 5" :key="inx" @click="fences(inx)">
         <div>tupian</div>
         <div class="fence_info">
           <p>Derrick Schmidt</p>
           <span>2022/02/01</span>
         </div>
         <b class="unread">4</b>
+      </div> -->
+
+      <div class="reports_li">
+        <div class="reports_lis_all">
+          <div class="reports_tree">
+            <div class="lt_icons">
+              <svg-icon iconName="wenjianjia" />
+              <span class="span_lable">123</span>
+            </div>
+            <div class="rt_handle">
+              <span class="span_nums">4个</span>
+            </div>
+          </div>
+          <files></files>
+          <!-- <grouplist v-if="items.showChildren" :grouplistData="items.children" :typesVal='types'></grouplist> -->
+        </div>
       </div>
 
     </div>
@@ -61,11 +77,13 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
+import files from "./component/files.vue";
 
 export default {
   name: "chatIndex",
   components: {
     DownloadOutlined,
+    files,
   },
   setup() {
     const pagesDatas = reactive<any>({
@@ -80,9 +98,9 @@ export default {
     };
 
     const contactsLeft = () => {
-      // Message.contacts().then((res) => {
-      //   console.log(res);
-      // });
+      Message.contacts().then((res) => {
+        console.log(res);
+      });
     };
     onMounted(() => {
       contactsLeft();
@@ -97,6 +115,49 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.reports_li {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eceef5;
+  cursor: pointer;
+  .reports_lis_all {
+    width: 100%;
+  }
+  .reports_tree {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    align-items: center;
+    // justify-content: space-between;
+    .lt_icons {
+      display: flex;
+      align-items: center;
+    }
+    .span_lable {
+      padding-left: 0.24rem;
+      font-size: 14px;
+      color: #2a2a2a;
+      font-weight: 600;
+    }
+    .rt_handle {
+      font-size: 14px;
+      position: absolute;
+      right: 7%;
+      color: #8f8f8f;
+      .checkRido {
+        padding-left: 0.32rem;
+      }
+    }
+    .rt_h_active {
+      right: 0.52rem !important;
+    }
+  }
+}
 .message {
   margin-top: 12px;
   display: flex;

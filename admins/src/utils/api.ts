@@ -10,5 +10,5 @@ export const LoginInfo={
 }
 
 export const Message={
-  contacts: () => http.get(portalBasicApi + "/app/facebook-operation/contacts"), // 左侧联系人列表
+  contacts: () => http.get(portalBasicApi + "/app/user/contacts"), // 左侧联系人列表
 }
