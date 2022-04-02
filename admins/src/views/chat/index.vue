@@ -11,7 +11,7 @@
       </div> -->
 
       <div class="reports_li">
-        <div class="reports_lis_all" v-for="items in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
+        <div class="reports_lis_all" v-for="(items,inx) in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
           <div class="reports_tree">
             <div class="lt_icons">
               <svg-icon iconName="wenjianjia" />
@@ -38,13 +38,14 @@
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs, watch } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
 import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
 import { baseUrl } from "@/utils/baseurl";
 import content from "./component/contents/content.vue";
+import { useStore } from "vuex";
 
 export default {
   name: "chatIndex",
@@ -55,6 +56,7 @@ export default {
     content,
   },
   setup() {
+    const store = useStore();
     const pagesDatas = reactive<any>({
       selectinx: 0,
       value1: "value1",
@@ -185,7 +187,10 @@ export default {
         errorCode: null,
         message: "",
       },
+
+      chatRecord: [],
     });
+
     const fences = (item) => {
       pagesDatas.selectinx = item;
     };
@@ -194,6 +199,7 @@ export default {
         console.log(res);
       });
     };
+
     const showReports = (items, inx) => {
       if (!items.showChildren) {
         if (items.channel_credentials) {
@@ -207,7 +213,7 @@ export default {
     };
 
     onMounted(() => {
-      contactsLeft();
+      // contactsLeft();
       pagesDatas.fencesData.data.map((res) => {
         res.showChildren = false;
         if (res.channel_credentials && res.channel_credentials.length > 0) {

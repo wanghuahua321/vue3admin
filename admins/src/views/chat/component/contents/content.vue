@@ -20,7 +20,7 @@
                 <!-- <message v-show="!loading" v-for="(item, index) in list" :key="index" :data="item" class="margin-20-n" /> -->
                 <div class="message-container">
                   <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
-                  <div class="message-wrap message-wrap_sender" v-for="currentUser in chatData" :key="currentUser">
+                  <div class="message-wrap message-wrap_sender" v-for="currentUser in chatRecord" :key="currentUser.message_Id">
                     <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
                     <a-avatar :size="50">
                       <template #icon>
@@ -33,11 +33,11 @@
                         <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
                         <span class="nickname">huahua</span>
                         <span class="time">
-                          2022-04-01 18:01:39
+                          {{currentUser.message.lastMessageDateStr}}
                         </span>
                       </div>
                       <div class="content margin_t-10">
-                        <span>{{currentUser.content}}</span>
+                        <span>{{currentUser.message.text}}</span>
                         <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
                         <!-- <div class="loading-icon-box" v-show="data.loading">
                           <el-icon class="loading-icon">
@@ -55,8 +55,6 @@
           <div class="message-input">
             <msginput @sents="sents"></msginput>
           </div>
-          <!-- <message-list class="message-group" />
-    <message-input class="message-input" /> -->
         </div>
       </div>
     </transition>
@@ -65,10 +63,10 @@
 </template>
 
 <script>
-import { computed, ref, reactive, toRefs } from 'vue'
+import { computed, ref, reactive, toRefs, onMounted, watch } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined } from '@ant-design/icons-vue';
-// import ContentMessage from './contentMessage'
+import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
 
@@ -83,18 +81,49 @@ export default ({
     const ws = useWebSocket(handleMessage)
     const store = useStore()
     const pageData = reactive({
+      chatPerson: {}, //左侧的person 信息
       currentUser: {
         id: "1",
         avatar: require('../../../../assets/images/person.png'),
         nickname: "wanghuahu"
       },
-      chatData: [
+      chatRecord: [
 
-      ]
+      ],
+      nextPageToken: "" //获取聊天记录第二页需要token
 
+
+    });
+    watch(
+      () => store.chatPerson,
+      (newsvalue, oldvalues) => {
+        console.log('newsvalue', newsvalue);
+      },
+      { immediate: true }
+    );
+
+
+    onMounted(() => {
+      getChatMsg()
     })
-    // const currentUser = computed(() => store.state.user.user)
-    // const friend = computed(() => store.state.conversation.active)
+
+    /*  获取聊天记录 */
+    const getChatMsg = () => {
+      let params = {
+        page_token: pageData.nextPageToken,
+        pageSize: 100,
+        contactId: "01FXRQPFYFM66SB57D3WDG26WV",
+        appId: "01FXRNXY02TEX69Z81KJP5NKXE",
+      };
+      Message.contactId(params).then((res) => {
+        if (res.data && res.isSuccess) {
+          pageData.chatRecord.push(...res.data.messageList)
+          pageData.nextPageToken = res.data.nextPageToken
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
+    };
 
 
     function handleMessage (e) {
@@ -106,8 +135,19 @@ export default ({
 
     const sents = (data) => {
       console.log("data", data);
+      let datas = {
+        contact_id: "01FXRQPFYFM66SB57D3WDG26WV",
+        messageType: "TextMessage",
+        message: "{\"text\":\" 新增新增\"}",
+        appID: "01FXRNXY02TEX69Z81KJP5NKXE"
+      }
       // pageData.chatData.push(data)
-      ws.send(JSON.stringify(data))
+      // ws.send(JSON.stringify(data))
+      Message.sentMessage(datas).then((res) => {
+        console.log("resres", res);
+      }).catch((error) => {
+        console.log(error);
+      });
 
     }
 
@@ -126,7 +166,8 @@ export default ({
       // detailVisible,
       // detailHandle
       sents,
-      ...toRefs(pageData)
+      ...toRefs(pageData),
+      getChatMsg
     }
   }
 })
@@ -138,6 +179,7 @@ export default ({
   display: flex;
   background-color: #f5f5f5;
   height: 100%;
+  align-items: center;
   &-message {
     flex: 1;
   }
@@ -196,6 +238,7 @@ $height: 50px;
 }
 .message-group {
   height: calc(100% - 190px);
+  overflow: auto;
 }
 .message-group-box {
   padding: 0 20px;

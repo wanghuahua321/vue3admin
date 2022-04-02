@@ -17,6 +17,12 @@ const mutations = {
   setUserInfo(state:storeState, count:object){
     state.userInfo=count
     localStorage.setItem('userInfo',JSON.stringify(count))
+  },
+
+  setChatPerson(state:storeState,count:object){
+    state.chatPerson=count
+    console.log("state.chatPerson",state.chatPerson);
+    
   }
 };
 export default mutations;

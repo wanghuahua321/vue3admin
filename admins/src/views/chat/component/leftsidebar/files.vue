@@ -21,6 +21,7 @@
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "fiLes",
   props: {
@@ -30,11 +31,15 @@ export default {
     },
   },
   components: {},
-  setup() {
+  setup(props, ctx) {
     // onMounted(() => {});
 
+    const store = useStore();
+
     const filesItem = (items) => {
-      console.log("itemsddddd", items);
+      // console.log("itemsddddd", items);
+      // ctx.emit("chatPer", items);
+      store.commit("setChatPerson", items);
     };
     return {
       filesItem,

@@ -1,6 +1,7 @@
 const state={
   token:'',
-  userInfo:{}
+  userInfo:{},
+  chatPerson:{}
   
 };
 

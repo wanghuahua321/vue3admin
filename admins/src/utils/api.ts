@@ -11,4 +11,6 @@ export const LoginInfo={
 
 export const Message={
   contacts: () => http.get(portalBasicApi + "/app/user/contacts"), // 左侧联系人列表
+  contactId:(params)=>http.post(portalBasicApi + "/app/facebook-operation/get-chat-messageby-contact-id",params),
+  sentMessage:(params)=>http.post(portalBasicApi + "/app/facebook-operation/send-message",params)
 }
