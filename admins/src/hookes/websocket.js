@@ -31,7 +31,10 @@ function useWebSocket (handleMessage) {
   }
 
 
+
   init()
+
+  return ws
 }
 
 export default useWebSocket

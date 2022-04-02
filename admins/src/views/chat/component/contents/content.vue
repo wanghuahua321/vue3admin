@@ -31,7 +31,7 @@
                     <div class="message-box">
                       <div class="details">
                         <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-                        <span class="nickname">{{currentUser.nickname}}</span>
+                        <span class="nickname">huahua</span>
                         <span class="time">
                           2022-04-01 18:01:39
                         </span>
@@ -70,6 +70,8 @@ import { useStore } from 'vuex'
 import { UserOutlined } from '@ant-design/icons-vue';
 // import ContentMessage from './contentMessage'
 import msginput from './msginput.vue'
+import { useWebSocket } from "../../../../hookes";
+
 
 export default ({
   components: {
@@ -78,6 +80,8 @@ export default ({
     UserOutlined
   },
   setup () {
+    const ws = useWebSocket(handleMessage)
+    const store = useStore()
     const pageData = reactive({
       currentUser: {
         id: "1",
@@ -91,11 +95,19 @@ export default ({
     })
     // const currentUser = computed(() => store.state.user.user)
     // const friend = computed(() => store.state.conversation.active)
-    const store = useStore()
+
+
+    function handleMessage (e) {
+      // console.log("接受", e);
+      const _msgData = JSON.parse(e.data)
+      pageData.chatData.push(_msgData)
+
+    }
 
     const sents = (data) => {
       console.log("data", data);
-      pageData.chatData.push(data)
+      // pageData.chatData.push(data)
+      ws.send(JSON.stringify(data))
 
     }
 
@@ -148,6 +160,7 @@ $height: 50px;
   flex-flow: column;
   border-right: 1px solid $darkColor-7;
   overflow: hidden;
+  height: 100%;
   &-header {
     position: relative;
     padding: 0 0 0 20px;

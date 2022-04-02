@@ -56,10 +56,15 @@ export default defineComponent({
     const token = computed(() => store.state.user.token.token)
 
     const data = reactive({
+      //   let huas = {
+      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
+      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
+      //     content: "from456to123",
+      //   };
       currentUser: {
-        id: "1",
-        avatar: require('../../../../assets/images/person.png'),
-        nickname: "wanghuahu",
+        fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
+        toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
+        // nickname: "wanghuahu",
         content: ""
       },
       focus: false,
