@@ -20,7 +20,7 @@
                 <!-- <message v-show="!loading" v-for="(item, index) in list" :key="index" :data="item" class="margin-20-n" /> -->
                 <div class="message-container">
                   <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
-                  <div class="message-wrap message-wrap_sender" v-for="item in 3" :key="item">
+                  <div class="message-wrap message-wrap_sender" v-for="currentUser in chatData" :key="currentUser">
                     <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
                     <a-avatar :size="50">
                       <template #icon>
@@ -37,7 +37,7 @@
                         </span>
                       </div>
                       <div class="content margin_t-10">
-                        <span>发送的内容</span>
+                        <span>{{currentUser.content}}</span>
                         <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
                         <!-- <div class="loading-icon-box" v-show="data.loading">
                           <el-icon class="loading-icon">
@@ -53,7 +53,7 @@
             </div>
           </div>
           <div class="message-input">
-            <msginput></msginput>
+            <msginput @sents="sents"></msginput>
           </div>
           <!-- <message-list class="message-group" />
     <message-input class="message-input" /> -->
@@ -83,12 +83,21 @@ export default ({
         id: "1",
         avatar: require('../../../../assets/images/person.png'),
         nickname: "wanghuahu"
-      }
+      },
+      chatData: [
+
+      ]
 
     })
     // const currentUser = computed(() => store.state.user.user)
     // const friend = computed(() => store.state.conversation.active)
     const store = useStore()
+
+    const sents = (data) => {
+      console.log("data", data);
+      pageData.chatData.push(data)
+
+    }
 
     // const user = computed(() => {
     //   return store.state.conversation.active || {}
@@ -104,6 +113,7 @@ export default ({
       // user,
       // detailVisible,
       // detailHandle
+      sents,
       ...toRefs(pageData)
     }
   }

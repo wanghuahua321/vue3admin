@@ -24,7 +24,7 @@
       <!-- <span class="iconfont icon-file" /> -->
     </div>
     <div class="textarea padding_t-10">
-      <a-textarea v-model:value="content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus" @blur="focus = !focus"
+      <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus" @blur="focus = !focus"
         @keydown="listener" />
       <!-- <a-input v-model="content" type="textarea" resize="none" rows="4" @focus="focus = !focus" @blur="focus = !focus" @keydown="listener" /> -->
       <a-tooltip effect="dark" placement="top-end" content="按Enter发送消息，Shift+Enter换行">
@@ -50,13 +50,18 @@ export default defineComponent({
   components: {
     SmileOutlined
   },
-  setup () {
+  setup (props, ctx) {
     const store = useStore()
 
     const token = computed(() => store.state.user.token.token)
 
     const data = reactive({
-      content: '',
+      currentUser: {
+        id: "1",
+        avatar: require('../../../../assets/images/person.png'),
+        nickname: "wanghuahu",
+        content: ""
+      },
       focus: false,
       emojis: '😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 😍 🤩 😘 😗 ☺️ 😚 😙 😋 😛 😜 🤪 😝 😝 🤗 🤭 🤫 🤔 🤐 🤨 😐 😑 😶 😏 😒 🙄 😬 🤥 😌 😔 😪 🤤 😴 😷 🤒 🤕 🤢 🤮 🤧 😵 🤯 🤠 😎 🤓 🧐 😕 😟 🙁 ☹️ 😮 😯 😲 😳 😦 😧 😨 😰 😥 😢 😭 😱 😖 😣 😞 😓 😩 😫 😤 😡 😠 🤬 😈 👿 💀 ☠️ 🤡 👹 👺 👻 👽 🙈 🙉 🙊 💋 💌 💘 💝 💖 💗 💓 💞 💕 💔 ❤️ 🧡 💛 💚 💙 💜 🖤 💬 🤳 👃 👅 👄 👶 🧒 👋 🤚 🖐️ ✋ 🖖 👌 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 ⬆️ ➡️ ⬇️ ⬅️ ↩️ ↪️ ⤴️ ⤵️ 🔃 🔄 🔙 🔚 🔛 🔜 🔝 🔀 🔁 🔂 ▶️ ⏩ ⏭️ ⏯️ ◀️ ⏪ ⏮️ 🔼 ⏫ 🔽 ⏬'.split(' ')
     })
@@ -94,6 +99,8 @@ export default defineComponent({
     //  * 发送
     //  */
     const submit = () => {
+      ctx.emit('sents', data.currentUser)
+
       // store.dispatch('websocket/send', paramsHandle(1, 1))
       // data.content = ''
       // store.dispatch('message/updateScrollBottom')
