@@ -24,8 +24,8 @@
       <!-- <span class="iconfont icon-file" /> -->
     </div>
     <div class="textarea padding_t-10">
-      <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus" @blur="focus = !focus"
-        @keydown="listener" />
+      <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus"
+        @blur="focus = !focus" />
       <!-- <a-input v-model="content" type="textarea" resize="none" rows="4" @focus="focus = !focus" @blur="focus = !focus" @keydown="listener" /> -->
       <a-tooltip effect="dark" placement="top-end" content="按Enter发送消息，Shift+Enter换行">
         <span class="iconfont icon-send" @click="submit">

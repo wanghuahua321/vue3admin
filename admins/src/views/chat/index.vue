@@ -45,6 +45,7 @@ import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
 import { baseUrl } from "@/utils/baseurl";
 import content from "./component/contents/content.vue";
+import { useWebSocket } from "../../hookes";
 
 export default {
   name: "chatIndex",
@@ -189,7 +190,7 @@ export default {
     const fences = (item) => {
       pagesDatas.selectinx = item;
     };
-
+    const ws = useWebSocket(handleMessage);
     const contactsLeft = () => {
       Message.contacts().then((res) => {
         console.log(res);
@@ -207,6 +208,10 @@ export default {
       items.showChildren = !items.showChildren;
       // console.log("items55", items);
     };
+
+    function handleMessage() {
+      console.log("123445555555555");
+    }
 
     onMounted(() => {
       contactsLeft();
