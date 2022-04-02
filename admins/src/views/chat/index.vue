@@ -28,10 +28,10 @@
 
     </div>
     <div class="chatMsg">
-      聊天
+      <content></content>
     </div>
     <div class="msgPage">
-      <msgPagecon></msgPagecon>
+      <!-- <msgPagecon></msgPagecon> -->
     </div>
 
   </div>
@@ -41,8 +41,10 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
-import folder from "./component/folder.vue";
+import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
+import { baseUrl } from "@/utils/baseurl";
+import content from "./component/contents/content.vue";
 
 export default {
   name: "chatIndex",
@@ -50,6 +52,7 @@ export default {
     DownloadOutlined,
     folder,
     msgPagecon,
+    content,
   },
   setup() {
     const pagesDatas = reactive<any>({
@@ -202,11 +205,47 @@ export default {
         }
       }
       items.showChildren = !items.showChildren;
-      console.log("items55", items);
+      // console.log("items55", items);
     };
 
     onMounted(() => {
       contactsLeft();
+      // let ws = new WebSocket(
+      //   "ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc0F2YWlsYWJsZSI6ZmFsc2UsIklkIjpudWxsLCJOYW1lIjpudWxsLCJUb2tlblRpbWUiOiIyMDIyLTAzLTI4VDE0OjA3OjI0Ljc4NzY4NjYrMDg6MDAiLCJleHAiOjE2Nzk5ODM2NDUuMH0.CK5nNzeeM__JJc6y7xaruIRkwHnCS9dX5EZOAPZWm88"
+      // );
+      // console.log("ws", ws);
+
+      // ws.onopen = function () {
+      //   console.log("ws onopen");
+      //   let huas = {
+      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
+      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
+      //     content: "from456to123",
+      //   };
+      //   ws.send(JSON.stringify(huas));
+      // };
+      // ws.onmessage = function (e) {
+      //   console.log("ws onmessage");
+      //   console.log("from server: " + e.data);
+      // };
+
+      // let ws2 = new WebSocket(
+      //   "ws://192.168.0.115:6800/Chat?contactId=01FY8B36YY87YG9R95RWRK0111-MESSENGER&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc0F2YWlsYWJsZSI6ZmFsc2UsIklkIjpudWxsLCJOYW1lIjpudWxsLCJUb2tlblRpbWUiOiIyMDIyLTAzLTI4VDE0OjA3OjI0Ljc4NzY4NjYrMDg6MDAiLCJleHAiOjE2Nzk5ODM2NDUuMH0.CK5nNzeeM__JJc6y7xaruIRkwHnCS9dX5EZOAPZWm88"
+      // );
+
+      // ws2.onopen = function () {
+      //   console.log("ws2 onopen");
+      //   let huas = {
+      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
+      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
+      //     content: "from456to123",
+      //   };
+      //   ws.send(JSON.stringify(huas));
+      // };
+      // ws2.onmessage = function (e) {
+      //   console.log("ws onmessage");
+      //   console.log("from server: " + e.data);
+      // };
       pagesDatas.fencesData.data.map((res) => {
         res.showChildren = false;
         if (res.channel_credentials && res.channel_credentials.length > 0) {
@@ -215,8 +254,6 @@ export default {
           });
         }
       });
-
-      console.log("fencesData", pagesDatas.fencesData);
     });
     return {
       ...toRefs(pagesDatas),
@@ -335,7 +372,7 @@ export default {
   }
   .chatMsg {
     flex: 2;
-    border: 1px solid;
+    // border: 1px solid;
     margin: 0px 3%;
     background: #fff;
   }
