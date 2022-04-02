@@ -137,6 +137,7 @@ export default ({
 .content {
   display: flex;
   background-color: #f5f5f5;
+  height: 100%;
   &-message {
     flex: 1;
   }
@@ -193,7 +194,9 @@ $height: 50px;
     height: 140px;
   }
 }
-
+.message-group {
+  height: calc(100% - 190px);
+}
 .message-group-box {
   padding: 0 20px;
   height: 352px;

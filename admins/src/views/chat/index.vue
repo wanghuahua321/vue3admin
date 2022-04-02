@@ -18,7 +18,7 @@
               <span class="span_lable">{{items.display_name}}</span>
             </div>
             <div class="rt_handle">
-              <span class="span_nums">{{items.channel_credentials.length}}条</span>
+              v
             </div>
           </div>
 
@@ -45,7 +45,6 @@ import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
 import { baseUrl } from "@/utils/baseurl";
 import content from "./component/contents/content.vue";
-// import { useWebSocket } from "../../hookes";
 
 export default {
   name: "chatIndex",
@@ -75,13 +74,13 @@ export default {
                 contacts: [
                   {
                     lastMessage: {
-                      message_Id: "01FZFNJ9WJS92SGMD24YZ1SHHW",
+                      message_Id: "01FZM4CRKSGSDHQQQJXN3D2H9M",
                       messageType: "TextMessage",
                       contact_Id: "01FXRQPFYFM66SB57D3WDG26WV",
                       isRead: false,
                       message: {
-                        text: "0",
-                        lastMessageDateStr: "2022/03/31",
+                        text: "testmessage03/25 16:05",
+                        lastMessageDateStr: "11:16 AM",
                       },
                     },
                     id: "01FXRQPFYFM66SB57D3WDG26WV",
@@ -190,13 +189,11 @@ export default {
     const fences = (item) => {
       pagesDatas.selectinx = item;
     };
-    // const ws = useWebSocket(handleMessage);
     const contactsLeft = () => {
       Message.contacts().then((res) => {
         console.log(res);
       });
     };
-
     const showReports = (items, inx) => {
       if (!items.showChildren) {
         if (items.channel_credentials) {
@@ -209,48 +206,8 @@ export default {
       // console.log("items55", items);
     };
 
-    function handleMessage() {
-      console.log("123445555555555");
-    }
-
     onMounted(() => {
       contactsLeft();
-      // let ws = new WebSocket(
-      //   "ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc0F2YWlsYWJsZSI6ZmFsc2UsIklkIjpudWxsLCJOYW1lIjpudWxsLCJUb2tlblRpbWUiOiIyMDIyLTAzLTI4VDE0OjA3OjI0Ljc4NzY4NjYrMDg6MDAiLCJleHAiOjE2Nzk5ODM2NDUuMH0.CK5nNzeeM__JJc6y7xaruIRkwHnCS9dX5EZOAPZWm88"
-      // );
-      // console.log("ws", ws);
-
-      // ws.onopen = function () {
-      //   console.log("ws onopen");
-      //   let huas = {
-      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
-      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
-      //     content: "from456to123",
-      //   };
-      //   ws.send(JSON.stringify(huas));
-      // };
-      // ws.onmessage = function (e) {
-      //   console.log("ws onmessage");
-      //   console.log("from server: " + e.data);
-      // };
-
-      // let ws2 = new WebSocket(
-      //   "ws://192.168.0.115:6800/Chat?contactId=01FY8B36YY87YG9R95RWRK0111-MESSENGER&token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJJc0F2YWlsYWJsZSI6ZmFsc2UsIklkIjpudWxsLCJOYW1lIjpudWxsLCJUb2tlblRpbWUiOiIyMDIyLTAzLTI4VDE0OjA3OjI0Ljc4NzY4NjYrMDg6MDAiLCJleHAiOjE2Nzk5ODM2NDUuMH0.CK5nNzeeM__JJc6y7xaruIRkwHnCS9dX5EZOAPZWm88"
-      // );
-
-      // ws2.onopen = function () {
-      //   console.log("ws2 onopen");
-      //   let huas = {
-      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
-      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
-      //     content: "from456to123",
-      //   };
-      //   ws.send(JSON.stringify(huas));
-      // };
-      // ws2.onmessage = function (e) {
-      //   console.log("ws onmessage");
-      //   console.log("from server: " + e.data);
-      // };
       pagesDatas.fencesData.data.map((res) => {
         res.showChildren = false;
         if (res.channel_credentials && res.channel_credentials.length > 0) {
@@ -274,8 +231,7 @@ export default {
 .reports_li {
   position: relative;
   width: 100%;
-  box-sizing: border-box;
-  padding: 0px 7%;
+
   // display: flex;
   justify-content: space-between;
   align-items: center;
@@ -286,10 +242,15 @@ export default {
   .reports_tree {
     display: flex;
     width: 100%;
-    height: 60px;
+    height: 48px;
     align-items: center;
-    border-bottom: 1px solid #eceef5;
+    box-sizing: border-box;
+    padding: 0px 7%;
+    // border-bottom: 1px solid #eceef5;
     // justify-content: space-between;
+    &:hover {
+      background: $hoverMine;
+    }
     .lt_icons {
       display: flex;
       align-items: center;
@@ -319,8 +280,10 @@ export default {
   display: flex;
   // min-height: 616px;
   height: 100%;
+  width: 100%;
   .fence {
-    flex: 1;
+    // flex: 1;
+    width: 24%;
     background: #fff;
 
     .fence_item {
@@ -376,13 +339,15 @@ export default {
     }
   }
   .chatMsg {
-    flex: 2;
+    // flex: 2;
+    width: 47%;
     // border: 1px solid;
     margin: 0px 3%;
     background: #fff;
   }
   .msgPage {
-    flex: 1;
+    // flex: 1;
+    width: 23%;
     background: #fff;
   }
 }

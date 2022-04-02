@@ -55,7 +55,7 @@ export default {
 
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #eceef5;
+  // border-bottom: 2px solid #eceef5;
   cursor: pointer;
   .reports_lis_alls {
     width: 100%;
@@ -65,18 +65,20 @@ export default {
     width: 100%;
     box-sizing: border-box;
     // display: flex;
-    padding: 0px 5%;
-    height: 60px;
+    padding: 0px 9%;
+    height: 42px;
     align-items: center;
-
+    &:hover {
+      background: $hoverMine;
+    }
     // justify-content: space-between;
     .lt_icons {
       display: flex;
       align-items: center;
     }
     .span_lable {
-      padding-left: 0.24rem;
-      font-size: 14px;
+      padding-left: 6px;
+      font-size: 12px;
       color: #2a2a2a;
       font-weight: 600;
     }
