@@ -77,6 +77,12 @@ export default {
           icon: "dashboard",
           key: "chat",
         },
+        {
+          title: "发帖",
+          name: "/dashboard",
+          icon: "dashboard",
+          key: "post",
+        },
         // {
         //   title: "Option 1",
         //   name: "/dashboard",

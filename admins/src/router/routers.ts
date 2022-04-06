@@ -40,7 +40,24 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "chat" */ '../views/chat/index.vue'),
       }
     ]
+  },
+  {
+    path: '/post',
+    name: 'Post',
+    component: () =>routerView,
+    redirect: { name: "postIndex" },
+    meta: {
+      TabbarShow: true //需要显示底部导航
+    },
+    children:[
+      {
+        path: '/postIndex/:type?',
+        name: 'postIndex',
+        component: () => import(/* webpackChunkName: "chat" */ '../views/Posting/index.vue'),
+      }
+    ]
   }
+
 
 ]
 
