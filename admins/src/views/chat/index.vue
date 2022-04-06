@@ -19,7 +19,7 @@
                 <span class="span_lable">{{items.display_name}}</span>
               </div>
               <div class="rt_handle">
-                v
+                <DownOutlined />
               </div>
             </div>
 
@@ -41,7 +41,7 @@
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs, watch, provide } from "vue";
-import { DownloadOutlined } from "@ant-design/icons-vue";
+import { DownloadOutlined, DownOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
 import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
@@ -53,6 +53,7 @@ export default {
   name: "chatIndex",
   components: {
     DownloadOutlined,
+    DownOutlined,
     folder,
     msgPagecon,
     content,

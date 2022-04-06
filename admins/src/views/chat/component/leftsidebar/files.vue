@@ -47,7 +47,6 @@ export default {
       router.push({
         name: "chatinx",
         params: { type: items.id },
-        query: {},
       });
       // store.commit("setChatPerson", items);
     };

@@ -109,7 +109,8 @@ export default ({
 
     onMounted(() => {
       // console.log("propsprops", appId.value);
-      getChatMsg()
+      console.log("走这里");
+      // getChatMsg()
     })
 
     /*  获取聊天记录 */
@@ -144,7 +145,7 @@ export default ({
       let datas = {
         contact_id: pageData.contactId ? pageData.contactId : '',
         messageType: "TextMessage",
-        message: "{\"text\":\" 新增新增\"}",
+        message: "{\"text\":\" 新增单独新增\"}",
         appID: appId.value
       }
       // pageData.chatData.push(data)
