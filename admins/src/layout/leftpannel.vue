@@ -81,7 +81,7 @@ export default {
           title: "发帖",
           name: "/dashboard",
           icon: "dashboard",
-          key: "post",
+          key: "posting",
         },
         // {
         //   title: "Option 1",

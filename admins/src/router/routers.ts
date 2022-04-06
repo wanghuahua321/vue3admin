@@ -42,8 +42,8 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
-    path: '/post',
-    name: 'Post',
+    path: '/posting',
+    name: 'posting',
     component: () =>routerView,
     redirect: { name: "postIndex" },
     meta: {
@@ -51,7 +51,7 @@ const routes: Array<RouteRecordRaw> = [
     },
     children:[
       {
-        path: '/postIndex/:type?',
+        path: '/postIndex',
         name: 'postIndex',
         component: () => import(/* webpackChunkName: "chat" */ '../views/Posting/index.vue'),
       }

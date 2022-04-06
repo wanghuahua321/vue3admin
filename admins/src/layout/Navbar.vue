@@ -1,11 +1,14 @@
 <template>
   <div class="cont_header">
+    <div class="crumbs">
+      <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+    </div>
+
     <div class="searchs">
       <a-input class="searchsinp" placeholder="Basic usage">
         <template #prefix>
           <user-outlined type="user" />
         </template>
-
       </a-input>
 
     </div>
@@ -40,8 +43,6 @@
     </div>
 
     <a-layout-header class="header-main">
-
-      <!-- <breadcrumb id="breadcrumb-container" class="breadcrumb-container" /> -->
 
       <div class="header-right">
 
@@ -90,6 +91,7 @@ import { ref, createVNode, reactive, toRef, toRefs, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { Modal } from 'ant-design-vue'
+import Breadcrumb from '@/components/Breadcrumb/index.vue'
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -110,7 +112,7 @@ export default {
     MenuFoldOutlined,
     UserOutlined,
     LoginOutlined,
-    // Breadcrumb,
+    Breadcrumb,
     BellOutlined,
     DownOutlined
   },
@@ -195,6 +197,15 @@ export default {
   position: relative;
   display: flex;
   justify-content: flex-end;
+  .crumbs {
+    width: 60px;
+    position: absolute;
+    left: 3.5%;
+    text-align: center;
+    span {
+      font-size: 22px;
+    }
+  }
   .searchs {
     width: 384px;
     .searchsinp {
