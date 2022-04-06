@@ -1,7 +1,8 @@
 <template>
-  <div class="message">
-    <div class="fence">
-      <!-- <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(items,inx) in 5" :key="inx" @click="fences(inx)">
+  <router-view>
+    <div class="message">
+      <div class="fence">
+        <!-- <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(items,inx) in 5" :key="inx" @click="fences(inx)">
         <div>tupian</div>
         <div class="fence_info">
           <p>Derrick Schmidt</p>
@@ -10,35 +11,36 @@
         <b class="unread">4</b>
       </div> -->
 
-      <div class="reports_li">
-        <div class="reports_lis_all" v-for="(items,inx) in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
-          <div class="reports_tree">
-            <div class="lt_icons">
-              <svg-icon iconName="wenjianjia" />
-              <span class="span_lable">{{items.display_name}}</span>
+        <div class="reports_li">
+          <div class="reports_lis_all" v-for="(items,inx) in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
+            <div class="reports_tree">
+              <div class="lt_icons">
+                <svg-icon iconName="wenjianjia" />
+                <span class="span_lable">{{items.display_name}}</span>
+              </div>
+              <div class="rt_handle">
+                v
+              </div>
             </div>
-            <div class="rt_handle">
-              v
-            </div>
-          </div>
 
-          <folder v-if="items.showChildren" :floderList="items.channel_credentials"></folder>
+            <folder v-if="items.showChildren" :floderList="items.channel_credentials"></folder>
+          </div>
         </div>
+
+      </div>
+      <div class="chatMsg">
+        <content :appId="appId"></content>
+      </div>
+      <div class="msgPage">
+        <!-- <msgPagecon></msgPagecon> -->
       </div>
 
     </div>
-    <div class="chatMsg">
-      <content></content>
-    </div>
-    <div class="msgPage">
-      <!-- <msgPagecon></msgPagecon> -->
-    </div>
-
-  </div>
+  </router-view>
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs, watch } from "vue";
+import { reactive, onMounted, toRefs, watch, provide } from "vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
 import folder from "./component/leftsidebar/folder.vue";
@@ -187,8 +189,8 @@ export default {
         errorCode: null,
         message: "",
       },
-
       chatRecord: [],
+      appId: "",
     });
 
     const fences = (item) => {
@@ -201,6 +203,9 @@ export default {
     };
 
     const showReports = (items, inx) => {
+      // provide("appId", items.appid);
+      pagesDatas.appId = items.appid;
+
       if (!items.showChildren) {
         if (items.channel_credentials) {
           items.channel_credentials.forEach((ele) => {
@@ -211,8 +216,10 @@ export default {
       items.showChildren = !items.showChildren;
       // console.log("items55", items);
     };
-
+    console.log("12", store);
     onMounted(() => {
+      console.log("12", store);
+
       // contactsLeft();
       pagesDatas.fencesData.data.map((res) => {
         res.showChildren = false;

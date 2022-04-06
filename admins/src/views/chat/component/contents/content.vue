@@ -7,17 +7,12 @@
             <div class="name">123</div>
             <div class="icon-btn-box">
               jj
-              <!-- <span :class="`iconfont icon-${detailVisible ? 'right' : 'left'}`" @click="detailHandle" /> -->
             </div>
           </div>
           <div class="message-group">
             <div class="message-group-box" ref="refScrollbar">
               <div ref="refInner">
-                <!-- <el-icon v-show="loading">
-                  <loading />
-                </el-icon> -->
-                <!-- <span class="tips">暂无更多</span> -->
-                <!-- <message v-show="!loading" v-for="(item, index) in list" :key="index" :data="item" class="margin-20-n" /> -->
+
                 <div class="message-container">
                   <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
                   <div class="message-wrap message-wrap_sender" v-for="currentUser in chatRecord" :key="currentUser.message_Id">
@@ -69,6 +64,8 @@ import { UserOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
+import routes from '@/router/routers';
+import { useRouter, useRoute } from 'vue-router'
 
 
 export default ({
@@ -77,9 +74,17 @@ export default ({
     msginput,
     UserOutlined
   },
-  setup () {
+  props: {
+    appId: {
+      type: String,
+      required: true
+    }
+  },
+  setup (props) {
+    const { appId } = toRefs(props)
     const ws = useWebSocket(handleMessage)
     const store = useStore()
+    const route = useRoute();
     const pageData = reactive({
       chatPerson: {}, //左侧的person 信息
       currentUser: {
@@ -87,33 +92,34 @@ export default ({
         avatar: require('../../../../assets/images/person.png'),
         nickname: "wanghuahu"
       },
-      chatRecord: [
-
-      ],
-      nextPageToken: "" //获取聊天记录第二页需要token
-
-
+      chatRecord: [],
+      nextPageToken: "", //获取聊天记录第二页需要token
+      contactId: ""
     });
     watch(
-      () => store.chatPerson,
+      () => route.params,
       (newsvalue, oldvalues) => {
+        pageData.contactId = newsvalue.type
         console.log('newsvalue', newsvalue);
+        getChatMsg()
       },
-      { immediate: true }
+      // { immediate: true }
     );
 
 
     onMounted(() => {
+      // console.log("propsprops", appId.value);
       getChatMsg()
     })
 
     /*  获取聊天记录 */
     const getChatMsg = () => {
+      pageData.chatRecord.length = 0
       let params = {
         page_token: pageData.nextPageToken,
         pageSize: 100,
-        contactId: "01FXRQPFYFM66SB57D3WDG26WV",
-        appId: "01FXRNXY02TEX69Z81KJP5NKXE",
+        contactId: pageData.contactId ? pageData.contactId : '',
+        appId: appId.value ? appId.value : '',
       };
       Message.contactId(params).then((res) => {
         if (res.data && res.isSuccess) {
@@ -136,10 +142,10 @@ export default ({
     const sents = (data) => {
       console.log("data", data);
       let datas = {
-        contact_id: "01FXRQPFYFM66SB57D3WDG26WV",
+        contact_id: pageData.contactId ? pageData.contactId : '',
         messageType: "TextMessage",
         message: "{\"text\":\" 新增新增\"}",
-        appID: "01FXRNXY02TEX69Z81KJP5NKXE"
+        appID: appId.value
       }
       // pageData.chatData.push(data)
       // ws.send(JSON.stringify(data))
@@ -167,7 +173,8 @@ export default ({
       // detailHandle
       sents,
       ...toRefs(pageData),
-      getChatMsg
+      getChatMsg,
+
     }
   }
 })

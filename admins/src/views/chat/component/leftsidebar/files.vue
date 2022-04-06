@@ -20,8 +20,9 @@
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs, inject } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 export default {
   name: "fiLes",
   props: {
@@ -35,11 +36,20 @@ export default {
     // onMounted(() => {});
 
     const store = useStore();
+    const router = useRouter();
+    let hua = inject("appId");
+
+    console.log("hua", hua);
 
     const filesItem = (items) => {
-      // console.log("itemsddddd", items);
-      // ctx.emit("chatPer", items);
-      store.commit("setChatPerson", items);
+      console.log("itemsitems", items);
+
+      router.push({
+        name: "chatinx",
+        params: { type: items.id },
+        query: {},
+      });
+      // store.commit("setChatPerson", items);
     };
     return {
       filesItem,
