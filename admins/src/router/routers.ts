@@ -17,6 +17,9 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component:() => routerView,
     redirect: { name: "homeinx" },
+    meta: {
+      title: '首页',
+    },
     children: [
      {
       path: '/home',
@@ -29,8 +32,9 @@ const routes: Array<RouteRecordRaw> = [
     path: '/chat',
     name: 'chat',
     component: () =>routerView,
-    redirect: { name: "chatinx" },
+    redirect: { name: "chatinx" }, 
     meta: {
+      title: '聊天',
       TabbarShow: true //需要显示底部导航
     },
     children:[
@@ -47,6 +51,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () =>routerView,
     redirect: { name: "postIndex" },
     meta: {
+      title: '发帖',
       TabbarShow: true //需要显示底部导航
     },
     children:[
