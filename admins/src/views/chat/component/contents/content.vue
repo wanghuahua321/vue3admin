@@ -11,40 +11,38 @@
           </div>
           <div class="message-group">
             <div class="message-group-box" ref="refScrollbar">
-              <div ref="refInner">
 
-                <div class="message-container">
-                  <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
-                  <div class="message-wrap message-wrap_sender" v-for="currentUser in chatRecord" :key="currentUser.message_Id">
-                    <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
-                    <a-avatar :size="50">
-                      <template #icon>
-                        <UserOutlined />
-                      </template>
-                    </a-avatar>
+              <div class="message-container">
+                <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
+                <div class="message-wrap message-wrap_sender" v-for="currentUser in chatRecord" :key="currentUser.message_Id">
+                  <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
+                  <a-avatar :size="50">
+                    <template #icon>
+                      <UserOutlined />
+                    </template>
+                  </a-avatar>
 
-                    <div class="message-box">
-                      <div class="details">
-                        <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-                        <span class="nickname">huahua</span>
-                        <span class="time">
-                          {{currentUser.message.lastMessageDateStr}}
-                        </span>
-                      </div>
-                      <div class="content margin_t-10">
-                        <span>{{currentUser.message.text}}</span>
-                        <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
-                        <!-- <div class="loading-icon-box" v-show="data.loading">
+                  <div class="message-box">
+                    <div class="details">
+                      <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
+                      <span class="nickname">huahua</span>
+                      <span class="time">
+                        {{currentUser.message.lastMessageDateStr}}
+                      </span>
+                    </div>
+                    <div class="content margin_t-10">
+                      <span>{{currentUser.message.text}}</span>
+                      <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
+                      <!-- <div class="loading-icon-box" v-show="data.loading">
                           <el-icon class="loading-icon">
                             <loading />
                           </el-icon>
                         </div> -->
-                      </div>
                     </div>
                   </div>
                 </div>
-
               </div>
+
             </div>
           </div>
           <div class="message-input">
@@ -75,13 +73,17 @@ export default ({
     UserOutlined
   },
   props: {
-    appId: {
-      type: String,
-      required: true
+    // appId: {
+    //   type: String,
+    //   required: true
+    // },
+    chatData: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup (props) {
-    const { appId } = toRefs(props)
+    const { chatData } = toRefs(props)
     const ws = useWebSocket(handleMessage)
     const store = useStore()
     const route = useRoute();
@@ -94,33 +96,41 @@ export default ({
       },
       chatRecord: [],
       nextPageToken: "", //获取聊天记录第二页需要token
-      contactId: ""
+      contactId: "",
+      chatDatas: {}
     });
+
     watch(
-      () => route.params,
+      () => props.chatData,
       (newsvalue, oldvalues) => {
-        pageData.contactId = newsvalue.type
-        console.log('newsvalue', newsvalue);
-        getChatMsg()
+        console.log('newsvalue666', newsvalue.id);
+        if (newsvalue.id) {
+          pageData.chatDatas = newsvalue
+          getChatMsg()
+        }
+
       },
-      // { immediate: true }
+      {
+        deep: true
+      }
     );
 
 
     onMounted(() => {
-      // console.log("propsprops", appId.value);
+      console.log("propsprops", pageData.chatDatas);
       console.log("走这里");
       // getChatMsg()
     })
 
+
     /*  获取聊天记录 */
     const getChatMsg = () => {
-      pageData.chatRecord.length = 0
+      pageData.chatRecord.length = 0;
+      pageData.nextPageToken = ""
       let params = {
-        page_token: pageData.nextPageToken,
-        pageSize: 100,
-        contactId: pageData.contactId ? pageData.contactId : '',
-        appId: appId.value ? appId.value : '',
+        page_token: "",
+        pageSize: 20,
+        contactId: pageData.chatDatas ? pageData.chatDatas.id : '',
       };
       Message.contactId(params).then((res) => {
         if (res.data && res.isSuccess) {
@@ -141,12 +151,10 @@ export default ({
     }
 
     const sents = (data) => {
-      console.log("data", data);
       let datas = {
-        contact_id: pageData.contactId ? pageData.contactId : '',
+        contact_id: pageData.chatDatas.id,
         messageType: "TextMessage",
-        message: "{\"text\":\" 新增单独新增\"}",
-        appID: appId.value
+        message: "新增s单独xx新增",
       }
       // pageData.chatData.push(data)
       // ws.send(JSON.stringify(data))
@@ -187,7 +195,7 @@ export default ({
   display: flex;
   background-color: #f5f5f5;
   height: 100%;
-  align-items: center;
+  // align-items: center;
   &-message {
     flex: 1;
   }
@@ -215,10 +223,10 @@ $height: 50px;
   &-header {
     position: relative;
     padding: 0 0 0 20px;
-    height: $height;
+    height: 60px;
     border-bottom: 1px solid $darkColor-7;
     display: flex;
-    line-height: $height;
+    line-height: 60px;
     .name {
       flex: 1;
       text-align: left;
@@ -247,7 +255,26 @@ $height: 50px;
 .message-group {
   height: calc(100% - 190px);
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    // 纵向滚动条和横向滚动条宽度
+    width: 6px;
+    height: 1px;
+  }
+  &::-webkit-scrollbar-thumb {
+    // 滚动条背景条样式
+    border-radius: 6px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: $elementMine;
+  }
+  &::-webkit-scrollbar-track {
+    // 滚动条按钮样式
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    background: $hoverMine;
+  }
 }
+
 .message-group-box {
   padding: 0 20px;
   height: 352px;
@@ -261,6 +288,7 @@ $height: 50px;
   .message-wrap {
     display: flex;
     padding-top: 18px;
+
     &_recipient {
       flex-direction: row;
       .message-box {

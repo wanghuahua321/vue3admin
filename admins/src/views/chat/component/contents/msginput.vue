@@ -167,7 +167,7 @@ export default defineComponent({
 }
 
 .textarea:deep(.ant-input:focus) {
-  // box-shadow: 0 0 0 0px;
+  box-shadow: 0 0 0 0px;
 }
 .highlight {
   background-color: $lightColor-0;

@@ -2,16 +2,23 @@
   <router-view>
     <div class="message">
       <div class="fence">
-        <!-- <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(items,inx) in 5" :key="inx" @click="fences(inx)">
-        <div>tupian</div>
-        <div class="fence_info">
-          <p>Derrick Schmidt</p>
-          <span>2022/02/01</span>
+        <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(item,inx) in fencesData.items" :key="inx" @click="fences(inx,item)">
+          <div class="fence_img">
+            <img src="../../assets/images/person.png" />
+          </div>
+          <div class="fence_info">
+            <div class="chatname">
+              <b>{{item.display_name}}</b>
+              <p>{{item.lastMessage? item.lastMessage.receviedDate :'--'}}</p>
+            </div>
+            <div class="chatMsg">
+              <p>{{item.lastMessage? item.lastMessage.message:'--'}}</p>
+            </div>
+          </div>
+          <b class="unread">4</b>
         </div>
-        <b class="unread">4</b>
-      </div> -->
 
-        <div class="reports_li">
+        <!-- <div class="reports_li">
           <div class="reports_lis_all" v-for="(items,inx) in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
             <div class="reports_tree">
               <div class="lt_icons">
@@ -25,11 +32,11 @@
 
             <folder v-if="items.showChildren" :floderList="items.channel_credentials"></folder>
           </div>
-        </div>
+        </div> -->
 
       </div>
       <div class="chatMsg">
-        <content :appId="appId"></content>
+        <contents :chatData="chatData"></contents>
       </div>
       <div class="msgPage">
         <!-- <msgPagecon></msgPagecon> -->
@@ -45,9 +52,9 @@ import { DownloadOutlined, DownOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
 import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
-import { baseUrl } from "@/utils/baseurl";
-import content from "./component/contents/content.vue";
+import contents from "./component/contents/content.vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
 export default {
   name: "chatIndex",
@@ -56,186 +63,43 @@ export default {
     DownOutlined,
     folder,
     msgPagecon,
-    content,
+    contents,
   },
   setup() {
     const store = useStore();
+    const router = useRouter();
     const pagesDatas = reactive<any>({
       selectinx: 0,
       value1: "value1",
       value2: "value2",
       value3: "value3",
       value4: "value4",
-      fencesData: {
-        data: [
-          {
-            appid: "01FXRNXY02TEX69Z81KJP5NKXE",
-            display_name: "facebook",
-            channel_credentials: [
-              {
-                channel: "MESSENGER",
-                status: "ACTIVE",
-                contactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
-                contacts: [
-                  {
-                    lastMessage: {
-                      message_Id: "01FZM4CRKSGSDHQQQJXN3D2H9M",
-                      messageType: "TextMessage",
-                      contact_Id: "01FXRQPFYFM66SB57D3WDG26WV",
-                      isRead: false,
-                      message: {
-                        text: "testmessage03/25 16:05",
-                        lastMessageDateStr: "11:16 AM",
-                      },
-                    },
-                    id: "01FXRQPFYFM66SB57D3WDG26WV",
-                    identity: "4976064819145825",
-                    language: "UNSPECIFIED",
-                    display_name: "Unknown",
-                    email: "",
-                    channel_priority: ["MESSENGER"],
-                  },
-                  {
-                    lastMessage: {
-                      message_Id: "01FYNSN000224E5V7B9GEJMMA8",
-                      messageType: "TextMessage",
-                      contact_Id: "01FYNSN02RGTW6ETXZBMSYJQRX",
-                      isRead: false,
-                      message: {
-                        text: "Youtube： #直播在线人数、#视频观看次数、#订阅、#点赞、#评论、#分享、#账号 Facebook ：#直播在线人数、#专页赞、#主页关注、#群组、#帖子赞、#帖子分享、#评论、#视频观看、#帖子展示量 Instagram ：#粉丝关注、#帖子赞、#视频观看、#评论 Twitter ：#关注者、#转推、#点赞、#评论数 、#展示量、#互动量 Tik Tok：#粉丝、#视频赞、#分享、#观看数 Shopee:#直播在线人数 微信：fensi777999",
-                        lastMessageDateStr: "2022/03/21",
-                      },
-                    },
-                    id: "01FYNSN02RGTW6ETXZBMSYJQRX",
-                    identity: "7649590338399271",
-                    language: "UNSPECIFIED",
-                    display_name: "Cheung Cheung",
-                    email: "",
-                    channel_priority: ["MESSENGER"],
-                  },
-                  {
-                    lastMessage: {
-                      message_Id: "01FYQR7YTAPQ0RB19SH4RS098B",
-                      messageType: "TextMessage",
-                      contact_Id: "01FYQR7YX49FGRMSKXYWYW9SSH",
-                      isRead: false,
-                      message: {
-                        text: "11",
-                        lastMessageDateStr: "2022/03/22",
-                      },
-                    },
-                    id: "01FYQR7YX49FGRMSKXYWYW9SSH",
-                    identity: "7177029705702467",
-                    language: "UNSPECIFIED",
-                    display_name: "Xins Misw",
-                    email: "",
-                    channel_priority: ["MESSENGER"],
-                  },
-                ],
-              },
-            ],
-          },
-          {
-            appid: "01FY8B36YY87YG9R95RWRK07M1",
-            display_name: "lilifacebook",
-            channel_credentials: [
-              {
-                channel: "MESSENGER",
-                status: "ACTIVE",
-                contactId: "01FY8B36YY87YG9R95RWRK07M1-MESSENGER",
-                contacts: [
-                  {
-                    lastMessage: {
-                      message_Id: "01FYZJX6WQKPB3NB7N4BD9HVSK",
-                      messageType: "MediaMessage",
-                      contact_Id: "01FY8BHDMXD8AE0WEF0AHXXPD3",
-                      isRead: false,
-                      message: {
-                        lastMessageDateStr: "2022/03/25",
-                        url: "https://scontent.xx.fbcdn.net/v/t1.15752-9/274738849_380559813605539_4369330687459145_n.jpg?_nc_cat=109&ccb=1-5&_nc_sid=58c789&_nc_ohc=jPvzd70iLwQAX90ewtV&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVLvG6XARpzBQIl2vP4aqOwzF12WSJ0L10zUGFt63jbqJA&oe=6260E352",
-                        thumbnail_url: "",
-                      },
-                    },
-                    id: "01FY8BHDMXD8AE0WEF0AHXXPD3",
-                    identity: "5410815092263838",
-                    language: "UNSPECIFIED",
-                    display_name: "张丽",
-                    email: "",
-                    channel_priority: ["MESSENGER"],
-                  },
-                  {
-                    lastMessage: {
-                      message_Id: "01FYQRTR9S9RBNQ5R8MC1FKGX8",
-                      messageType: "TextMessage",
-                      contact_Id: "01FYQRA8FBR834J68YREV90HKB",
-                      isRead: false,
-                      message: {
-                        text: "123",
-                        lastMessageDateStr: "2022/03/22",
-                      },
-                    },
-                    id: "01FYQRA8FBR834J68YREV90HKB",
-                    identity: "5057183960971576",
-                    language: "UNSPECIFIED",
-                    display_name: "Xins Misw",
-                    email: "",
-                    channel_priority: ["MESSENGER"],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-        isSuccess: true,
-        errorCode: null,
-        message: "",
-      },
-      chatRecord: [],
-      appId: "",
+      fencesData: {}, //左侧数据
+      chatData: {},
     });
 
-    const fences = (item) => {
-      pagesDatas.selectinx = item;
+    const fences = (inx, item) => {
+      pagesDatas.selectinx = inx;
+      pagesDatas.chatData = item;
+      // router.push({
+      //   name: "chatinx",
+      //   params: { type: item.id },
+      // });
     };
     const contactsLeft = () => {
       Message.contacts().then((res) => {
-        console.log(res);
+        pagesDatas.fencesData = res;
       });
     };
 
-    const showReports = (items, inx) => {
-      // provide("appId", items.appid);
-      pagesDatas.appId = items.appid;
-
-      if (!items.showChildren) {
-        if (items.channel_credentials) {
-          items.channel_credentials.forEach((ele) => {
-            ele.showChildren = false;
-          });
-        }
-      }
-      items.showChildren = !items.showChildren;
-      // console.log("items55", items);
-    };
-    console.log("12", store);
     onMounted(() => {
-      console.log("12", store);
-
-      // contactsLeft();
-      pagesDatas.fencesData.data.map((res) => {
-        res.showChildren = false;
-        if (res.channel_credentials && res.channel_credentials.length > 0) {
-          res.channel_credentials.map((channel) => {
-            channel.showChildren = false;
-          });
-        }
-      });
+      contactsLeft();
+      // fences(pagesDatas.selectinx, pagesDatas.fencesData[pagesDatas.selectinx]);
     });
     return {
       ...toRefs(pagesDatas),
       fences,
       contactsLeft,
-      showReports,
     };
   },
 };
@@ -299,46 +163,70 @@ export default {
     // flex: 1;
     width: 24%;
     background: #fff;
+    .fence_img {
+      width: 14%;
+      height: 36px;
+      img {
+        width: 100%;
+      }
+    }
 
     .fence_item {
-      width: 100%;
-      box-sizing: border-box;
-      padding: 0px 7%;
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #eceef5;
+      width: 100%;
       height: 60px;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0px 9%;
+      // &:hover {
+      //   background: $hoverMine;
+      // }
       cursor: pointer;
-
+      position: relative;
       .fence_info {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-content: center;
-        p {
-          font-size: 14px;
-          margin-bottom: 0em;
+        padding-left: 8px;
+        width: 90%;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: center;
+        // align-content: center;
+        .chatname {
+          display: flex;
+          width: 100%;
+          justify-content: space-between;
+          p {
+            color: #999999;
+          }
         }
-        span {
-          font-size: 12px;
+        .chatMsg {
+          width: 100%;
+          p {
+            color: #999999;
+            width: 96%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
         }
       }
       .unread {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
         background: #ff605d;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
         color: #fff;
+        position: absolute;
+        top: 0px;
+        left: 15.6%;
       }
     }
 
     .selected {
       position: relative;
-      background: #f8f9fb !important;
+      background: #e7e7e7 !important;
       &::before {
         content: "";
         width: 5px;
@@ -348,16 +236,13 @@ export default {
         border-radius: 2px;
         position: absolute;
         left: -5px;
-        top: 0px;
+        top: -1px;
       }
     }
   }
   .chatMsg {
     // flex: 2;
     width: 47%;
-    // border: 1px solid;
-    margin: 0px 3%;
-    background: #fff;
   }
   .msgPage {
     // flex: 1;
