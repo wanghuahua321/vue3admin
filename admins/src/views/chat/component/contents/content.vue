@@ -13,8 +13,12 @@
             <div class="message-group-box" ref="refScrollbar">
 
               <div class="message-container">
-                <!-- <div :class="`message-wrap ${2 === currentUser.id ? 'message-wrap_sender' : 'message-wrap_recipient'}`"> -->
-                <div class="message-wrap message-wrap_sender" v-for="currentUser in chatRecord" :key="currentUser.message_Id">
+                <!-- class="message-wrap message-wrap_sender" -->
+                <div class="senttimes">
+                  09:30
+                </div>
+                <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`"
+                  v-for="currentUser in chatRecord" :key="currentUser.message_Id">
                   <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
                   <a-avatar :size="50">
                     <template #icon>
@@ -25,11 +29,13 @@
                   <div class="message-box">
                     <div class="details">
                       <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-                      <span class="nickname"></span>
+                      <span class="nickname">20:9</span>
+
                       <span class="time">
                         {{currentUser.message?currentUser.message.lastMessageDateStr:'--'}}
                       </span>
                     </div>
+
                     <div class="content margin_t-10">
                       <span>{{currentUser.message}}</span>
                       <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
@@ -46,7 +52,7 @@
             </div>
           </div>
           <div class="message-input">
-            <msginput @sents="sents"></msginput>
+            <msginput @sents="sents" sentTime="20:9"></msginput>
           </div>
         </div>
       </div>
@@ -61,7 +67,7 @@ import { useStore } from 'vuex'
 import { UserOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
-import { useWebSocket } from "../../../../hookes";
+// import { useWebSocket } from "../../../../hookes";
 import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
 import { tuple } from 'ant-design-vue/lib/_util/type';
@@ -85,8 +91,7 @@ export default ({
     }
   },
   setup (props, ctx) {
-    const { chatData, selectinx } = toRefs(props)
-    const ws = useWebSocket(handleMessage)
+    // const { chatData, selectinx } = toRefs(props)
     const store = useStore()
     const route = useRoute();
     const pageData = reactive({
@@ -103,10 +108,34 @@ export default ({
       displayName: ""
     });
 
+    let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
+    wss.onopen = ((res) => {
+      console.log(res, "连接成功");
+    })
 
-    // onMounted(() => {
+    wss.onerror = ((res) => {
+      console.log(res, '=====err');
+    })
 
-    // })
+    wss.onmessage = ((res) => {
+      console.log(res, "接受数据");
+
+    })
+
+    wss.onclose = function () {
+      // 关闭 websocket
+      console.log("连接已关闭...");
+    };
+
+    onMounted(() => {
+
+      // this.ws.onmessage = (res => {
+      //   let received_msg = JSON.parse(res.data);
+      //   console.log("数据已接收...", received_msg);
+      //   this.newsList = received_msg;
+      // })
+
+    })
 
 
     /*  获取聊天记录 */
@@ -140,9 +169,10 @@ export default ({
     );
 
     function handleMessage (e) {
-      // console.log("接受", e);
-      const _msgData = JSON.parse(e.data)
-      pageData.chatData.push(_msgData)
+      console.log("接受", e);
+      debugger
+      // const _msgData = JSON.parse(e.data)
+      // pageData.chatData.push(_msgData)
 
     }
 
@@ -161,6 +191,7 @@ export default ({
         }
         let sentdata = { ...res.data, ...params }
         pageData.chatRecord.push(sentdata)
+        // ws.send(data)
         /* 已经发送过消息，要刷新左边菜单栏 */
         ctx.emit("doneSent",)
 
@@ -289,7 +320,13 @@ $height: 50px;
   font-size: 12px;
   color: $darkColor-6;
 }
-
+.senttimes {
+  width: 50px;
+  background: #dadada;
+  margin: 10px auto;
+  text-align: center;
+  padding: 3px 0px;
+}
 .message-container {
   .message-wrap {
     display: flex;
