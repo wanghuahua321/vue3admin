@@ -15,7 +15,7 @@
               <p>{{item.lastMessage? item.lastMessage.message:'--'}}</p>
             </div>
           </div>
-          <b class="unread">4</b>
+          <!-- <b class="unread">4</b> -->
         </div>
 
         <!-- <div class="reports_li">
@@ -165,6 +165,7 @@ export default {
   // min-height: 616px;
   height: 100%;
   width: 100%;
+  justify-content: space-between;
   .fence {
     // flex: 1;
     width: 24%;
@@ -184,9 +185,9 @@ export default {
       align-items: center;
       box-sizing: border-box;
       padding: 0px 9%;
-      // &:hover {
-      //   background: $hoverMine;
-      // }
+      &:hover {
+        background: #e7e7e7;
+      }
       cursor: pointer;
       position: relative;
       .fence_info {

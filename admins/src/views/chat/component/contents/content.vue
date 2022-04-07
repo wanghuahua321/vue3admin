@@ -9,7 +9,7 @@
               jj
             </div> -->
           </div>
-          <div class="message-group">
+          <div class="message-group" ref="msgContent">
             <div class="message-group-box" ref="refScrollbar">
 
               <div class="message-container">
@@ -62,12 +62,12 @@
 </template>
 
 <script>
-import { computed, ref, reactive, toRefs, onMounted, watch } from 'vue'
+import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
-// import { useWebSocket } from "../../../../hookes";
+import { useWebSocket } from "../../../../hookes";
 import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
 import { tuple } from 'ant-design-vue/lib/_util/type';
@@ -92,6 +92,9 @@ export default ({
   },
   setup (props, ctx) {
     // const { chatData, selectinx } = toRefs(props)
+
+    const msgContent = ref();
+    const ws = useWebSocket(handleMessage)
     const store = useStore()
     const route = useRoute();
     const pageData = reactive({
@@ -108,34 +111,63 @@ export default ({
       displayName: ""
     });
 
-    let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
-    wss.onopen = ((res) => {
-      console.log(res, "连接成功");
-    })
+    // let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
+    // wss.onopen = ((res) => {
+    //   console.log(res, "连接成功");
+    // })
 
-    wss.onerror = ((res) => {
-      console.log(res, '=====err');
-    })
+    // wss.onerror = ((res) => {
+    //   console.log(res, '=====err');
+    // })
 
-    wss.onmessage = ((res) => {
-      console.log(res, "接受数据");
+    // wss.onmessage = ((res) => {
+    //   console.log(res.data, "接受数据123");
 
-    })
+    // })
 
-    wss.onclose = function () {
-      // 关闭 websocket
-      console.log("连接已关闭...");
-    };
+    // wss.onclose = function () {
+    //   // 关闭 websocket
+    //   console.log("连接已关闭...");
+    // };
 
     onMounted(() => {
-
+      // console.log("888", msgContent.value.scrollHeight);
+      // // console.log("888", msgContent.value.scrollHeight);
+      // msgContent.value.scrollTop = 300
+      // console.log("scrollTop", msgContent.value.scrollTop);
       // this.ws.onmessage = (res => {
       //   let received_msg = JSON.parse(res.data);
       //   console.log("数据已接收...", received_msg);
       //   this.newsList = received_msg;
       // })
+      window.addEventListener('scroll', scrollBottom, true);
 
     })
+
+    /* 下拉加载更多 */
+    const scrollBottom = () => {
+      let scrollTop =
+        msgContent.value().scrollTop || document.body.scrollTop;
+      let clientHight = document.documentElement.clientHeight;
+      let scrollHight = document.documentElement.scrollHeight;
+
+      console.log("000", scrollTop);
+      console.log("23", clientHight);
+      console.log("11", scrollHight);
+
+      if (scrollHight - scrollTop <= clientHight) {
+        /* 返回ture 是滚动到低 否则false */
+        // let nocuntPage = pagedatas.pageInfo.pageIndex;
+        // if (pagedatas.pageInfo.pageIndex < pagedatas.pageInfo.totalCount) {
+        //   pagedatas.pageInfo.pageIndex++;
+        //   recentView();
+        // }
+      }
+    };
+
+    onUnmounted(() => {
+      window.removeEventListener('scroll', scrollBottom, true);
+    });
 
 
     /*  获取聊天记录 */
@@ -169,11 +201,9 @@ export default ({
     );
 
     function handleMessage (e) {
+      pageData.chatRecord.push(JSON.parse(e.data))
       console.log("接受", e);
-      debugger
-      // const _msgData = JSON.parse(e.data)
-      // pageData.chatData.push(_msgData)
-
+      ctx.emit("doneSent",)
     }
 
     const sents = (data) => {
@@ -215,6 +245,7 @@ export default ({
       // user,
       // detailVisible,
       // detailHandle
+      msgContent,
       sents,
       ...toRefs(pageData),
       getChatMsg,
@@ -228,8 +259,8 @@ export default ({
 @import "@/assets/css/_variable.scss";
 .content {
   display: flex;
-  background-color: #f5f5f5;
-  height: 100%;
+  background-color: #fff;
+  // height: 100%;
   // align-items: center;
   &-message {
     flex: 1;
@@ -345,6 +376,9 @@ $height: 50px;
         .content {
           flex-direction: row;
           position: relative;
+          span {
+            background: #f8f9fb !important;
+          }
           span::before {
             content: "";
             position: absolute;
@@ -369,6 +403,7 @@ $height: 50px;
         }
         .content {
           flex-direction: row-reverse;
+
           span::before {
             content: "";
             position: absolute;
@@ -408,11 +443,18 @@ $height: 50px;
           position: relative;
           padding: 10px;
           font-size: 14px;
-          color: $mFontcolor;
+          color: #333629;
           text-align: left;
-          background-color: $activeColor;
+          background-color: #fbebe6;
           border-radius: 4px;
-          max-width: 50%;
+          max-width: 60%;
+          white-space: wrap;
+          word-break: break-all;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-line-clamp: 30;
+          -webkit-box-orient: vertical;
         }
       }
     }
