@@ -36,7 +36,7 @@
 
       </div>
       <div class="chatMsg">
-        <contents :chatData="chatData"></contents>
+        <contents :chatData="chatData" :selectinx="selectinx" @doneSent="doneSent"></contents>
       </div>
       <div class="msgPage">
         <!-- <msgPagecon></msgPagecon> -->
@@ -81,15 +81,20 @@ export default {
     const fences = (inx, item) => {
       pagesDatas.selectinx = inx;
       pagesDatas.chatData = item;
-      // router.push({
-      //   name: "chatinx",
-      //   params: { type: item.id },
-      // });
+
+      router.push({
+        name: "chatinx",
+        params: { type: item.id },
+      });
     };
     const contactsLeft = () => {
       Message.contacts().then((res) => {
         pagesDatas.fencesData = res;
       });
+    };
+
+    const doneSent = () => {
+      contactsLeft();
     };
 
     onMounted(() => {
@@ -100,6 +105,7 @@ export default {
       ...toRefs(pagesDatas),
       fences,
       contactsLeft,
+      doneSent,
     };
   },
 };

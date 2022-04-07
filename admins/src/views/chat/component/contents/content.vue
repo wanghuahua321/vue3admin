@@ -4,10 +4,10 @@
       <div class="content-message">
         <div class="message">
           <div class="message-header ellipse-1">
-            <div class="name">123</div>
-            <div class="icon-btn-box">
+            <div class="name">{{displayName? displayName:'--'}}</div>
+            <!-- <div class="icon-btn-box">
               jj
-            </div>
+            </div> -->
           </div>
           <div class="message-group">
             <div class="message-group-box" ref="refScrollbar">
@@ -25,13 +25,13 @@
                   <div class="message-box">
                     <div class="details">
                       <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-                      <span class="nickname">huahua</span>
+                      <span class="nickname"></span>
                       <span class="time">
-                        {{currentUser.message.lastMessageDateStr}}
+                        {{currentUser.message?currentUser.message.lastMessageDateStr:'--'}}
                       </span>
                     </div>
                     <div class="content margin_t-10">
-                      <span>{{currentUser.message.text}}</span>
+                      <span>{{currentUser.message}}</span>
                       <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
                       <!-- <div class="loading-icon-box" v-show="data.loading">
                           <el-icon class="loading-icon">
@@ -64,6 +64,9 @@ import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
 import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
+import { tuple } from 'ant-design-vue/lib/_util/type';
+import router from '@/router';
+import { Item } from 'ant-design-vue/lib/menu';
 
 
 export default ({
@@ -73,17 +76,16 @@ export default ({
     UserOutlined
   },
   props: {
-    // appId: {
-    //   type: String,
-    //   required: true
-    // },
+    selectinx: {
+      type: Number,
+    },
     chatData: {
       type: Object,
       default: () => ({})
     }
   },
-  setup (props) {
-    const { chatData } = toRefs(props)
+  setup (props, ctx) {
+    const { chatData, selectinx } = toRefs(props)
     const ws = useWebSocket(handleMessage)
     const store = useStore()
     const route = useRoute();
@@ -97,30 +99,14 @@ export default ({
       chatRecord: [],
       nextPageToken: "", //获取聊天记录第二页需要token
       contactId: "",
-      chatDatas: {}
+      chatDatas: {},
+      displayName: ""
     });
 
-    watch(
-      () => props.chatData,
-      (newsvalue, oldvalues) => {
-        console.log('newsvalue666', newsvalue.id);
-        if (newsvalue.id) {
-          pageData.chatDatas = newsvalue
-          getChatMsg()
-        }
 
-      },
-      {
-        deep: true
-      }
-    );
+    // onMounted(() => {
 
-
-    onMounted(() => {
-      console.log("propsprops", pageData.chatDatas);
-      console.log("走这里");
-      // getChatMsg()
-    })
+    // })
 
 
     /*  获取聊天记录 */
@@ -130,18 +116,28 @@ export default ({
       let params = {
         page_token: "",
         pageSize: 20,
-        contactId: pageData.chatDatas ? pageData.chatDatas.id : '',
+        contactId: pageData.contactId ? pageData.contactId : '',
       };
       Message.contactId(params).then((res) => {
         if (res.data && res.isSuccess) {
           pageData.chatRecord.push(...res.data.messageList)
-          pageData.nextPageToken = res.data.nextPageToken
+          pageData.nextPageToken = res.data.nextPageToken;
+          pageData.displayName = res.data.displayName
         }
       }).catch((error) => {
         console.log(error);
       });
     };
 
+    watch(
+      () => route.params,
+      (newsvalue, oldvalues) => {
+        pageData.contactId = newsvalue.type
+        getChatMsg()
+      }, {
+      immediate: true
+    }
+    );
 
     function handleMessage (e) {
       // console.log("接受", e);
@@ -152,14 +148,22 @@ export default ({
 
     const sents = (data) => {
       let datas = {
-        contact_id: pageData.chatDatas.id,
+        contact_id: pageData.contactId,
         messageType: "TextMessage",
-        message: "新增s单独xx新增",
+        message: data,
       }
-      // pageData.chatData.push(data)
-      // ws.send(JSON.stringify(data))
+
       Message.sentMessage(datas).then((res) => {
-        console.log("resres", res);
+        let params = {
+          message: data,
+          isRead: true,
+          isRight: true,// 发送方
+        }
+        let sentdata = { ...res.data, ...params }
+        pageData.chatRecord.push(sentdata)
+        /* 已经发送过消息，要刷新左边菜单栏 */
+        ctx.emit("doneSent",)
+
       }).catch((error) => {
         console.log(error);
       });
@@ -213,7 +217,9 @@ $height: 50px;
   border-right: 2px solid $darkColor-6;
   cursor: pointer;
 }
-
+.content-message {
+  width: 100%;
+}
 .message {
   display: flex;
   flex-flow: column;
@@ -365,7 +371,7 @@ $height: 50px;
           position: relative;
           padding: 10px;
           font-size: 14px;
-          color: $lightColor-0;
+          color: $mFontcolor;
           text-align: left;
           background-color: $activeColor;
           border-radius: 4px;

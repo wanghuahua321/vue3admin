@@ -104,11 +104,9 @@ export default defineComponent({
     //  * 发送
     //  */
     const submit = () => {
-      ctx.emit('sents', data.currentUser)
-
-      // store.dispatch('websocket/send', paramsHandle(1, 1))
-      // data.content = ''
-      // store.dispatch('message/updateScrollBottom')
+      let value = data.currentUser.content
+      ctx.emit('sents', value)
+      data.currentUser.content = ""
     }
 
     // /**
