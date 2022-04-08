@@ -15,7 +15,7 @@
               <div class="message-container">
                 <!-- class="message-wrap message-wrap_sender" -->
                 <div class="senttimes">
-                  09:30
+                  <!-- 09:30 -->
                 </div>
                 <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`"
                   v-for="currentUser in chatRecord" :key="currentUser.message_Id">
@@ -29,7 +29,6 @@
                   <div class="message-box">
                     <div class="details">
                       <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-                      <span class="nickname">20:9</span>
 
                       <span class="time">
                         {{currentUser.message?currentUser.message.lastMessageDateStr:'--'}}
@@ -140,7 +139,7 @@ export default ({
       //   console.log("数据已接收...", received_msg);
       //   this.newsList = received_msg;
       // })
-      window.addEventListener('scroll', scrollBottom, true);
+      // window.addEventListener('scroll', scrollBottom, true);
 
     })
 
@@ -166,7 +165,7 @@ export default ({
     };
 
     onUnmounted(() => {
-      window.removeEventListener('scroll', scrollBottom, true);
+      // window.removeEventListener('scroll', scrollBottom, true);
     });
 
 
@@ -207,10 +206,12 @@ export default ({
     }
 
     const sents = (data) => {
+      console.log("data", data);
       let datas = {
         contact_id: pageData.contactId,
-        messageType: "TextMessage",
-        message: data,
+        messageType: data.messageType,
+        message: data.content,
+        replyToMessageId: "" //回复的某个人信息
       }
 
       Message.sentMessage(datas).then((res) => {

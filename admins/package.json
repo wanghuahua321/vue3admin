@@ -18,7 +18,8 @@
     "vue-axios": "^3.4.1",
     "vue-cookies": "^1.7.4",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "wangeditor": "^4.7.13"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",

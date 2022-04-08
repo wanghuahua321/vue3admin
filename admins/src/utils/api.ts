@@ -14,3 +14,8 @@ export const Message={
   contactId:(params)=>http.post(portalBasicApi + "/app/facebook-operation/get-chat-messageby-contact-id",params),
   sentMessage:(params)=>http.post(portalBasicApi + "/app/facebook-operation/send-message",params)
 }
+
+export const uploads={
+  fileUpload:(params)=>http.postImage(portalBasicApi + "/app/facebook-operation/file-upload",params)
+  // https://192.168.0.120/api/app/facebook-operation/file-upload/
+}

@@ -1,31 +1,34 @@
 <template>
   <div :class="`message-input-container${focus ? ' highlight' : ''}`">
-    <div class="tool-box">
+    <!-- <div class="tool-box">
       <a-popover placement="top" :width="400" trigger="click">
-        <!--       <template #content>
-          123
-          <SmileOutlined />
-          <span class="iconfont icon-smile" />
-        </template> -->
+        <template #content>
+          <div class="emoji-scrollbar">
+            <div class="emoji-group">
+              <div class="emoji" v-for="(emoji, index) in emojis" :key="index" @click="content += emoji">{{ emoji }}</div>
+            </div>
+          </div>
+        </template>
 
         <SmileOutlined />
-        <!-- <el-scrollbar class="emoji-scrollbar"> -->
-        <div class="emoji-group">
-          <!-- <div class="emoji" v-for="(emoji, index) in emojis" :key="index" @click="content += emoji">{{ emoji }}</div> -->
-        </div>
-        <!-- </el-scrollbar> -->
-      </a-popover>
-      <!-- <el-upload class="image-upload" :action="uploadApi()" :show-file-list="false" :on-success="uploadSuccessHandle" :headers="{
-          [TOKEN_KEY]: token
-        }">
-        <span class="iconfont icon-image" />
-      </el-upload> -->
 
-      <!-- <span class="iconfont icon-file" /> -->
-    </div>
+      </a-popover>
+
+
+      <a-upload name="file" v-model:file-list="fileList" :before-upload="beforeUpload" @change="FilesCustomRequest">
+        list-type="picture" :action='fileUploads' :header="{token:$store}" :action="fileUploads" :data="uploads" 
+        123
+        <PictureOutlined />
+      </a-upload>
+    </div> -->
+    <edItors></edItors>
+
     <div class="textarea padding_t-10">
-      <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus"
-        @blur="focus = !focus" />
+
+      <!-- <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus"
+        @blur="focus = !focus" /> -->
+
+      <!-- http://192.168.0.120:8080/01FYQR7YX49FGRMSKXYWYW9SSH/MESSENGER/2022-04/3.png -->
       <!-- <a-input v-model="content" type="textarea" resize="none" rows="4" @focus="focus = !focus" @blur="focus = !focus" @keydown="listener" /> -->
       <a-tooltip effect="dark" placement="top-end" content="按Enter发送消息，Shift+Enter换行">
         <span class="iconfont icon-send" @click="submit">
@@ -37,39 +40,92 @@
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs, onMounted, computed } from 'vue'
-import { SmileOutlined } from '@ant-design/icons-vue';
+import { defineComponent, reactive, toRefs, onMounted, computed, watch, toRaw } from 'vue'
+import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
 import { useStore } from 'vuex'
 // import { getUUID } from '@/utils'
-// import { emojiApi } from '@/api'
-// import { uploadApi } from '@/api/user'
-// import { SUCCESS_CODE, TOKEN_KEY } from '@/utils/constants'
-// import { ElMessage } from 'element-plus'
+import { useRoute } from 'vue-router'
+import { uploads } from '@/utils/api'
+import edItors from "@/components/editors.vue";
 
 export default defineComponent({
   components: {
-    SmileOutlined
+    SmileOutlined,
+    PictureOutlined,
+    edItors
   },
   setup (props, ctx) {
     const store = useStore()
-
-    const token = computed(() => store.state.user.token.token)
+    const route = useRoute()
 
     const data = reactive({
-      //   let huas = {
-      //     fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
-      //     toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
-      //     content: "from456to123",
-      //   };
+      /* TextMessage  文本  "PhotoMessage" 图片 FileMessage  文件*/
       currentUser: {
-        fromContactId: "01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
-        toContactIdList: ["01FY8B36YY87YG9R95RWRK0111-MESSENGER"],
-        // nickname: "wanghuahu",
+        messageType: "TextMessage",
         content: ""
       },
       focus: false,
+      fileList: [],
+      uploads: {
+        contactId: ''
+      },
+      fileUploads: "https://192.168.0.120/api/app/facebook-operation/file-upload/",
       emojis: '😃 😄 😁 😆 😅 🤣 😂 🙂 🙃 😉 😊 😇 😍 🤩 😘 😗 ☺️ 😚 😙 😋 😛 😜 🤪 😝 😝 🤗 🤭 🤫 🤔 🤐 🤨 😐 😑 😶 😏 😒 🙄 😬 🤥 😌 😔 😪 🤤 😴 😷 🤒 🤕 🤢 🤮 🤧 😵 🤯 🤠 😎 🤓 🧐 😕 😟 🙁 ☹️ 😮 😯 😲 😳 😦 😧 😨 😰 😥 😢 😭 😱 😖 😣 😞 😓 😩 😫 😤 😡 😠 🤬 😈 👿 💀 ☠️ 🤡 👹 👺 👻 👽 🙈 🙉 🙊 💋 💌 💘 💝 💖 💗 💓 💞 💕 💔 ❤️ 🧡 💛 💚 💙 💜 🖤 💬 🤳 👃 👅 👄 👶 🧒 👋 🤚 🖐️ ✋ 🖖 👌 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 ⬆️ ➡️ ⬇️ ⬅️ ↩️ ↪️ ⤴️ ⤵️ 🔃 🔄 🔙 🔚 🔛 🔜 🔝 🔀 🔁 🔂 ▶️ ⏩ ⏭️ ⏯️ ◀️ ⏪ ⏮️ 🔼 ⏫ 🔽 ⏬'.split(' ')
     })
+
+    const token = computed(() => {
+      return store.store.token
+    })
+
+    watch(
+      () => route.params,
+      (newsvalue, oldvalues) => {
+        console.log("newsssss", newsvalue);
+        data.uploads.contactId = newsvalue.type
+        data.fileUploads = data.fileUploads + newsvalue.type
+        // getChatMsg()
+      }, {
+      immediate: true
+    }
+    );
+
+    const beforeUpload = (file) => {
+      data.currentUser.messageType = "PhotoMessage"
+      data.currentUser.content = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+      // if (file.type.includes('image')) {
+      //   data.currentUser.messageType = 'PhotoMessage'
+      // }
+      console.log("file55", file);
+      // const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      // if (!isJpgOrPng) {
+      //   // message.error('You can only upload JPG file!');
+      // }
+      // const isLt2M = file.size / 1024 / 1024 < 2;
+      // if (!isLt2M) {
+      //   // message.error('Image must smaller than 2MB!');
+      // }
+      // return isJpgOrPng && isLt2M;
+    };
+
+    const FilesCustomRequest = (info) => {
+      console.log("info", info);
+      data.currentUser.messageType = "PhotoMessage"
+      data.currentUser.content = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+      //   console.log("infoinfo", info);
+      //   if (info.file.status === 'uploading') {
+      //     console.log("1234");
+      //     // loading.value = true;
+      //     // return;
+      //   }
+      //   if (info.file.status === 'done') {
+      //     const res = info.file.response
+      //     data.currentUser.messageType = res.messageType
+      //     data.currentUser.content = res.url
+      //   }
+
+    }
+
+
 
     /**
      * 获取emoji表情
@@ -82,47 +138,33 @@ export default defineComponent({
     //   })
     // }
 
-    /**
-     * 参数处理
-     */
-    // const paramsHandle = (type = 1, messageType = 1, url = '') => {
-    //   const params = {
-    //     message: {
-    //       ack: getUUID(), // ack 消息确认
-    //       from: store.state.user.user.id, // 当前用户ID
-    //       to: store.state.conversation.active.id, // 接收者ID
-    //       type: type, // 消息类型 1-私聊 2-群聊
-    //       messageType: messageType, // 发送消息类型 1-text 2-image 3-file
-    //       content: messageType === 1 ? data.content : '', // 消息内容 messageType = 1
-    //       url: url // 资源路径 messageType = 2 | 3
-    //     }
-    //   }
-    //   return params
-    // }
 
-    // /**
-    //  * 发送
+
+
     //  */
     const submit = () => {
-      let value = data.currentUser.content
-      ctx.emit('sents', value)
+      data.currentUser.messageType = "PhotoMessage"
+      data.currentUser.content = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
+      let sendValue = JSON.parse(JSON.stringify(data.currentUser))
+      ctx.emit('sents', sendValue)
       data.currentUser.content = ""
     }
 
-    // /**
     //  * 图片上传成功事件
-    //  */
-    // const uploadSuccessHandle = (res, _file) => {
-    //   if (SUCCESS_CODE.includes(res.code)) {
-    //     store.dispatch('websocket/send', paramsHandle(1, 2, res.data.url))
-    //     store.dispatch('message/updateScrollBottom')
-    //   } else {
-    //     ElMessage({
-    //       message: res.message,
-    //       type: 'warning'
-    //     })
-    //   }
-    // }
+    const uploadSuccessHandle = (res, _file) => {
+      console.log("res", res);
+
+
+      // if (SUCCESS_CODE.includes(res.code)) {
+      //   store.dispatch('websocket/send', paramsHandle(1, 2, res.data.url))
+      //   store.dispatch('message/updateScrollBottom')
+      // } else {
+      //   ElMessage({
+      //     message: res.message,
+      //     type: 'warning'
+      //   })
+      // }
+    }
 
     // /**
     //  * 监听textarea 键盘事件 取消回车换行 改为 shift+回车 换行
@@ -146,10 +188,10 @@ export default defineComponent({
       focus,
       // listener,
       submit,
-      // uploadApi,
-      // uploadSuccessHandle,
-      // TOKEN_KEY,
-      token
+      beforeUpload,
+      uploadSuccessHandle,
+      FilesCustomRequest,
+      token,
     }
   }
 })

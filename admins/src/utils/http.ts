@@ -192,6 +192,22 @@ const headersString:any = {
       .catch((res) => {
         return checkCode(res);
       });
+  },
+
+  postImage(url:string, params?:any){
+    return axios({
+      method:"post",
+      url: baseUrl + url,
+      data: params, // get 请求时带的参数
+      timeout: httpTimeout,
+      // headers: {
+      //   "token": "",
+      // },
+    }).then((response)=>{
+      return checkStatus(response);
+    }) .catch((res) => {
+      return checkCode(res);
+    });
   }
 };
 
