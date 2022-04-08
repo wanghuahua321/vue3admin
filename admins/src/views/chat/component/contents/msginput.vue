@@ -1,5 +1,5 @@
 <template>
-  <div :class="`message-input-container${focus ? ' highlight' : ''}`">
+  <div class="message-input">
     <!-- <div class="tool-box">
       <a-popover placement="top" :width="400" trigger="click">
         <template #content>
@@ -21,21 +21,20 @@
         <PictureOutlined />
       </a-upload>
     </div> -->
-    <edItors></edItors>
 
-    <div class="textarea padding_t-10">
-
-      <!-- <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus"
+    <!-- <a-textarea v-model:value="currentUser.content" placeholder="Basic usage" resize="none" :rows="4" @focus="focus = !focus"
         @blur="focus = !focus" /> -->
 
-      <!-- http://192.168.0.120:8080/01FYQR7YX49FGRMSKXYWYW9SSH/MESSENGER/2022-04/3.png -->
-      <!-- <a-input v-model="content" type="textarea" resize="none" rows="4" @focus="focus = !focus" @blur="focus = !focus" @keydown="listener" /> -->
-      <a-tooltip effect="dark" placement="top-end" content="按Enter发送消息，Shift+Enter换行">
-        <span class="iconfont icon-send" @click="submit">
-          发送
-        </span>
-      </a-tooltip>
-    </div>
+    <!-- http://192.168.0.120:8080/01FYQR7YX49FGRMSKXYWYW9SSH/MESSENGER/2022-04/3.png -->
+    <!-- <a-input v-model="content" type="textarea" resize="none" rows="4" @focus="focus = !focus" @blur="focus = !focus" @keydown="listener" /> -->
+    <!-- <a-tooltip effect="dark" placement="top-end" content="按Enter发送消息，Shift+Enter换行">
+      
+    </a-tooltip> -->
+    <edItors />
+
+    <span class="iconfont icon-send" @click="submit">
+      发送
+    </span>
   </div>
 </template>
 
@@ -212,7 +211,7 @@ export default defineComponent({
 .highlight {
   background-color: $lightColor-0;
 }
-.message-input-container {
+.message-input {
   padding: 3px 20px 20px 20px;
   text-align: left;
   height: 100%;
