@@ -2,7 +2,7 @@
   <!-- 编辑器 -->
   <div ref='editor'></div>
   <button @click='syncHTML'>同步内容</button>
-  <div :innerHTML='content.html'></div>
+  <!-- <div :innerHTML='content.html'></div> -->
 </template>
 
 <script>

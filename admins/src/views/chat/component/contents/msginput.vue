@@ -1,5 +1,5 @@
 <template>
-  <div class="message-input">
+  <div>
     <!-- <div class="tool-box">
       <a-popover placement="top" :width="400" trigger="click">
         <template #content>
@@ -212,7 +212,7 @@ export default defineComponent({
   background-color: $lightColor-0;
 }
 .message-input {
-  padding: 3px 20px 20px 20px;
+  padding: 0px 0px 20px 0px;
   text-align: left;
   height: 100%;
   .tool-box {

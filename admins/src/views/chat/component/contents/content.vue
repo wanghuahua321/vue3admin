@@ -51,7 +51,8 @@
             </div>
           </div>
           <div class="message-input">
-            <msginput @sents="sents" sentTime="20:9"></msginput>
+            <editors></editors>
+            <!-- <msginput @sents="sents" sentTime="20:9"></msginput> -->
           </div>
         </div>
       </div>
@@ -71,14 +72,15 @@ import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
 import { tuple } from 'ant-design-vue/lib/_util/type';
 import router from '@/router';
-import { Item } from 'ant-design-vue/lib/menu';
+import editors from "@/components/editors.vue"
 
 
 export default ({
   components: {
     // ContentMessage,
     msginput,
-    UserOutlined
+    UserOutlined,
+    editors
   },
   props: {
     selectinx: {
@@ -261,7 +263,7 @@ export default ({
 .content {
   display: flex;
   background-color: #fff;
-  // height: 100%;
+  height: 100%;
   // align-items: center;
   &-message {
     flex: 1;
@@ -318,11 +320,12 @@ $height: 50px;
   }
   &-input {
     border-top: 1px solid $darkColor-7;
-    height: 140px;
+    height: 32%;
   }
 }
 .message-group {
-  height: calc(100% - 190px);
+  // height: calc(100% - 190px);
+  height: 68%;
   overflow: auto;
 
   &::-webkit-scrollbar {
