@@ -51,7 +51,7 @@
             </div>
           </div>
           <div class="message-input">
-            <editors></editors>
+            <editors @sents="sents"></editors>
             <!-- <msginput @sents="sents" sentTime="20:9"></msginput> -->
           </div>
         </div>
@@ -72,7 +72,7 @@ import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
 import { tuple } from 'ant-design-vue/lib/_util/type';
 import router from '@/router';
-import editors from "@/components/editors.vue"
+import editors from "@/components/editors2.vue"
 
 
 export default ({
@@ -202,9 +202,15 @@ export default ({
     );
 
     function handleMessage (e) {
-      pageData.chatRecord.push(JSON.parse(e.data))
-      console.log("接受", e);
-      ctx.emit("doneSent",)
+      console.log('[  JSON.parse(e.data)] >', JSON.parse(e.data))
+      if (JSON.parse(e.data)) {
+        if (JSON.parse(e.data).messageType == 'DeliveryMessage') {
+          return
+        } else {
+          pageData.chatRecord.push(JSON.parse(e.data))
+          ctx.emit("doneSent",)
+        }
+      }
     }
 
     const sents = (data) => {
@@ -223,7 +229,7 @@ export default ({
           isRight: true,// 发送方
         }
         let sentdata = { ...res.data, ...params }
-        pageData.chatRecord.push(sentdata)
+        // pageData.chatRecord.push(sentdata)
         // ws.send(data)
         /* 已经发送过消息，要刷新左边菜单栏 */
         ctx.emit("doneSent",)
