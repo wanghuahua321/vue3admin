@@ -83,6 +83,12 @@ export default {
           icon: "dashboard",
           key: "posting",
         },
+        {
+          title: "渠道",
+          name: "/dashboard",
+          icon: "dashboard",
+          key: "channel",
+        },
         // {
         //   title: "Option 1",
         //   name: "/dashboard",

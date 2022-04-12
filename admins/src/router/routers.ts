@@ -61,7 +61,25 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import(/* webpackChunkName: "chat" */ '../views/Posting/index.vue'),
       }
     ]
+  },
+  {
+    path: '/channel',
+    name: 'channel',
+    component: () =>routerView,
+    redirect: { name: "channelIndex" },
+    meta: {
+      title: '渠道',
+      TabbarShow: true //需要显示底部导航
+    },
+    children:[
+      {
+        path: '/channelIndex',
+        name: 'channelIndex',
+        component: () => import(/* webpackChunkName: "chat" */ '../views/channel/index.vue'),
+      }
+    ]
   }
+
 
 
 ]
