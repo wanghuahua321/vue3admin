@@ -4,7 +4,7 @@
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="全部">
           <div class="channels">
-            <div class="channels_item">
+            <div class="channels_item" v-for="item in channelData" :key="item.id">
               <div class="c_tit">
                 <img src="@/assets/images/facebook.png" alt="" title="" />
               </div>
@@ -19,15 +19,31 @@
 
           </div>
 
-          <modalCon>
+          <modalCon :showDialogue="showDialogue" @closeDia="closeDia">
             <template #modalCon>
-              <div>
-                <a-form ref="formRef" :model="formState" :rules="rules">
-                  <a-form-item label="Activity name" name="name">
-                    <a-input v-model:value="formState.name" />
+              <div class="diaforms">
+                <a-form ref="formRef" :model="dialogueData" :rules="rules">
+                  <a-form-item label="name" name="name">
+                    <a-input v-model:value="dialogueData.name" />
                   </a-form-item>
-                  <a-form-item label="Sub name" :name="['sub', 'name']">
-                    <a-input v-model:value="formState.sub.name" />
+                  <a-form-item label="emailorphoneno" name="emailorphoneno">
+                    <a-input v-model:value="dialogueData.channelConfiguration.emailorphoneno" />
+                  </a-form-item>
+                  <a-form-item label="password" name="password">
+                    <a-input v-model:value="dialogueData.channelConfiguration.password" />
+                  </a-form-item>
+
+                  <a-form-item label="appId" name="appId">
+                    <a-input v-model:value="dialogueData.appId" />
+                  </a-form-item>
+                  <a-form-item label="projectId" name="projectId">
+                    <a-input v-model:value="dialogueData.projectId" />
+                  </a-form-item>
+                  <a-form-item label="sinchUsername" name="sinchUsername">
+                    <a-input v-model:value="dialogueData.sinchUsername" />
+                  </a-form-item>
+                  <a-form-item label="sinchPassword" name="sinchPassword">
+                    <a-input v-model:value="dialogueData.sinchPassword" />
                   </a-form-item>
                   <!-- <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
                     <a-button type="primary" @click="onSubmit">Create</a-button>
@@ -49,6 +65,8 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs, ref } from "vue";
 import modalCon from "@/components/modalCon.vue";
+import { channels } from "@/utils/api";
+import { tuple } from "ant-design-vue/lib/_util/type";
 export default {
   name: "channelIndex",
   components: {
@@ -62,6 +80,20 @@ export default {
         name: undefined,
         sub: { name: undefined },
       },
+      channelData: [],
+      showDialogue: false,
+      dialogueData: {
+        name: "",
+        channelValue: "",
+        channelConfiguration: {
+          emailorphoneno: "",
+          password: "",
+        },
+        appId: "",
+        projectId: "",
+        sinchUsername: "",
+        sinchPassword: "mgBnUQcHkEWqz5XBkXkjaW9vcU",
+      },
     });
 
     const rules = {
@@ -69,13 +101,29 @@ export default {
         required: true,
         message: "Please input name",
       },
-      sub: {
-        name: [
-          {
-            required: true,
-            message: "Please input name",
-          },
-        ],
+      password: {
+        required: true,
+        message: "Please input password",
+      },
+      emailorphoneno: {
+        required: true,
+        message: "Please input emailorphoneno",
+      },
+      projectId: {
+        required: true,
+        message: "Please input projectId",
+      },
+      appId: {
+        required: true,
+        message: "Please input appId",
+      },
+      sinchUsername: {
+        required: true,
+        message: "Please input sinchUsername",
+      },
+      sinchPassword: {
+        required: true,
+        message: "Please input sinchPassword",
       },
     };
 
@@ -94,15 +142,32 @@ export default {
     };
 
     const addchannel = () => {
-      console.log("dinji");
+      pagedata.showDialogue = true;
     };
-    onMounted(() => {});
+    const closeDia = () => {
+      pagedata.showDialogue = false;
+      console.log("000", pagedata.showDialogue);
+    };
+    onMounted(() => {
+      loadData();
+    });
+
+    const loadData = () => {
+      channels
+        .getChannel()
+        .then((res) => {
+          pagedata.channelData = res.items;
+        })
+        .catch((error) => {});
+    };
     return {
       addchannel,
       onSubmit,
       resetForm,
       rules,
       ...toRefs(pagedata),
+      loadData,
+      closeDia,
     };
   },
 };
@@ -159,5 +224,14 @@ export default {
 .ant-btn {
   width: 100%;
   border-radius: 8px;
+}
+.diaforms {
+  :deep(.ant-form-item-control-input) {
+    width: 86%;
+    margin: 0 7%;
+  }
+  :deep(.ant-form-horizontal .ant-form-item-label) {
+    width: 21%;
+  }
 }
 </style>

@@ -72,7 +72,7 @@ import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
 import { tuple } from 'ant-design-vue/lib/_util/type';
 import router from '@/router';
-import editors from "@/components/editors2.vue"
+import editors from "@/components/editors.vue"
 
 
 export default ({
