@@ -129,39 +129,10 @@ export default ({
     // };
 
     onMounted(() => {
-      // console.log("888", msgContent.value.scrollHeight);
-      // // console.log("888", msgContent.value.scrollHeight);
-      // msgContent.value.scrollTop = 300
-      // console.log("scrollTop", msgContent.value.scrollTop);
-      // this.ws.onmessage = (res => {
-      //   let received_msg = JSON.parse(res.data);
-      //   console.log("数据已接收...", received_msg);
-      //   this.newsList = received_msg;
-      // })
-      // window.addEventListener('scroll', scrollBottom, true);
+
 
     })
 
-    /* 下拉加载更多 */
-    const scrollBottom = () => {
-      let scrollTop =
-        msgContent.value().scrollTop || document.body.scrollTop;
-      let clientHight = document.documentElement.clientHeight;
-      let scrollHight = document.documentElement.scrollHeight;
-
-      console.log("000", scrollTop);
-      console.log("23", clientHight);
-      console.log("11", scrollHight);
-
-      if (scrollHight - scrollTop <= clientHight) {
-        /* 返回ture 是滚动到低 否则false */
-        // let nocuntPage = pagedatas.pageInfo.pageIndex;
-        // if (pagedatas.pageInfo.pageIndex < pagedatas.pageInfo.totalCount) {
-        //   pagedatas.pageInfo.pageIndex++;
-        //   recentView();
-        // }
-      }
-    };
 
     onUnmounted(() => {
       // window.removeEventListener('scroll', scrollBottom, true);
@@ -199,6 +170,7 @@ export default ({
     );
 
     function handleMessage (e) {
+      console.log("收到信息");
       console.log('[  JSON.parse(e.data)] >', JSON.parse(e.data))
       if (JSON.parse(e.data)) {
         if (JSON.parse(e.data).messageType == 'DeliveryMessage') {
@@ -215,7 +187,7 @@ export default ({
       let datas = {
         contact_id: pageData.contactId,
         messageType: data.messageType,
-        message: data.content,
+        message: data.url,
         replyToMessageId: "" //回复的某个人信息
       }
 

@@ -16,7 +16,7 @@ export const Message={
 }
 
 export const uploads={
-  fileUpload:(params)=>http.postImage(portalBasicApi + "/app/facebook-operation/file-upload-forward/"+params+"")
+  fileUpload:(ids,params)=>http.postfile(portalBasicApi + "/app/facebook-operation/file-upload-forward/"+ids+"",params)
   // https://192.168.0.120/api/app/facebook-operation/file-upload/
 }
 
