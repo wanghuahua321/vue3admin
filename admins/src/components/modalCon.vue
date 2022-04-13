@@ -9,7 +9,6 @@
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
-import { tuple } from "ant-design-vue/lib/_util/type";
 export default {
   name: "modalCon",
   props: {

@@ -18,107 +18,114 @@
     </div> -->
 
     <div>
-      <a-tabs v-model:activeKey="activeKey">
-        <a-tab-pane key="1" tab="全部">
-          <div class="channels">
-            <div class="channels_item" v-for="(item,inx) in channelData" :key="inx">
-              <div class="c_tit">
-                <img src="@/assets/images/facebook.png" alt="" title="" />
+      <keep-alive>
+        <a-tabs v-model:activeKey="activeKey" @change="changeTab">
+          <a-tab-pane key="1" tab="全部">
+            <div class="channels">
+              <div class="channels_item">
+                <div class="c_tit">
+                  <img src="@/assets/images/facebook.png" alt="" title="" />
+                </div>
+                <div class="c_cont">
+                  <h2>Facebook Messenger</h2>
+                  <p>1分钟完成配置</p>
+                </div>
+                <div class="addchan">
+                  <a-button type="primary" @click="addchannel('news','')">添加</a-button>
+                </div>
               </div>
-              <div class="c_cont">
-                <h2>Facebook Messenger</h2>
-                <p>1分钟完成配置</p>
-              </div>
-              <div class="addchan">
-                <a-button type="primary" @click="addchannel">添加</a-button>
-              </div>
+
             </div>
 
-          </div>
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="我的" force-render>
 
-          <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
-            <template #modalCon>
-              <div class="diaforms">
-                <a-form ref="formRef" :model="dialogueData" :rules="rules">
-                  <a-form-item label="name" name="name">
-                    <a-input v-model:value="dialogueData.name" />
-                  </a-form-item>
-                  <a-form-item label="emailorphoneno" :name="['channelConfiguration','emailorphoneno']">
-                    <a-input v-model:value="dialogueData.channelConfiguration.emailorphoneno" />
-                  </a-form-item>
-                  <a-form-item label="password" :name="['channelConfiguration','password']">
-                    <a-input v-model:value="dialogueData.channelConfiguration.password" />
-                  </a-form-item>
+            <div class="mychannel">
+              <div class="my_items" v-for="items in channelData" :key="items.id">
+                <div class="left_img">
+                  <img src="@/assets/images/facebook.png" alt="" title="" />
+                </div>
+                <div class="rig_cont">
+                  <h2 class="r_tit">Facebook Messenger</h2>
+                  <dl class="my_info">
+                    <dt>名称:</dt>
+                    <dd>{{items.name}}</dd>
+                  </dl>
+                  <dl class="my_info">
+                    <dt>时间:</dt>
+                    <dd>{{items.creationTime}}</dd>
+                  </dl>
 
-                  <a-form-item label="appId" name="appId">
-                    <a-input v-model:value="dialogueData.appId" />
-                  </a-form-item>
-                  <a-form-item label="projectId" name="projectId">
-                    <a-input v-model:value="dialogueData.projectId" />
-                  </a-form-item>
-                  <a-form-item label="sinchUsername" name="sinchUsername">
-                    <a-input v-model:value="dialogueData.sinchUsername" />
-                  </a-form-item>
-                  <a-form-item label="sinchPassword" name="sinchPassword">
-                    <a-input v-model:value="dialogueData.sinchPassword" />
-                  </a-form-item>
-
-                </a-form>
-              </div>
-            </template>
-          </modalCon>
-
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="我的" force-render>
-
-          <div class="mychannel">
-            <div class="my_items">
-              <div class="left_img">
-                <img src="@/assets/images/facebook.png" alt="" title="" />
-              </div>
-              <div class="rig_cont">
-                <h2 class="r_tit">Facebook Messenger</h2>
-                <dl class="my_info">
-                  <dt>名称:</dt>
-                  <dd>Fashion & Fancy</dd>
-                </dl>
-                <dl class="my_info">
-                  <dt>ID:</dt>
-                  <dd>100576222122289</dd>
-                </dl>
+                </div>
 
                 <div class="handles">
 
-                  <a-button type="primary" shape="circle">
+                  <a-button @click="addchannel('edit',items)" shape="round">
                     <template #icon>
                       <DownloadOutlined />
+                      修改
                     </template>
                   </a-button>
-                  <a-button type="primary" shape="circle">
+                  <a-button @click="addchannel('delete',items)" shape="circle">
                     <template #icon>
                       <DownloadOutlined />
+                      删除
                     </template>
                   </a-button>
                 </div>
-
               </div>
+
             </div>
-            <div class="my_items">
-              1
-            </div>
+
+          </a-tab-pane>
+        </a-tabs>
+      </keep-alive>
+
+      <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
+        <template #modalCon>
+          <div v-if="dialogType=='delete'" class="diaforms">
+            确定删除该渠道？
           </div>
-        </a-tab-pane>
-      </a-tabs>
+          <div v-else class="diaforms">
+            <a-form ref="formRef" :model="dialogueData" :rules="rules">
+              <a-form-item label="name" name="name">
+                <a-input v-model:value="dialogueData.name" placeholder="请输入渠道名称" />
+              </a-form-item>
+              <a-form-item label="emailorphoneno" :name="['channelConfiguration','emailorphoneno']">
+                <a-input v-model:value="dialogueData.channelConfiguration.emailorphoneno" placeholder="请输入账号" />
+              </a-form-item>
+              <a-form-item label="password" :name="['channelConfiguration','password']">
+                <a-input v-model:value="dialogueData.channelConfiguration.password" placeholder="请输入密码" />
+              </a-form-item>
+
+              <a-form-item label="appId" name="appId">
+                <a-input v-model:value="dialogueData.appId" placeholder="请输入appId" />
+              </a-form-item>
+              <a-form-item label="projectId" name="projectId">
+                <a-input v-model:value="dialogueData.projectId" placeholder="请输入projectId" />
+              </a-form-item>
+              <a-form-item label="sinchUsername" name="sinchUsername">
+                <a-input v-model:value="dialogueData.sinchUsername" placeholder="请输入sinchUsername" />
+              </a-form-item>
+              <a-form-item label="sinchPassword" name="sinchPassword">
+                <a-input v-model:value="dialogueData.sinchPassword" placeholder="请输入sinchPassword" />
+              </a-form-item>
+
+            </a-form>
+          </div>
+        </template>
+      </modalCon>
     </div>
 
   </div>
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs, ref } from "vue";
+import { reactive, onMounted, toRefs, ref, markRaw } from "vue";
 import modalCon from "@/components/modalCon.vue";
 import { channels } from "@/utils/api";
 import { DownloadOutlined } from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
 export default {
   name: "channelIndex",
   components: {
@@ -136,17 +143,21 @@ export default {
       channelData: [],
       showDialogue: false,
       dialogueData: {
-        name: "facebook123",
-        channelValue: "FacebookMessenger",
+        name: "",
+        channelValue: 0,
         channelConfiguration: {
-          emailorphoneno: "1638029480@qq.com",
-          password: "Pass@word1",
+          emailorphoneno: "",
+          password: "",
         },
-        appId: "01FXRNXY02TEX69Z81KJP5NKXY",
-        projectId: "2c7d361d-eac5-46e3-948a-548eee9e1508",
-        sinchUsername: "417a75d3-4754-4ef4-86cc-2597e2aef84a",
-        sinchPassword: "mgBnUQcHkEWqz5XBkXkjaW9vcU",
+        appId: "",
+        projectId: "",
+        sinchUsername: "",
+        sinchPassword: "",
       },
+      formData: {}, //处理后要新增的值
+      dialogType: "",
+      seletItems: {},
+      seletItemsId: "",
     });
 
     const rules = {
@@ -182,65 +193,125 @@ export default {
       },
     };
 
-    const resetForm = () => {
-      formRef.value.resetFields();
-    };
-
-    const addchannel = () => {
+    const addchannel = (type, value) => {
+      pagedata.dialogType = type;
+      pagedata.seletItems = value;
+      pagedata.seletItemsId = value.id;
+      if (pagedata.dialogType == "edit") {
+        getOneChannel();
+      }
       pagedata.showDialogue = true;
     };
     const confimAdd = () => {
-      //确认按钮
-      // pagedata.showDialogue = false;
-      (pagedata.dialogueData as any).channelConfiguration = JSON.stringify(
-        pagedata.dialogueData.channelConfiguration
-      ); //处理字段
+      console.log("pagedata.dial", pagedata.dialogType);
+      let formData = JSON.parse(JSON.stringify(pagedata.dialogueData));
+      (formData as any).channelConfiguration = JSON.stringify(
+        formData.channelConfiguration
+      );
 
-      // formRef.value
-      //   .validate()
-      //   .then(() => {
-      //     console.log("dialogueData", JSON.stringify(pagedata.dialogueData));
-
-      //     // channels
-      //     //   .addChannel(pagedata.dialogueData)
-      //     //   .then((res) => {
-      //     //     console.log("chuangjian");
-      //     //   })
-      //     //   .catch((error) => {});
-      //   })
-      //   .catch((error) => {
-      //     console.log("error", error);
-      //   });
+      pagedata.formData = formData;
+      if (pagedata.dialogType == "delete") {
+        deleteData();
+      } else {
+        formRef.value
+          .validate()
+          .then(() => {
+            if (pagedata.dialogType == "news") {
+              addChannels();
+            } else if (pagedata.dialogType == "edit") {
+              editInterface();
+            }
+          })
+          .catch((error) => {
+            console.log("error", error);
+          });
+      }
     };
     const closeDia = () => {
       // 取消按钮
       pagedata.showDialogue = false;
+      formRef.value.resetFields();
     };
 
     onMounted(() => {
-      loadData();
+      // loadData();
     });
 
-    const loadData = () => {
+    const myloadData = () => {
       channels
         .getChannel()
         .then((res) => {
           pagedata.channelData = res.items;
-          pagedata.channelData.map((res: any) => {
-            res.channelConfiguration = JSON.parse(res.channelConfiguration);
-          });
         })
         .catch((error) => {});
     };
+
+    const deleteData = () => {
+      /* 删除操作 */
+      channels
+        .delChannel(pagedata.seletItemsId)
+        .then((res) => {
+          if (res.isSuccess) {
+            message.success(res.message);
+            pagedata.showDialogue = false;
+            myloadData();
+          }
+        })
+        .catch((error) => {});
+    };
+
+    const getOneChannel = () => {
+      //修改前获取某一个信息
+      channels
+        .getChannelId(pagedata.seletItemsId)
+        .then((res) => {
+          let formDatas = JSON.parse(res.channelConfiguration);
+          pagedata.dialogueData = res;
+          pagedata.dialogueData.channelConfiguration = formDatas;
+        })
+        .catch((error) => {});
+    };
+
+    const addChannels = () => {
+      channels
+        .addChannel(pagedata.formData)
+        .then((res) => {
+          message.success("新增渠道成功");
+          pagedata.showDialogue = false;
+          formRef.value.resetFields();
+        })
+        .catch((error) => {});
+    };
+
+    const editInterface = () => {
+      channels
+        .updataChannel(pagedata.seletItemsId, pagedata.dialogueData)
+        .then((res) => {
+          message.success("修改成功");
+          pagedata.showDialogue = false;
+        })
+        .catch((error) => {});
+    };
+
+    const changeTab = (val) => {
+      if (val == 2) {
+        myloadData();
+      }
+    };
+
     return {
       addchannel,
-      resetForm,
       confimAdd,
       rules,
       ...toRefs(pagedata),
-      loadData,
+      myloadData,
       closeDia,
       formRef,
+      deleteData,
+      changeTab,
+      getOneChannel,
+      addChannels,
+      editInterface,
     };
   },
 };
@@ -253,6 +324,7 @@ export default {
   .channels_item {
     width: 14%;
     height: 220px;
+    min-width: 160px;
     border: 1px solid #e1e3eb;
     margin-right: 16px;
     background: #ffffff;
@@ -312,19 +384,23 @@ export default {
   width: 100%;
   height: 100%;
   display: flex;
+  flex-wrap: wrap;
+  padding-top: 20px;
 
   .my_items {
-    width: 23%;
+    width: 23.5%;
     height: 172px;
     min-width: 286px;
     background: #ffffff;
     border-radius: 12px;
-    margin-right: 16px;
+    margin-right: 2%;
     box-sizing: border-box;
+    margin-bottom: 28px;
     padding: 22px;
     display: flex;
+    position: relative;
     box-shadow: 0 0 4px 1px rgba(73, 77, 81, 0.2);
-    :nth-child(4n) {
+    &:nth-child(4n) {
       margin-right: 0% !important;
     }
 
@@ -353,16 +429,27 @@ export default {
           font-size: 12px;
           color: #9fa4bb;
           min-width: 23%;
+          font-weight: 700;
         }
         dd {
           font-size: 13px;
           color: #3e414a;
         }
       }
+    }
 
-      .handles {
-        display: flex;
-        justify-content: space-between;
+    .handles {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 15px;
+      position: absolute;
+      width: 85%;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      :deep(.ant-btn) {
+        width: 36%;
+        border-radius: 4px;
       }
     }
   }
