@@ -1,10 +1,27 @@
 <template>
   <div class="channel">
+    <!-- <div style="backgroud: #ccc;">
+      <svg-icon iconName="huiyuan2" />
+      <svg-icon iconName="liaotian2" />
+      <svg-icon iconName="pingtai2" />
+      <svg-icon iconName="shanchu" />
+      <svg-icon iconName="shezhi2" />
+
+      <svg-icon iconName="shouye2" />
+      <svg-icon iconName="tixing" />
+      <svg-icon iconName="tupian" />
+      <svg-icon iconName="wenjian" />
+      <svg-icon iconName="yuyan" />
+
+            <svg-icon iconName="wenjian" />
+      <svg-icon iconName="yuyan" />
+    </div> -->
+
     <div>
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="全部">
           <div class="channels">
-            <div class="channels_item" v-for="item in channelData" :key="item.id">
+            <div class="channels_item" v-for="(item,inx) in channelData" :key="inx">
               <div class="c_tit">
                 <img src="@/assets/images/facebook.png" alt="" title="" />
               </div>
@@ -19,17 +36,17 @@
 
           </div>
 
-          <modalCon :showDialogue="showDialogue" @closeDia="closeDia">
+          <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
             <template #modalCon>
               <div class="diaforms">
                 <a-form ref="formRef" :model="dialogueData" :rules="rules">
                   <a-form-item label="name" name="name">
                     <a-input v-model:value="dialogueData.name" />
                   </a-form-item>
-                  <a-form-item label="emailorphoneno" name="emailorphoneno">
+                  <a-form-item label="emailorphoneno" :name="['channelConfiguration','emailorphoneno']">
                     <a-input v-model:value="dialogueData.channelConfiguration.emailorphoneno" />
                   </a-form-item>
-                  <a-form-item label="password" name="password">
+                  <a-form-item label="password" :name="['channelConfiguration','password']">
                     <a-input v-model:value="dialogueData.channelConfiguration.password" />
                   </a-form-item>
 
@@ -45,10 +62,7 @@
                   <a-form-item label="sinchPassword" name="sinchPassword">
                     <a-input v-model:value="dialogueData.sinchPassword" />
                   </a-form-item>
-                  <!-- <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
-                    <a-button type="primary" @click="onSubmit">Create</a-button>
-                    <a-button style="margin-left: 10px" @click="resetForm">Reset</a-button>
-                  </a-form-item> -->
+
                 </a-form>
               </div>
             </template>
@@ -83,15 +97,15 @@ export default {
       channelData: [],
       showDialogue: false,
       dialogueData: {
-        name: "",
-        channelValue: "",
+        name: "facebook123",
+        channelValue: "FacebookMessenger",
         channelConfiguration: {
-          emailorphoneno: "",
-          password: "",
+          emailorphoneno: "1638029480@qq.com",
+          password: "Pass@word1",
         },
-        appId: "",
-        projectId: "",
-        sinchUsername: "",
+        appId: "01FXRNXY02TEX69Z81KJP5NKXY",
+        projectId: "2c7d361d-eac5-46e3-948a-548eee9e1508",
+        sinchUsername: "417a75d3-4754-4ef4-86cc-2597e2aef84a",
         sinchPassword: "mgBnUQcHkEWqz5XBkXkjaW9vcU",
       },
     });
@@ -101,13 +115,15 @@ export default {
         required: true,
         message: "Please input name",
       },
-      password: {
-        required: true,
-        message: "Please input password",
-      },
-      emailorphoneno: {
-        required: true,
-        message: "Please input emailorphoneno",
+      channelConfiguration: {
+        password: {
+          required: true,
+          message: "Please input password",
+        },
+        emailorphoneno: {
+          required: true,
+          message: "Please input emailorphoneno",
+        },
       },
       projectId: {
         required: true,
@@ -127,16 +143,6 @@ export default {
       },
     };
 
-    const onSubmit = () => {
-      formRef.value
-        .validate()
-        .then(() => {
-          console.log("values");
-        })
-        .catch((error) => {
-          console.log("error", error);
-        });
-    };
     const resetForm = () => {
       formRef.value.resetFields();
     };
@@ -144,10 +150,34 @@ export default {
     const addchannel = () => {
       pagedata.showDialogue = true;
     };
-    const closeDia = () => {
-      pagedata.showDialogue = false;
-      console.log("000", pagedata.showDialogue);
+    const confimAdd = () => {
+      //确认按钮
+      // pagedata.showDialogue = false;
+      (pagedata.dialogueData as any).channelConfiguration = JSON.stringify(
+        pagedata.dialogueData.channelConfiguration
+      ); //处理字段
+
+      // formRef.value
+      //   .validate()
+      //   .then(() => {
+      //     console.log("dialogueData", JSON.stringify(pagedata.dialogueData));
+
+      //     // channels
+      //     //   .addChannel(pagedata.dialogueData)
+      //     //   .then((res) => {
+      //     //     console.log("chuangjian");
+      //     //   })
+      //     //   .catch((error) => {});
+      //   })
+      //   .catch((error) => {
+      //     console.log("error", error);
+      //   });
     };
+    const closeDia = () => {
+      // 取消按钮
+      pagedata.showDialogue = false;
+    };
+
     onMounted(() => {
       loadData();
     });
@@ -157,17 +187,21 @@ export default {
         .getChannel()
         .then((res) => {
           pagedata.channelData = res.items;
+          pagedata.channelData.map((res: any) => {
+            res.channelConfiguration = JSON.parse(res.channelConfiguration);
+          });
         })
         .catch((error) => {});
     };
     return {
       addchannel,
-      onSubmit,
       resetForm,
+      confimAdd,
       rules,
       ...toRefs(pagedata),
       loadData,
       closeDia,
+      formRef,
     };
   },
 };
