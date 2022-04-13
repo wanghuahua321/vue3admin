@@ -39,8 +39,6 @@ export default {
     const router = useRouter();
     let hua = inject("appId");
 
-    console.log("hua", hua);
-
     const filesItem = (items) => {
       console.log("itemsitems", items);
 
