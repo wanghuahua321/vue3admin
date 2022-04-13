@@ -27,14 +27,14 @@ export default ({
   h2,
   ul,
   ol,
-  dl,
-  dd,
   h1 {
     margin: 0;
     padding: 0;
   }
 
-  p {
+  p,
+  dl,
+  dd {
     margin: 0;
   }
 }

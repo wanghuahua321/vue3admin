@@ -69,7 +69,45 @@
           </modalCon>
 
         </a-tab-pane>
-        <a-tab-pane key="2" tab="我的" force-render>Content of Tab Pane 2</a-tab-pane>
+        <a-tab-pane key="2" tab="我的" force-render>
+
+          <div class="mychannel">
+            <div class="my_items">
+              <div class="left_img">
+                <img src="@/assets/images/facebook.png" alt="" title="" />
+              </div>
+              <div class="rig_cont">
+                <h2 class="r_tit">Facebook Messenger</h2>
+                <dl class="my_info">
+                  <dt>名称:</dt>
+                  <dd>Fashion & Fancy</dd>
+                </dl>
+                <dl class="my_info">
+                  <dt>ID:</dt>
+                  <dd>100576222122289</dd>
+                </dl>
+
+                <div class="handles">
+
+                  <a-button type="primary" shape="circle">
+                    <template #icon>
+                      <DownloadOutlined />
+                    </template>
+                  </a-button>
+                  <a-button type="primary" shape="circle">
+                    <template #icon>
+                      <DownloadOutlined />
+                    </template>
+                  </a-button>
+                </div>
+
+              </div>
+            </div>
+            <div class="my_items">
+              1
+            </div>
+          </div>
+        </a-tab-pane>
       </a-tabs>
     </div>
 
@@ -80,11 +118,12 @@
 import { reactive, onMounted, toRefs, ref } from "vue";
 import modalCon from "@/components/modalCon.vue";
 import { channels } from "@/utils/api";
-import { tuple } from "ant-design-vue/lib/_util/type";
+import { DownloadOutlined } from "@ant-design/icons-vue";
 export default {
   name: "channelIndex",
   components: {
     modalCon,
+    DownloadOutlined,
   },
   setup() {
     const formRef = ref();
@@ -266,6 +305,66 @@ export default {
   }
   :deep(.ant-form-horizontal .ant-form-item-label) {
     width: 21%;
+  }
+}
+
+.mychannel {
+  width: 100%;
+  height: 100%;
+  display: flex;
+
+  .my_items {
+    width: 23%;
+    height: 172px;
+    min-width: 286px;
+    background: #ffffff;
+    border-radius: 12px;
+    margin-right: 16px;
+    box-sizing: border-box;
+    padding: 22px;
+    display: flex;
+    box-shadow: 0 0 4px 1px rgba(73, 77, 81, 0.2);
+    :nth-child(4n) {
+      margin-right: 0% !important;
+    }
+
+    .left_img {
+      width: 56px;
+      height: 56px;
+      img {
+        width: 100%;
+      }
+    }
+
+    .rig_cont {
+      width: calc(100% - 76px);
+      margin-left: 20px;
+      .r_tit {
+        font-size: 15px;
+        color: #3e414a;
+        line-height: 20px;
+        font-weight: 600;
+      }
+
+      .my_info {
+        display: flex;
+        padding-top: 10px;
+        dt {
+          font-size: 12px;
+          color: #9fa4bb;
+          min-width: 23%;
+        }
+        dd {
+          font-size: 13px;
+          color: #3e414a;
+        }
+      }
+
+      .handles {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
 }
 </style>
