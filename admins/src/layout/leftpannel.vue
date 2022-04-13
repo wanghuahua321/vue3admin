@@ -18,15 +18,20 @@
       @openChange='openChange'>
       <template v-for="items in menuList">
         <a-menu-item v-if="!items.children" :key="items.key">
-          <template #icon>
+          <!-- <template #icon>
             <PieChartOutlined />
-          </template>
-          <span>{{items.title}}</span>
+          </template> -->
+          <!-- <span>{{items.title}}</span> -->
+
+          <span class="svgicons">
+            <svg-icon :iconName="items.key==selectedKeys[0]?items.actIcon : items.icon " />
+          </span>
+
         </a-menu-item>
         <a-sub-menu v-else :key="items.key">
-          <template #icon>
+          <!-- <template #icon>
             <MailOutlined />
-          </template>
+          </template> -->
           <template #title>{{items.title}}</template>
           <a-menu-item v-for="subitem in items.children" :key="subitem.key">{{subitem.title}}</a-menu-item>
         </a-sub-menu>
@@ -68,27 +73,37 @@ export default {
         {
           title: "首页",
           name: "/dashboard",
-          icon: "dashboard",
+          icon: "shouye1",
+          actIcon: "shouye2",
           key: "home",
         },
         {
           title: "聊天",
           name: "/dashboard",
-          icon: "dashboard",
+          icon: "liaotian1",
+          actIcon: "liaotian2",
           key: "chat",
         },
         {
           title: "发帖",
           name: "/dashboard",
-          icon: "dashboard",
+          icon: "fatie1",
+          actIcon: "fatie2",
           key: "posting",
         },
         {
           title: "渠道",
           name: "/dashboard",
-          icon: "dashboard",
+          icon: "pingtai1",
+          actIcon: "pingtai2",
           key: "channel",
         },
+        // {
+        //   title: "设置",
+        //   name: "/dashboard",
+        //   icon: "shezhi1",
+        //   key: "channel",
+        // },
         // {
         //   title: "Option 1",
         //   name: "/dashboard",
@@ -153,6 +168,8 @@ export default {
       // router.push({
       //   name: items.key,
       // });
+      console.log("huahuahau", pagedata.selectedKeys);
+
       ctx.emit("menuSel", items.key);
     };
 
@@ -178,14 +195,40 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.svg-icon {
+  width: 22px;
+  height: 22px;
+}
 .leftpannel {
-  width: 130px;
+  width: 100%;
+  // width: 8%;
   height: 100vh;
   .menus {
     width: 100%;
     // height: 100%;
     :deep(.ant-menu-item) {
       height: 80px;
+      text-align: center;
+      padding-left: 8px !important;
+    }
+    :deep(.ant-menu-title-content) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    :deep(.ant-menu-item-selected) {
+      .svgicons {
+        width: 44px;
+        height: 44px;
+        background-color: red;
+        display: inline-block;
+        background: #ff6b48;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

@@ -82,30 +82,33 @@ export default {
     // onMounted(() => {});
     const logins = () => {
       console.log("  loginForm.value", loginForms.value);
+      router.push({
+        path: "/home",
+      });
 
-      loginForms.value
-        .validate() /*  */
-        .then(() => {
-          let data = {
-            grant_type: "password",
-            client_id: "Basic_App",
-            client_secret: "1q2w3E*",
-            username: pagesDatas.formData.username,
-            password: pagesDatas.formData.password,
-            scope: "Basic",
-          };
+      // loginForms.value
+      //   .validate() /*  */
+      //   .then(() => {
+      //     let data = {
+      //       grant_type: "password",
+      //       client_id: "Basic_App",
+      //       client_secret: "1q2w3E*",
+      //       username: pagesDatas.formData.username,
+      //       password: pagesDatas.formData.password,
+      //       scope: "Basic",
+      //     };
 
-          console.log("1234");
-          // router.push({ path: redirect.value || "/", query: otherQuery.value });
-          LoginInfo.Login(data).then((res) => {
-            store.commit("setToken", res.token);
-            getUsers();
-          });
-        })
-        .catch((error) => {
-          console.log("error", error);
-          console.log("请先登录");
-        });
+      //     console.log("1234");
+      //     // router.push({ path: redirect.value || "/", query: otherQuery.value });
+      //     LoginInfo.Login(data).then((res) => {
+      //       store.commit("setToken", res.token);
+      //       getUsers();
+      //     });
+      //   })
+      //   .catch((error) => {
+      //     console.log("error", error);
+      //     console.log("请先登录");
+      //   });
     };
 
     const getUsers = () => {

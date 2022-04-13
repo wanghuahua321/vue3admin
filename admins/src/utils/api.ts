@@ -24,6 +24,11 @@ export const uploads={
 export const channels={
   getChannel:()=>http.get(portalBasicApi + "/app/channel"), // 获取联系人列表
   addChannel:(params)=>http.post(portalBasicApi + "/app/channel",params), //新增
-  getChannelId:()=>http.get(portalBasicApi + "/app/channel"),
+  updataChannel:(id)=>http.put(portalBasicApi + "/app/channel",id), // 修改
+  delChannel:(id)=>http.delete(portalBasicApi + "/app/channel"+id+"/channel",id), // 删除
+  // app/channel/2c7d361d-eac5-46e3-948a-548eee9e1508/channel
+  getChannelId:()=>http.get(portalBasicApi + "/app/channel"), // 根据id 查找
+  
+
 
 }

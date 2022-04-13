@@ -194,6 +194,44 @@ const headersString:any = {
       });
   },
 
+  delete(url, params) {
+    // store.commit("LOADING");
+    return axios({
+      method: "DELETE",
+      url: baseUrl + url,
+      params, // delete 请求时带的参数
+      timeout: httpTimeout,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+      },
+    })
+      .then((response) => {
+        return checkStatus(response);
+      })
+      .catch((res) => {
+        return checkCode(res);
+      });
+  },
+  put(url, data) {
+    // store.commit("LOADING");
+    return axios({
+      method: "PUT",
+      url: baseUrl + url,
+      data: data,
+      timeout: httpTimeout,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((response) => {
+        return checkStatus(response);
+      })
+      .catch((res) => {
+        return checkCode(res);
+      });
+  },
+
   postImage(url:string, params?:any){
     return axios({
       method:"post",

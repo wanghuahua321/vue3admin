@@ -47,7 +47,8 @@ export default {
   display: flex;
   width: 100%;
   .con-left {
-    width: 130px;
+    width: 7%;
+    min-width: 86px;
   }
   .con-rig {
     width: 100%;

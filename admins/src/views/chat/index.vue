@@ -140,7 +140,7 @@ export default {
       align-items: center;
     }
     .span_lable {
-      padding-left: 0.24rem;
+      // padding-left: 0.24rem;
       font-size: 14px;
       color: #2a2a2a;
       font-weight: 600;

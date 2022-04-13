@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <a-modal title="Title" :visible="showDialogue" @cancel="onCancel" @ok="handleOk">
+  <div class="modals">
+    <a-modal title="添加Fancebook Messager" :visible="showDialogue" @cancel="onCancel" @ok="handleOk">
       <slot name="modalCon"></slot>
     </a-modal>
 
@@ -27,11 +27,7 @@ export default {
     onMounted(() => {});
 
     const handleOk = () => {
-      pagedata.confirmLoading = true;
-      setTimeout(() => {
-        // pagedata.visible = false;
-        pagedata.confirmLoading = false;
-      }, 2000);
+      ctx.emit("confimAdd", false);
     };
     const onCancel = () => {
       ctx.emit("closeDia", false);
@@ -46,4 +42,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.modals {
+  :deep(.ant-modal .ant-modal-content) {
+    background-color: #f8f9fb !important;
+  }
+
+  :deep(.ant-modal-title) {
+  }
+}
 </style>
