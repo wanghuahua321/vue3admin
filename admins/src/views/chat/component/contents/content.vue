@@ -62,17 +62,14 @@
 </template>
 
 <script>
-import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
+import { ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
-import routes from '@/router/routers';
 import { useRouter, useRoute } from 'vue-router'
-import { tuple } from 'ant-design-vue/lib/_util/type';
-import router from '@/router';
-import editors from "@/components/editors.vue"
+import editors from "@/components/editors2.vue"
 
 
 export default ({

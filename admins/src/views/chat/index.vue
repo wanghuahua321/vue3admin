@@ -18,28 +18,12 @@
           <!-- <b class="unread">4</b> -->
         </div>
 
-        <!-- <div class="reports_li">
-          <div class="reports_lis_all" v-for="(items,inx) in fencesData.data" :key="items.appid" @click="showReports(items,inx)">
-            <div class="reports_tree">
-              <div class="lt_icons">
-                <svg-icon iconName="wenjianjia" />
-                <span class="span_lable">{{items.display_name}}</span>
-              </div>
-              <div class="rt_handle">
-                <DownOutlined />
-              </div>
-            </div>
-
-            <folder v-if="items.showChildren" :floderList="items.channel_credentials"></folder>
-          </div>
-        </div> -->
-
       </div>
       <div class="chatMsg">
         <contents :chatData="chatData" :selectinx="selectinx" @doneSent="doneSent"></contents>
       </div>
       <div class="msgPage">
-        <!-- <msgPagecon></msgPagecon> -->
+        <msgPagecon></msgPagecon>
       </div>
 
     </div>
