@@ -54,7 +54,8 @@ export default {
       },
       fileUploads: "https://192.168.0.120/api/app/facebook-operation/file-upload/",
       editHtml: "",
-      upResults: {}
+      upResults: {},
+      sentResults: []
     });
 
     onMounted(() => {
@@ -67,7 +68,6 @@ export default {
       (newsvalue, oldvalues) => {
         console.log("newsssss", newsvalue);
         pageData.uploads.contactId = newsvalue.type
-        pageData.fileUploads = pageData.fileUploads + newsvalue.type
         // getChatMsg()
       }, {
       immediate: true
@@ -75,28 +75,33 @@ export default {
     );
 
     const enters = () => {
-      // editCons.value.append(doms)
-      console.log("huahuah", editCons.value.innerHTML);
+      // console.log("huahuah", editCons.value.innerHTML);
+      // let doms = `<p>${editCons.value.innerHTML}</p>`;
+      // pageData.editHtml += doms
 
-
+      // console.log(" pageData.editHtml", pageData.editHtml);
     }
     const submit = () => {
       // console.log("huahuah", editCons.value.innerHTML);
       pageData.currentUser.url = editCons.value.innerHTML
       //  pageData.fileList[0]
       console.log("99999", editCons.value.innerHTML);
-      // if (pageData.messageTypess == 'TextMessage') {
-      //   ctx.emit('sents', pageData.currentUser)
-      // } else {
-      //   ctx.emit('sents', pageData.fileList[0])
-      // }
+      console.log("setttttttttttt", pageData.sentResults);
+      console.log("11111", pageData.fileList);
+      pageData.sentResults.forEach((res) => {
+        ctx.emit('sents', res)
+      })
 
       pageData.editHtml = ""
-
-
+      // pageData.sentResults.length = 0;
+      // pageData.fileList.length = 0;
+      editCons.value.innerHTML = ""
     }
     function blurEdit () {
-      console.log("sssssd");
+      // let doms = editCons.value.innerHTML
+      pageData.currentUser.url = editCons.value.innerHTML
+      pageData.sentResults.push(pageData.currentUser)
+      console.log("sssssd", editCons.value.innerHTML);
     }
 
     const beforeUpload = (file) => {
@@ -111,6 +116,8 @@ export default {
 
     const FilesCustomRequest = async (info) => {
       let doms = ""
+      pageData.editHtml = ""
+
 
       console.log("infoinfo", info);
       pageData.messageTypess = "22222"
@@ -121,11 +128,32 @@ export default {
       await uploads.fileUpload('01FYQR7YX49FGRMSKXYWYW9SSH', formData).then((res) => {
         pageData.upResults = res
         pageData.fileList.push(res)
+        pageData.sentResults.push(res)
       }).catch((error) => {
         console.log(error);
       })
+      // let hua = [
+      //   {
+      //     messageType: "PhotoMessage",
+      //     url: 'https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png'
+      //   },
+      //   {
+      //     messageType: "FileMessage",
+      //     url: 'https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png'
+      //   }
+      // ]
+
+      // pageData.fileList.push(...hua)
 
       console.log("pageData.fileList", pageData.fileList);
+
+      if (editCons.value.innerHTML) {
+        console.log("有值", editCons.value.innerHTML);
+        pageData.editHtml += editCons.value.innerHTML
+
+      } else {
+        console.log("000000", editCons.value.innerHTML);
+      }
 
       if (pageData.fileList.length > 0) {
         pageData.fileList.map((res) => {
@@ -142,36 +170,16 @@ export default {
                </b>
               </span>`
             pageData.editHtml += doms
-
           }
         })
       }
 
 
 
-      // contents.currentUser.messageType = "PhotoMessage"
-      // contents.currentUser.content = "https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"
-      //   console.log("infoinfo", info);
-      //   if (info.file.status === 'uploading') {
-      //     console.log("1234");
-      //     // loading.value = true;
-      //     // return;
-      //   }
-      //   if (info.file.status === 'done') {
-      //     const res = info.file.response
-      //     data.currentUser.messageType = res.messageType
-      //     data.currentUser.content = res.url
-      //   }
+
 
     }
 
-    /* 
-          console.log("info", info);
-     
-       
-       
-       
-       */
 
 
 
@@ -193,16 +201,21 @@ export default {
 .menus {
   width: 100%;
   height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0px 10px;
+  border-bottom: 1px solid #ccc;
 }
 .editCon {
   width: 100%;
   height: calc(100% - 80px);
-  border: 3px solid gray;
+  // border: 3px solid gray;
   position: relative;
 
   .editHtml {
     width: 100%;
-    height: 100%;
+    height: 120%;
+    min-height: 100px;
     // display: flex;
     // flex-wrap: wrap;
     text-align: left;

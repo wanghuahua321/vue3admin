@@ -31,13 +31,15 @@
                       <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
 
                       <span class="time">
-                        {{currentUser.message?currentUser.message.lastMessageDateStr:'--'}}
+                        <!-- {{currentUser.receviedDate?currentUser.receviedDate:'--'}} -->
                       </span>
                     </div>
 
                     <div class="content margin_t-10">
-                      <span>{{currentUser.message}}</span>
-                      <!-- <a-image v-if="data.type === 2" style="width: 100px; height: 100px" :src="data.url" :preview-src-list="[data.url]" /> -->
+                      <span v-if="currentUser.messageType=='TextMessage'">{{currentUser.message}}</span>
+                      <a-image v-else-if="currentUser.messageType=='PhotoMessage'" :width="100" :src="currentUser.message" />
+                      <a-image v-else :width="100" :src="currentUser.message" />
+
                       <!-- <div class="loading-icon-box" v-show="data.loading">
                           <el-icon class="loading-icon">
                             <loading />

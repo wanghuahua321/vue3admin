@@ -53,11 +53,11 @@ export default {
     const store = useStore();
     const router = useRouter();
     const pagesDatas = reactive<any>({
-      selectinx: 0,
-      value1: "value1",
-      value2: "value2",
-      value3: "value3",
-      value4: "value4",
+      selectinx:
+        sessionStorage.getItem("initSelectinx") == null
+          ? 0
+          : Number(sessionStorage.getItem("initSelectinx")),
+
       fencesData: {}, //左侧数据
       chatData: {},
     });
@@ -65,15 +65,21 @@ export default {
     const fences = (inx, item) => {
       pagesDatas.selectinx = inx;
       pagesDatas.chatData = item;
+      sessionStorage.setItem("initSelectinx", inx);
 
       router.push({
         name: "chatinx",
         params: { type: item.id },
       });
     };
-    const contactsLeft = () => {
-      Message.contacts().then((res) => {
+    const contactsLeft = async () => {
+      await Message.contacts().then((res) => {
         pagesDatas.fencesData = res;
+
+        router.push({
+          name: "chatinx",
+          params: { type: res.items[pagesDatas.selectinx].id },
+        });
       });
     };
 
@@ -83,6 +89,8 @@ export default {
 
     onMounted(() => {
       contactsLeft();
+      console.log("sssssss", pagesDatas.fencesData);
+
       // fences(pagesDatas.selectinx, pagesDatas.fencesData[pagesDatas.selectinx]);
     });
     return {

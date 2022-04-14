@@ -64,7 +64,10 @@ export default {
     */
     const router = useRouter();
     const pagedata = reactive<any>({
-      selectedKeys: ["home"],
+      selectedKeys:
+        sessionStorage.getItem("itemskey") == null
+          ? ["home"]
+          : [sessionStorage.getItem("itemskey")],
       openKeys: [],
       preOpenKeys: [],
       rootSubmenuKeys: [],
@@ -165,10 +168,12 @@ export default {
 
       pagedata.selectedKeys.length = 0;
       pagedata.selectedKeys.push(items.key);
+      sessionStorage.setItem("itemskey", items.key);
       // router.push({
       //   name: items.key,
       // });
       console.log("huahuahau", pagedata.selectedKeys);
+      console.log("huahuahau", items);
 
       ctx.emit("menuSel", items.key);
     };

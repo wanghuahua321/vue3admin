@@ -176,19 +176,15 @@ export default {
         },
       },
       projectId: {
-        required: true,
         message: "Please input projectId",
       },
       appId: {
-        required: true,
         message: "Please input appId",
       },
       sinchUsername: {
-        required: true,
         message: "Please input sinchUsername",
       },
       sinchPassword: {
-        required: true,
         message: "Please input sinchPassword",
       },
     };
