@@ -17,7 +17,9 @@
       </p>
 
     </div>
-    <div class="sents" @click="submit">发送</div>
+    <!-- <div class="sents" @click="submit">发送</div> -->
+    <div class="sents" @click="dealHtml('1')">图片</div>
+    <div class="sents2" @click="dealHtml('2')">文件</div>
   </div>
 
   <!-- <div :innerHTML='content.html'></div> -->
@@ -59,8 +61,18 @@ export default {
     });
 
     onMounted(() => {
-      let hua = document.querySelector('.editCon')
-      // console.log("hua", hua.innerHTML);
+      let hua = [
+        {
+          messageType: "PhotoMessage",
+          url: 'https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png'
+        },
+        {
+          messageType: "FileMessage",
+          url: 'https://www.baidu.com/img/PCfb_5bf082d29588c07f842ccde3f97243ea.png'
+        }
+      ]
+
+      pageData.fileList.push(...hua)
     });
 
     watch(
@@ -91,7 +103,8 @@ export default {
     }
     function blurEdit () {
       pageData.currentUser.url = editCons.value.innerHTML
-      console.log("888", pageData.currentUser.url);
+      console.log("888ssssssss", pageData.currentUser.url);
+      // dealHtml()
     }
 
     const beforeUpload = (file) => {
@@ -103,8 +116,18 @@ export default {
         // if(file.type)
       }
     };
+    function getBase64 (file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
 
-    const FilesCustomRequest = async (info) => {
+    const FilesCustomRequest = async (info, value) => {
+      console.log("infoinfo", info);
+      console.log("value", value);
       let formData = new FormData()
       formData.append('file', info.file)
       formData.append('TempleteFile', info.file.name)
@@ -117,39 +140,30 @@ export default {
         console.log(error);
       })
 
-      dealHtml()
+
 
     }
 
-    const dealHtml = () => {
-      let doms = ""
-      pageData.editHtml = ""
-      // if (editCons.value.innerHTML) {
-      //   console.log("有值", editCons.value.innerHTML);
-      //   pageData.editHtml += editCons.value.innerHTML
-      //   /* push */
-      //   pageData.currentUser.url = editCons.value.innerHTML
-      //   pageData.sentResults.push(pageData.currentUser)
-      // }
-      if (pageData.fileList.length > 0) {
 
-        pageData.fileList.map((res) => {
-          console.log("res", res);
-          if (res.messageType == "PhotoMessage") {
-            doms = `<img class="fileimg" src="${res.url}" />`
-            pageData.editHtml += doms
-          } else if (res.messageType == "FileMessage") {
-            doms = `<span class="filespan">
-               <b class="_img"><img src="${res.url}" /></b>
+
+    const dealHtml = (type) => {
+      let doms = ""
+      // pageData.editHtml = ""
+      if (type == '1') {
+        console.log("00000000000");
+        doms = `<img class="fileimg" src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" />`
+        pageData.editHtml += doms
+      } else {
+        doms = `<span class="filespan">
+               <b class="_img"><img src="" /></b>
                <b class="_text">
                 <i>文件夹</i>
                 <i>222</i>
                </b>
               </span>`
-            pageData.editHtml += doms
-          }
-        })
+        pageData.editHtml += doms
       }
+
     }
 
 
@@ -162,6 +176,8 @@ export default {
       FilesCustomRequest,
       submit,
       editCons,
+      dealHtml,
+      getBase64,
       ...toRefs(pageData),
     };
   },
@@ -190,6 +206,7 @@ export default {
     width: 100%;
     height: 100%;
     min-height: 100px;
+    overflow: auto;
     // display: flex;
     // flex-wrap: wrap;
     text-align: left;
@@ -216,6 +233,11 @@ export default {
     position: absolute;
     bottom: 10px;
     right: 10px;
+  }
+  .sents2 {
+    position: absolute;
+    bottom: 10px;
+    right: 40px;
   }
 }
 </style>

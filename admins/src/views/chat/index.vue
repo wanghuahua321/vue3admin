@@ -32,9 +32,8 @@
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs, watch, provide } from "vue";
-import { DownloadOutlined, DownOutlined } from "@ant-design/icons-vue";
+import { DownOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
-import folder from "./component/leftsidebar/folder.vue";
 import msgPagecon from "./component/magPerson.vue";
 import contents from "./component/contents/content.vue";
 import { useStore } from "vuex";
@@ -43,9 +42,6 @@ import { useRouter } from "vue-router";
 export default {
   name: "chatIndex",
   components: {
-    DownloadOutlined,
-    DownOutlined,
-    folder,
     msgPagecon,
     contents,
   },

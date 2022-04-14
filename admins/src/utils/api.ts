@@ -16,8 +16,8 @@ export const Message={
 }
 
 export const uploads={
-  fileUpload:(ids,params)=>http.postfile(portalBasicApi + "/app/facebook-operation/file-upload-forward/"+ids+"",params)
-  // https://192.168.0.120/api/app/facebook-operation/file-upload/
+  // fileUpload:(ids,params)=>http.postfile(portalBasicApi + "/app/facebook-operation/file-upload-forward/"+ids+"",params)
+  fileUpload:(ids,params)=>http.postfile("https://next.json-generator.com/api/json/get/4ytyBoLK8",params)
 }
 
 

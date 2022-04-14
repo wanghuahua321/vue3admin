@@ -67,7 +67,7 @@ import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
 import { useRouter, useRoute } from 'vue-router'
-import editors from "@/components/editors2.vue"
+import editors from "@/components/editors3.vue"
 
 
 export default ({
