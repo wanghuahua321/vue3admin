@@ -5,6 +5,7 @@
         <div class="message">
           <div class="message-header ellipse-1">
             <div class="name">{{displayName? displayName:'--'}}</div>
+            <!-- {{}}000 -->
             <!-- <div class="icon-btn-box">
               jj
             </div> -->
@@ -22,7 +23,8 @@
                   <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
                   <a-avatar :size="50">
                     <template #icon>
-                      <UserOutlined />
+                      <a-image :width="50" :src="$store.state.chatPerson.phoneurl" />
+                      <!-- <UserOutlined /> -->
                     </template>
                   </a-avatar>
 
@@ -39,12 +41,6 @@
                       <span v-if="currentUser.messageType=='TextMessage'">{{currentUser.message}}</span>
                       <a-image v-else-if="currentUser.messageType=='PhotoMessage'" :width="100" :src="currentUser.message" />
                       <a-image v-else :width="100" :src="currentUser.message" />
-
-                      <!-- <div class="loading-icon-box" v-show="data.loading">
-                          <el-icon class="loading-icon">
-                            <loading />
-                          </el-icon>
-                        </div> -->
                     </div>
                   </div>
                 </div>
@@ -111,6 +107,8 @@ export default ({
       displayName: ""
     });
 
+    console.log("storestorestore", store.state.chatPerson)
+
     // let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
     // wss.onopen = ((res) => {
     //   console.log(res, "连接成功");
@@ -131,6 +129,7 @@ export default ({
     // };
 
     onMounted(() => {
+
 
 
     })
@@ -271,10 +270,10 @@ $height: 50px;
   &-header {
     position: relative;
     padding: 0 0 0 20px;
-    height: 60px;
+    height: 42px;
     border-bottom: 1px solid $darkColor-7;
     display: flex;
-    line-height: 60px;
+    line-height: 42px;
     .name {
       flex: 1;
       text-align: left;
@@ -422,7 +421,7 @@ $height: 50px;
         display: flex;
         span {
           position: relative;
-          padding: 10px;
+          padding: 0px 10px;
           font-size: 14px;
           color: #333629;
           text-align: left;
@@ -436,6 +435,8 @@ $height: 50px;
           display: -webkit-box;
           -webkit-line-clamp: 30;
           -webkit-box-orient: vertical;
+          display: flex;
+          align-items: center;
         }
       }
     }

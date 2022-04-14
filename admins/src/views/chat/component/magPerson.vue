@@ -1,21 +1,24 @@
 <template>
   <div class="msgPagecon">
     <div class="pageInfo">
-      <div class="pageimg"></div>
-      <b>宰妍琬</b>
+      <div class="pageimg">
+        <a-image :src="user.phoneurl" />
+      </div>
+      <b>{{user.display_name}}</b>
       <a-button type="primary" :size="size" style="width:78%">
         <template #icon>
           <DownloadOutlined />
+          浏览主页
         </template>
       </a-button>
     </div>
     <span class="small_tit">备注</span>
     <div class="note">
-      <a-textarea readOnly v-model:value="value1" placeholder="Basic usage" :rows="3" />
+      <a-textarea readOnly placeholder="Basic usage" :rows="3" />
     </div>
     <span class="small_tit">会员信息</span>
     <dl>
-      <dt>姓名</dt>
+      <dt>{{user.display_name}}</dt>
       <dd>
         <a-input readOnly placeholder="请选择随访人员" />
       </dd>
@@ -24,27 +27,46 @@
     <dl>
       <dt>微博</dt>
       <dd>
-        <a-input readOnly v-model:value="value2" placeholder="Basic usage" />
+        <a-input readOnly placeholder="Basic usage" />
       </dd>
     </dl>
     <span class="small_tit">购买信息</span>
     <dl>
       <dt>累计消费</dt>
       <dd>
-        <a-input readOnly v-model:value="value3" placeholder="Basic usage" />
+        <a-input readOnly placeholder="Basic usage" />
       </dd>
     </dl>
   </div>
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+import { computed, reactive, onMounted, toRefs, toRef } from "vue";
+import { useStore } from "vuex";
 export default {
   name: "msgPagecon",
+  props: {
+    msgPerson: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   components: {},
-  setup() {
+  setup(props, ctx) {
+    const store = useStore();
+    const pageDatas = reactive({
+      msgPagecons: {},
+    });
+
+    const user = computed(() => {
+      return store.state.chatPerson || {};
+    });
+
     onMounted(() => {});
-    return {};
+    return {
+      ...toRefs(pageDatas),
+      user,
+    };
   },
 };
 </script>
@@ -92,7 +114,6 @@ dl {
     width: 64px;
     height: 64px;
     border-radius: 12px;
-    border: 1px solid;
   }
   b {
     font-size: 16px;

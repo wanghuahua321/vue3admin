@@ -208,13 +208,16 @@ export default {
 }
 .editCon {
   width: 100%;
-  height: calc(100% - 80px);
+  height: calc(100% - 42px);
   // border: 3px solid gray;
   position: relative;
-
+  .editimages {
+    width: 100%;
+    height: 100%;
+  }
   .editHtml {
     width: 100%;
-    height: 120%;
+    height: 100%;
     min-height: 100px;
     // display: flex;
     // flex-wrap: wrap;
@@ -222,6 +225,7 @@ export default {
     -webkit-user-modify: read-write;
     overflow-wrap: break-word;
     -webkit-line-break: after-white-space;
+    outline: 1px solid #ffffff;
   }
 
   .files_txt {
