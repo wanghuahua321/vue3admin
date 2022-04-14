@@ -4,7 +4,7 @@
       <div class="fence">
         <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(item,inx) in fencesData.items" :key="inx" @click="fences(inx,item)">
           <div class="fence_img">
-            <img src="../../assets/images/person.png" />
+            <img :src="item.phoneurl" />
           </div>
           <div class="fence_info">
             <div class="chatname">
@@ -71,6 +71,7 @@ export default {
         name: "chatinx",
         params: { type: item.id },
       });
+      store.commit("setChatPerson", item);
     };
     const contactsLeft = async () => {
       await Message.contacts().then((res) => {
@@ -80,6 +81,7 @@ export default {
           name: "chatinx",
           params: { type: res.items[pagesDatas.selectinx].id },
         });
+        store.commit("setChatPerson", res.items[pagesDatas.selectinx]);
       });
     };
 
@@ -89,9 +91,6 @@ export default {
 
     onMounted(() => {
       contactsLeft();
-      console.log("sssssss", pagesDatas.fencesData);
-
-      // fences(pagesDatas.selectinx, pagesDatas.fencesData[pagesDatas.selectinx]);
     });
     return {
       ...toRefs(pagesDatas),
