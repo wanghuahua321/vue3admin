@@ -22,7 +22,7 @@ export default {
   },
   setup(props, ctx) {
     const pageData = reactive({
-      activeKey: "1",
+      activeKey: "role",
     });
     const changeTabs = (val) => {
       pageData.activeKey = val.key;
