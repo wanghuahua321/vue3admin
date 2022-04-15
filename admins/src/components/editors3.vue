@@ -116,14 +116,14 @@ export default {
         // if(file.type)
       }
     };
-    function getBase64 (file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-      });
-    }
+    // function getBase64 (file) {
+    //   return new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = error => reject(error);
+    //   });
+    // }
 
     const FilesCustomRequest = async (info, value) => {
       console.log("infoinfo", info);
@@ -177,7 +177,6 @@ export default {
       submit,
       editCons,
       dealHtml,
-      getBase64,
       ...toRefs(pageData),
     };
   },

@@ -52,8 +52,8 @@
                     <dd>{{items.name}}</dd>
                   </dl>
                   <dl class="my_info">
-                    <dt>时间:</dt>
-                    <dd>{{items.creationTime}}</dd>
+                    <dt>最近修改:</dt>
+                    <dd>{{items.editDate}}</dd>
                   </dl>
 
                 </div>
@@ -62,13 +62,13 @@
 
                   <a-button @click="addchannel('edit',items)" shape="round">
                     <template #icon>
-                      <DownloadOutlined />
+                      <EditOutlined />
                       修改
                     </template>
                   </a-button>
                   <a-button @click="addchannel('delete',items)" shape="circle">
                     <template #icon>
-                      <DownloadOutlined />
+                      <DeleteOutlined />
                       删除
                     </template>
                   </a-button>
@@ -124,13 +124,14 @@
 import { reactive, onMounted, toRefs, ref, markRaw } from "vue";
 import modalCon from "@/components/modalCon.vue";
 import { channels } from "@/utils/api";
-import { DownloadOutlined } from "@ant-design/icons-vue";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 export default {
   name: "channelIndex",
   components: {
     modalCon,
-    DownloadOutlined,
+    EditOutlined,
+    DeleteOutlined,
   },
   setup() {
     const formRef = ref();

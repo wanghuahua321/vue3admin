@@ -40,7 +40,16 @@
                     <div class="content margin_t-10">
                       <span v-if="currentUser.messageType=='TextMessage'">{{currentUser.message}}</span>
                       <a-image v-else-if="currentUser.messageType=='PhotoMessage'" :width="100" :src="currentUser.message" />
-                      <a-image v-else :width="100" :src="currentUser.message" />
+                      <span class="con_file" v-else>
+                        <b class="file_b">
+                          <FileTextOutlined class="icons_sty" />
+                        </b>
+                        <dl class="files">
+                          <dt>6556</dt>
+                          <dd>88888888</dd>
+                        </dl>
+                      </span>
+                      <!-- <a-image v-else :width="100" :src="currentUser.message" /> -->
                     </div>
                   </div>
                 </div>
@@ -62,7 +71,7 @@
 <script>
 import { ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
-import { UserOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, FileTextOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
 import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
@@ -72,7 +81,7 @@ import editors from "@/components/editors3.vue"
 
 export default ({
   components: {
-    // ContentMessage,
+    FileTextOutlined,
     msginput,
     UserOutlined,
     editors
@@ -437,6 +446,28 @@ $height: 50px;
           -webkit-box-orient: vertical;
           display: flex;
           align-items: center;
+        }
+
+        .con_file {
+          display: flex;
+          .file_b {
+            min-width: 50px;
+            .icons_sty {
+              font-size: 58px;
+              padding: 0px 0px 0px 6px;
+            }
+          }
+          .files {
+            min-width: 100px;
+            dt {
+              font-size: 14px;
+              color: #333629;
+            }
+            dd {
+              font-size: 12px;
+              color: #9fa4bb;
+            }
+          }
         }
       }
     }
