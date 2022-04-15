@@ -45,8 +45,8 @@
                           <FileTextOutlined class="icons_sty" />
                         </b>
                         <dl class="files">
-                          <dt>6556</dt>
-                          <dd>88888888</dd>
+                          <dt>{{ filename(currentUser.message)}}</dt>
+                          <dd>1k</dd>
                         </dl>
                       </span>
                       <!-- <a-image v-else :width="100" :src="currentUser.message" /> -->
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import { ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
+import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined, FileTextOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
@@ -115,6 +115,11 @@ export default ({
       chatDatas: {},
       displayName: ""
     });
+    const filename = (val) => {
+      let filenames = val.substring(val.lastIndexOf("/") + 1)
+      // str.subString()
+      return filenames
+    };
 
     console.log("storestorestore", store.state.chatPerson)
 
@@ -233,6 +238,7 @@ export default ({
       // user,
       // detailVisible,
       // detailHandle
+      filename,
       msgContent,
       sents,
       ...toRefs(pageData),
@@ -450,11 +456,14 @@ $height: 50px;
 
         .con_file {
           display: flex;
+          background-color: #f5f5f5;
           .file_b {
             min-width: 50px;
             .icons_sty {
               font-size: 58px;
               padding: 0px 0px 0px 6px;
+              color: #fa9d3b;
+              background-color: #f5f5f5;
             }
           }
           .files {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>sx</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="B-17-租户" transform="translate(-1216.000000, -121.000000)" fill-rule="nonzero">
+            <g id="sx" transform="translate(1216.000000, 121.000000)">
+                <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                <path d="M9,16 L10,12 L12.445,12 C13.444803,10.9077255 13.9995333,9.48076653 14,8 C14,5.27 12.172,2.895 9.676,2.156 C9.268,2.036 9,1.646 9,1.22 C9,0.573 9.617,0.075 10.238,0.257 C13.566,1.237 16,4.359 16,8 C16,12.037 12.886,15.453 9,16 Z M0,8 C0,3.964 3.114,0.547 7,0 L6,4 L3.555,4 C2.55519698,5.09227453 2.00046669,6.51923347 2,8 C2,10.73 3.828,13.105 6.324,13.843 C6.73105988,13.9724272 7.0055492,14.3528954 7,14.78 C7,15.427 6.383,15.925 5.762,15.743 C2.434,14.763 0,11.641 0,8 Z" id="形状" fill="#FF6B48"></path>
+            </g>
+        </g>
+    </g>
+</svg>

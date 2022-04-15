@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="51px" viewBox="0 0 70 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.1 (78136) - https://sketchapp.com -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="45.195239%" y1="100%" x2="50%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#FFA47E" offset="0%"></stop>
+            <stop stop-color="#FF6B48" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#FFA37D" offset="0%"></stop>
+            <stop stop-color="#FF6D4A" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="B-17-租户" transform="translate(-8.000000, -25.000000)">
+            <g id="logo" transform="translate(8.000000, 25.000000)">
+                <g id="编组-2" transform="translate(0.000000, 34.000000)" fill="#2F2929">
+                    <text id="arketing" font-family="Arial-Black, Arial Black" font-size="13" font-weight="700">
+                        <tspan x="11.3945312" y="14">arketing</tspan>
+                    </text>
+                    <g id="编组" transform="translate(0.000000, 4.000000)">
+                        <polygon id="矩形" points="0.150211953 0.691625084 3.0371777 0.691625084 3.0371777 10 0.150211953 10"></polygon>
+                        <polygon id="矩形备份-25" points="7.75662166 0.691625084 10.6435874 0.691625084 10.6435874 10 7.75662166 10"></polygon>
+                        <rect id="矩形备份-32" x="3.60019461" y="2.79857563" width="3.6" height="3.42857143"></rect>
+                    </g>
+                </g>
+                <g id="编组-23备份-2" transform="translate(15.000000, 0.000000)">
+                    <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="12.1891892" height="30" rx="2.24"></rect>
+                    <rect id="矩形备份-37" fill="url(#linearGradient-2)" x="28.8108108" y="0" width="12.1891892" height="30" rx="2.24"></rect>
+                    <rect id="矩形" fill="#FF6B48" x="13.8513514" y="3.33333333" width="13.2972973" height="13.3333333" rx="4.48"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

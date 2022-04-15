@@ -2,12 +2,12 @@
   <div class="leftpannel">
     <div class="layout-logo" v-if="!collapsed">
       <router-link to="/">
-        <img alt="JC Admin" src="../assets/images/logo-jc.png" />
+        <svg-icon class="logos" iconName="logo" />
       </router-link>
     </div>
     <div class="layout-logo-collapsed" v-else>
       <router-link to="/">
-        <img alt="JC Admin" src="../assets/images/logo-jc.png" />
+        <svg-icon iconName="logo" />
       </router-link>
     </div>
     <!-- <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
@@ -239,9 +239,15 @@ export default {
 }
 
 .layout-logo {
-  height: 42px;
-  line-height: 42px;
+  width: 100%;
+  height: 56px;
   text-align: center;
+  margin-top: 20px;
+  .logos {
+    width: 82%;
+    height: 96%;
+    margin: 0 auto;
+  }
   span {
     color: #fff;
     font-size: 18px;

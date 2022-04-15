@@ -1,21 +1,25 @@
 <template>
   <div class="channel">
-    <!-- <div style="backgroud: #ccc;">
-      <svg-icon iconName="huiyuan2" />
-      <svg-icon iconName="liaotian2" />
-      <svg-icon iconName="pingtai2" />
-      <svg-icon iconName="shanchu" />
-      <svg-icon iconName="shezhi2" />
+    <div style="backgroud: #ccc;">
+      <svg-icon iconName="身份_ico_wx" />
+      <svg-icon iconName="身份_ico_xz" />
+      <svg-icon iconName="bj" />
+      <svg-icon iconName="fangda_14" />
 
-      <svg-icon iconName="shouye2" />
-      <svg-icon iconName="tixing" />
-      <svg-icon iconName="tupian" />
-      <svg-icon iconName="wenjian" />
-      <svg-icon iconName="yuyan" />
+      <svg-icon iconName="glgn" />
+      <svg-icon iconName="glljzfc" />
+      <svg-icon iconName="logo_huise" />
+      <svg-icon iconName="logo" />
+      <svg-icon iconName="qx" />
+      <svg-icon iconName="sc_13" />
+      <svg-icon iconName="sc_17" />
+      <svg-icon iconName="shuaxin_14" />
+      <svg-icon iconName="suoxiao_14" />
 
-            <svg-icon iconName="wenjian" />
-      <svg-icon iconName="yuyan" />
-    </div> -->
+      <svg-icon iconName="sx" />
+      <svg-icon iconName="tishi" />
+      <svg-icon iconName="xj" />
+    </div>
 
     <div>
       <keep-alive>
@@ -282,9 +286,10 @@ export default {
 
     const editInterface = () => {
       channels
-        .updataChannel(pagedata.seletItemsId, pagedata.dialogueData)
+        .updataChannel(pagedata.seletItemsId, pagedata.formData)
         .then((res) => {
           message.success("修改成功");
+          myloadData();
           pagedata.showDialogue = false;
         })
         .catch((error) => {});

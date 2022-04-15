@@ -4,7 +4,7 @@
       <div class="wrapper">
         <div class="login-logo enter-x-l">
           <p>
-            <img alt="JC Admin" src="../assets/images/logo-jc.png" />
+            <svg-icon iconName="logo" />
             <span>Admin</span>
           </p>
         </div>
