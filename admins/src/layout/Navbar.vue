@@ -204,6 +204,8 @@ export default {
     text-align: center;
     span {
       font-size: 22px;
+      min-width: 110px;
+      display: inline-block;
     }
   }
   .searchs {

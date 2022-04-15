@@ -95,6 +95,13 @@ export default {
           key: "posting",
         },
         {
+          title: "身份认证",
+          name: "/dashboard",
+          icon: "identity1",
+          actIcon: "identity2",
+          key: "identity",
+        },
+        {
           title: "渠道",
           name: "/dashboard",
           icon: "pingtai1",
@@ -212,7 +219,7 @@ export default {
     width: 100%;
     // height: 100%;
     :deep(.ant-menu-item) {
-      height: 80px;
+      height: 68px;
       text-align: center;
       padding-left: 8px !important;
     }

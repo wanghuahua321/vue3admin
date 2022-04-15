@@ -63,6 +63,23 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/identity',
+    name: 'identity',
+    component: () =>routerView,
+    redirect: { name: "certification" },
+    meta: {
+      title: '身份认证',
+      TabbarShow: true //需要显示底部导航
+    },
+    children:[
+      {
+        path: '/certification',
+        name: 'certification',
+        component: () => import(/* webpackChunkName: "chat" */ '../views/certification/index.vue'),
+      }
+    ]
+  },
+  {
     path: '/channel',
     name: 'channel',
     component: () =>routerView,
