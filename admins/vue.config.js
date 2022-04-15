@@ -5,8 +5,9 @@ let isLinux = platform.startsWith("linux") ? true : false; //linux
 
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  lintOnSave: false,
   transpileDependencies: true,
-  lintOnSave: false, //eslint-loader 是否在保存的时候检查
+
 
   // 输出文件目录
   outputDir: isLinux
