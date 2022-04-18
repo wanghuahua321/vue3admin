@@ -6,7 +6,7 @@
       <tabbar :tabbraList="tabbraList" @choseTab="choseTab"></tabbar>
 
       <div class="certsRig">
-        <a-button class="antActive" :size="size">
+        <a-button class="antActive">
           <template #icon>
             <div class="btns">
               <svg-icon iconName="xj" />
@@ -15,7 +15,7 @@
           </template>
         </a-button>
 
-        <a-button :size="size">
+        <a-button>
           <template #icon>
             <div class="btns">
               <svg-icon iconName="sx" />

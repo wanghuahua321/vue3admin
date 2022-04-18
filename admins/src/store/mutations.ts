@@ -21,8 +21,11 @@ const mutations = {
 
   setChatPerson(state:storeState,count:object){
     state.chatPerson=count
-    console.log("state.chatPerson",state.chatPerson);
-    
+    console.log("state.chatPerson",state.chatPerson);  
+  },
+
+  setEditClick(state:storeState,count:object){
+    state.editClick=count
   }
 };
 export default mutations;

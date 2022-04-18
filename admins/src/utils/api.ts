@@ -30,3 +30,13 @@ export const channels={
   getChannelId:(id)=>http.get(portalBasicApi + "/app/channel/"+id+""), // 根据id 查找
   
 }
+
+
+export const certification={
+  
+  roles:{
+    getRoles:()=>http.get(portalBasicApi + "/identity/roles"), // 获取角色列表
+    editRoles:(id,params)=>http.put(portalBasicApi + "/identity/roles/"+id+"",params), // 获取角色列表  
+  }
+
+}

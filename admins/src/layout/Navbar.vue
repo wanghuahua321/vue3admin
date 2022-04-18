@@ -58,7 +58,7 @@
               </template>
             </a-avatar>
             <div class="user-name">
-              <span>{{UserInfo.name}}</span>
+              <span>{{UserInfo? UserInfo.name:'---'}}</span>
               <DownOutlined />
             </div>
 
