@@ -94,6 +94,9 @@ export default {
         case "#FBEBE6":
           resoults = "#FF6B48";
           break;
+        case "#DBF0F3":
+          resoults = "#5ABECF";
+          break;
         default:
           resoults = "";
       }
@@ -104,18 +107,13 @@ export default {
     };
     const editTagClick = (types, rows) => {
       console.log("typestypes", types);
+      if (types.keys == 0) {
+        //编辑
+        ctx.emit("editClick", rows, types.kinds);
+        store.commit("setEditClick", rows);
+      }
       if (types.kinds == "role") {
-        if (types.keys == 0) {
-          //编辑
-          // pagedata.dialogMsg.addvisible = true;
-          // pagedata.dialogMsg.isAdd = true;
-          let edits = {
-            rows: rows,
-            dialogMsg: pagedata.dialogMsg,
-          };
-          ctx.emit("editClick", rows);
-          store.commit("setEditClick", rows);
-        } else if (types.keys == 1) {
+        if (types.keys == 1) {
           //权限
         }
       }

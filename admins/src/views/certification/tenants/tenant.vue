@@ -69,14 +69,14 @@ export default {
           ktit: "编辑",
           icons: "bj",
           colors: "#E7E7FF",
-          kinds: "user",
+          kinds: "tenant",
         },
         {
           keys: 1,
           ktit: "管理链接字符串",
           icons: "glljzfc",
           colors: "#FBEBE6",
-          kinds: "user",
+          kinds: "tenant",
         },
         {
           keys: 3,
@@ -90,7 +90,7 @@ export default {
           ktit: "删除",
           icons: "sc_17",
           colors: "#FBEBE6",
-          kinds: "user",
+          kinds: "tenant",
         },
       ],
       // dialogMsgs: {},
@@ -144,7 +144,7 @@ export default {
       // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
 
-    const editClick = (val) => {
+    const editClick = (val, kinds) => {
       let params = {
         isAdd: true,
         addTit: "编辑角色",
@@ -155,7 +155,7 @@ export default {
 
       pagedata.formData = val;
       pagedata.editsId = val.id;
-      console.log("vals", val);
+      console.log("vals", kinds);
     };
     const editInterface = () => {
       certification.roles

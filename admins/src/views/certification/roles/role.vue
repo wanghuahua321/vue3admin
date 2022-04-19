@@ -135,7 +135,7 @@ export default {
       // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
 
-    const editClick = (val) => {
+    const editClick = (val, kinds) => {
       let params = {
         isAdd: true,
         addTit: "编辑角色",
@@ -146,7 +146,7 @@ export default {
 
       pagedata.formData = val;
       pagedata.editsId = val.id;
-      console.log("vals", val);
+      console.log("vals", kinds);
     };
     const editInterface = () => {
       certification.roles
