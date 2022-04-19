@@ -1,24 +1,25 @@
 <template>
   <div class="createForm">
-    Look how they shine for you
-    <!-- {{$store.state.editClick}} -->
-    <a-form-model ref="roleForm" :model="createRoleform" :rules="rules">
-      <a-form-model-item ref="name" label="RoleName" prop="name">
-        <a-input v-model="createRoleform.name" />
-      </a-form-model-item>
-      <a-form-model-item>
+
+    <a-form ref="roleForm" :model="createRoleform" :rules="rules">
+      <a-form-item class="formItems" ref="names" name="name">
+        <span slot="label">*name</span>
+        <a-input v-model="createRoleform.name" placeholder="请输入渠道名称" />
+      </a-form-item>
+
+      <a-form-item>
         <a-checkbox v-model="createRoleform.isDefault">
           <!-- 默认 -->
-          1
+          默认
         </a-checkbox>
-      </a-form-model-item>
-      <a-form-model-item>
+      </a-form-item>
+      <a-form-item>
         <a-checkbox v-model="createRoleform.isPublic">
           <!-- 公开 -->
-          1
+          公开
         </a-checkbox>
-      </a-form-model-item>
-    </a-form-model>
+      </a-form-item>
+    </a-form>
 
   </div>
 </template>
@@ -49,17 +50,14 @@ export default {
       formData: {},
       createRoleform: {},
       rules: {
-        name: [
-          {
-            required: true,
-            message: "请先填写",
-            trigger: ["blur", "change"],
-          },
-        ],
+        name: {
+          required: true,
+          message: "Please input name",
+        },
       },
     });
     onMounted(() => {
-      // console.log("99999999", store.state.editClick);
+      console.log("99999999", pagedata.formData);
 
       if (pagedata.formData) {
         pagedata.createRoleform = { ...store.state.editClick };
@@ -75,4 +73,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.createForm {
+  width: 100%;
+  min-height: 180px;
+  .formItems {
+    // flex-direction: column !important;
+    // // justify-content: space-around;
+    // align-items: flex-start;
+  }
+}
 </style>

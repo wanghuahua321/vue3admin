@@ -1,15 +1,28 @@
 <template>
   <div class="tables">
+
     <a-table :rowKey="record=>record.id" :columns="table_header" :data-source="table_data" :pagination="pagination" @change="handleTableChange">
       <template #isPublic="{text}">
         {{filterData(text)}}
       </template>
+
       <template #operation="{record}">
-        {{record.isPublic}}
-        <a href="javascript:;" @click="edit_role_click(record)">修改</a>
-        <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
+
+        <!-- <a href="javascript:;" @click="edit_role_click(record)">修改</a> -->
+
+        <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
+          <div class="taglis" :style="filterChange(tag.colors)">
+            <svg-icon :iconName="tag.icons" />
+            <span class="tagspan"> {{ tag.ktit }}</span>
+          </div>
+        </a-tag>
+        <!-- <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
           <a href="javascript:;">删除</a>
-        </a-popconfirm>
+        </a-popconfirm> -->
+        <!-- <a href="javascript:;" @click="permissions(record)">权限</a> -->
+      </template>
+      <template #customTitle>
+        1111
       </template>
     </a-table>
   </div>
@@ -34,6 +47,12 @@ export default {
         return [];
       },
     },
+    tagList: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   setup(props, ctx) {
     console.log("props", props.table_data);
@@ -53,20 +72,49 @@ export default {
     });
     onMounted(() => {});
     const handleTableChange = () => {};
-    const edit_role_click = (rows) => {
-      ctx.emit("editClick", rows);
-      store.commit("setEditClick", rows);
-    };
+
     function filterData(val) {
       let isPub = "";
       val ? (isPub = "是") : (isPub = "否");
       return isPub;
     }
+
+    function filterChange(vals) {
+      let resoults = "";
+      switch (vals) {
+        case "#E7E7FF":
+          resoults = "#5561FF";
+          break;
+        case "#FBEBE6":
+          resoults = "#FF6B48";
+          break;
+        default:
+          resoults = "";
+      }
+      return `color:${resoults}`;
+    }
+    const permissions = () => {
+      console.log("permissions");
+    };
+    const editTagClick = (types, rows) => {
+      console.log("typestypes", types);
+      if (types.kinds == "role") {
+        if (types.keys == 0) {
+          //编辑
+          ctx.emit("editClick", rows);
+          store.commit("setEditClick", rows);
+        } else if (types.keys == 1) {
+          //权限
+        }
+      }
+    };
     return {
       ...toRefs(pagedata),
       handleTableChange,
-      edit_role_click,
       filterData,
+      permissions,
+      filterChange,
+      editTagClick,
     };
   },
 };
@@ -82,6 +130,26 @@ export default {
   }
   :deep(.ant-table-tbody > tr > td) {
     border-bottom: 0px solid #f0f0f0 !important;
+  }
+  :deep(.ant-tag) {
+    border-radius: 6px;
+    font-weight: 600;
+  }
+}
+
+.taglis {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 0px 6px;
+  .tagspan {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-family: SourceHanSansCN-Medium;
   }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="role">
     role
-    <tables :table_header="roleHeader" :table_data="roleData" @editClick="editClick"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick"></tables>
 
     <permissionDialog ref="permissionDialog"></permissionDialog>
-    <a-modal :title="newRoleTitle" :visible="visible" :maskClosable="false" :confirm-loading="confirmLoading" @ok="handleOk" @cancel="handleCancel">
+    <a-modal title="11111" :visible="visible" :maskClosable="false" :confirm-loading="confirmLoading" @ok="handleOk" @cancel="handleCancel">
       <createForm v-if="visible" :formData="formData" ref="createRole"></createForm>
     </a-modal>
 
@@ -41,13 +41,30 @@ export default {
           slots: { customRender: "isPublic" },
         },
         {
-          title: "operation",
+          title: "操作",
           dataIndex: "operation",
+          // slots: { customRender: "operation" },
           slots: { customRender: "operation" },
         },
       ],
       newRoleTitle: "",
       confirmLoading: false,
+      tagLists: [
+        {
+          keys: 0,
+          ktit: "编辑",
+          icons: "bj",
+          colors: "#E7E7FF",
+          kinds: "role",
+        },
+        {
+          keys: 1,
+          ktit: "权限",
+          icons: "qx",
+          colors: "#FBEBE6",
+          kinds: "role",
+        },
+      ],
     });
     onMounted(() => {
       getRoles();
@@ -63,9 +80,13 @@ export default {
         });
     };
 
-    const handleOk = () => {};
+    const handleOk = () => {
+      pagedata.visible = false;
+    };
 
-    const handleCancel = () => {};
+    const handleCancel = () => {
+      pagedata.visible = false;
+    };
 
     const editClick = (val, Boolean) => {
       console.log("vals", val);
