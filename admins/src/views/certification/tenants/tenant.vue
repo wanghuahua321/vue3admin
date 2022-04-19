@@ -7,7 +7,7 @@
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
-      <createForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole"></createForm>
+      <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole"></tenantForm>
     </a-modal>
 
   </div>
@@ -17,7 +17,7 @@
 import { reactive, onMounted, toRefs, watch, toRef, PropType, ref } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
-import createForm from "../component/createForm.vue";
+import tenantForm from "./component/tenantForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
 interface dialogMsgss {
   isAdd?: boolean;
@@ -30,7 +30,7 @@ export default {
   components: {
     tables,
     permissionDialog,
-    createForm,
+    tenantForm,
   },
 
   props: {
@@ -156,6 +156,7 @@ export default {
       pagedata.formData = val;
       pagedata.editsId = val.id;
       console.log("vals", kinds);
+      console.log("vals", val);
     };
     const editInterface = () => {
       certification.roles
