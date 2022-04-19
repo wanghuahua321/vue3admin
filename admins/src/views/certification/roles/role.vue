@@ -7,14 +7,14 @@
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
-      <createForm v-if="dialogMsgs.addvisible" :formData="formData" :isEdit="dialogMsgs.isAdd" ref="createRole"></createForm>
+      <createForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole"></createForm>
     </a-modal>
 
   </div>
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs, watch, toRef, PropType } from "vue";
+import { reactive, onMounted, toRefs, watch, toRef, PropType, ref } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import createForm from "../component/createForm.vue";
@@ -43,8 +43,10 @@ export default {
   },
 
   setup(props, ctx) {
+    const createRole = ref();
     const pagedata = reactive({
       formData: {},
+      editsId: "",
       roleData: [],
       roleHeader: [
         {
@@ -109,8 +111,23 @@ export default {
     // );
 
     const handleOk = () => {
-      // (props.dialogMsgs as dialogMsgs).addvisible = false;
-      ctx.emit("closedia");
+      console.log("createRole.value.roleForm", createRole.value.createRoleform);
+      // let editParam = {
+      //   name: createRole.value.createRoleform.name,
+      //   isDefault: createRole.value.createRoleform.isDefault,
+      //   isPublic: createRole.value.createRoleform.isPublic,
+      //   concurrencyStamp: createRole.value.createRoleform.concurrencyStamp,
+      // };
+      (pagedata.formData as any).name = "sdssss";
+      createRole.value.roleForm
+        .validate()
+        .then(() => {
+          editInterface();
+          ctx.emit("closedia");
+        })
+        .catch((error) => {
+          console.log("error", error);
+        });
     };
 
     const handleCancel = () => {
@@ -120,19 +137,24 @@ export default {
 
     const editClick = (val) => {
       let params = {
-        isAdd: false,
+        isAdd: true,
         addTit: "编辑角色",
         addvisible: false,
         confirmLoading: false,
       };
       ctx.emit("editDialog", params);
-      // (pagedata.dialogMsgs as dialogMsgs).addvisible = true;
-      // (pagedata.dialogMsgs as dialogMsgs).isAdd = false;
-      // (pagedata.dialogMsgs as dialogMsgs).addTit = "bianji";
 
+      pagedata.formData = val;
+      pagedata.editsId = val.id;
       console.log("vals", val);
-      // pagedata.visible = true;
-      // pagedata.dialogMsgs = val.dialogMsg;
+    };
+    const editInterface = () => {
+      certification.roles
+        .editRoles(pagedata.editsId, pagedata.formData)
+        .then((res) => {})
+        .catch((error) => {
+          console.log(error);
+        });
     };
     return {
       ...toRefs(pagedata),
@@ -140,6 +162,8 @@ export default {
       editClick,
       handleOk,
       handleCancel,
+      createRole,
+      editInterface,
     };
   },
 };

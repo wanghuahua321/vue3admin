@@ -1,27 +1,25 @@
 <template>
-  <div class="createForm">
 
-    <a-form ref="roleForm" :model="createRoleform" :rules="rules">
-      <a-form-item class="formItems" ref="names" name="name">
-        <span slot="label">*name</span>
-        <a-input v-model="createRoleform.name" placeholder="请输入渠道名称" />
-      </a-form-item>
+  <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
+    <a-form-item class="formItems" ref="names" name="name">
+      <span slot="label">*name</span>
+      <a-input v-model:value="createRoleform.name" placeholder="请输入渠道名称" />
+    </a-form-item>
 
-      <a-form-item>
-        <a-checkbox v-model="createRoleform.isDefault">
-          <!-- 默认 -->
-          默认 {{isEdit}}
-        </a-checkbox>
-      </a-form-item>
-      <a-form-item>
-        <a-checkbox v-model="createRoleform.isPublic">
-          <!-- 公开 -->
-          公开
-        </a-checkbox>
-      </a-form-item>
-    </a-form>
+    <a-form-item>
+      <a-checkbox v-model:checked="createRoleform.isDefault">
+        <!-- 默认 -->
+        默认
+      </a-checkbox>
+    </a-form-item>
+    <a-form-item>
+      <a-checkbox v-model:checked="createRoleform.isPublic">
+        <!-- 公开 -->
+        公开
+      </a-checkbox>
+    </a-form-item>
+  </a-form>
 
-  </div>
 </template>
 <script lang='ts'>
 import { reactive, onMounted, toRefs, ref } from "vue";
@@ -47,7 +45,7 @@ export default {
     const roleForm = ref();
     const store = useStore();
     const pagedata = reactive({
-      formData: {},
+      formDatas: {},
       createRoleform: {},
       rules: {
         name: {
@@ -56,13 +54,17 @@ export default {
         },
       },
     });
+    if (props.isEdit) {
+      pagedata.createRoleform = { ...store.state.editClick };
+    } else {
+      pagedata.createRoleform = {};
+    }
+
     onMounted(() => {
       // console.log("99999999", pagedata.formData);
-      // console.log("isEdit", props.isEdit);
-
-      if (pagedata.formData) {
-        pagedata.createRoleform = { ...store.state.editClick };
-      }
+      // console.log("isEdit", props.formData);
+      // if (pagedata.formDatas) {
+      // }
     });
 
     return {
