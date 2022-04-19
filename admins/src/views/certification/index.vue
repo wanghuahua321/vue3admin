@@ -8,7 +8,7 @@
       <div class="certsRig">
         <a-button class="antActive">
           <template #icon>
-            <div class="btns">
+            <div class="btns" @click="addRoles()">
               <svg-icon iconName="xj" />
               新建角色
             </div>
@@ -29,7 +29,7 @@
     <div class="certCont">
 
       <router-view>
-        <component :is="showCom"></component>
+        <component :is="showCom" :isAdd="isAdd"></component>
       </router-view>
 
     </div>
@@ -39,9 +39,9 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs, watch } from "vue";
 import tabbar from "@/components/tabbar.vue";
-import role from "./component/role.vue";
-import user from "./component/user.vue";
-import tenant from "./component/tenant.vue";
+import role from "./roles/role.vue";
+import user from "./users/user.vue";
+import tenant from "./tenants/tenant.vue";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 export default {
   name: "certiFication",
@@ -73,9 +73,13 @@ export default {
         title: "角色",
       },
       showCom: "role",
+      isAdd: false,
     });
     const choseTab = (data) => {
       pageData.choseOne = data;
+    };
+    const addRoles = () => {
+      pageData.isAdd = true;
     };
 
     watch(
@@ -88,6 +92,7 @@ export default {
     return {
       ...toRefs(pageData),
       choseTab,
+      addRoles,
     };
   },
 };

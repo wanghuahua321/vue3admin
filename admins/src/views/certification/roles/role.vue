@@ -4,7 +4,8 @@
     <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick"></tables>
 
     <permissionDialog ref="permissionDialog"></permissionDialog>
-    <a-modal title="11111" :visible="visible" :maskClosable="false" :confirm-loading="confirmLoading" @ok="handleOk" @cancel="handleCancel">
+
+    <a-modal :title="diagoTit" :visible="visible" :maskClosable="false" :confirm-loading="confirmLoading" @ok="handleOk" @cancel="handleCancel">
       <createForm v-if="visible" :formData="formData" ref="createRole"></createForm>
     </a-modal>
 
@@ -15,7 +16,7 @@
 import { reactive, onMounted, toRefs } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
-import createForm from "./createForm.vue";
+import createForm from "../component/createForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
 export default {
   name: "role",
@@ -24,11 +25,18 @@ export default {
     permissionDialog,
     createForm,
   },
+  props: {
+    isAdd: {
+      type: Boolean,
+      default: true,
+    },
+  },
   setup() {
     const pagedata = reactive({
       visible: false,
       formData: {},
       roleData: [],
+      diagoTit: "新建角色",
       roleHeader: [
         {
           title: "角色名称",
