@@ -10,7 +10,7 @@
       <a-form-item>
         <a-checkbox v-model="createRoleform.isDefault">
           <!-- 默认 -->
-          默认
+          默认 {{isEdit}}
         </a-checkbox>
       </a-form-item>
       <a-form-item>
@@ -43,7 +43,7 @@ export default {
       },
     },
   },
-  setup() {
+  setup(props) {
     const roleForm = ref();
     const store = useStore();
     const pagedata = reactive({
@@ -57,7 +57,8 @@ export default {
       },
     });
     onMounted(() => {
-      console.log("99999999", pagedata.formData);
+      // console.log("99999999", pagedata.formData);
+      // console.log("isEdit", props.isEdit);
 
       if (pagedata.formData) {
         pagedata.createRoleform = { ...store.state.editClick };

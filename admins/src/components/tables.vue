@@ -69,6 +69,12 @@ export default {
       },
       table_header: [],
       table_data: [],
+      dialogMsg: {
+        isAdd: false,
+        addTit: "编辑角色",
+        addvisible: false,
+        confirmLoading: false,
+      },
     });
     onMounted(() => {});
     const handleTableChange = () => {};
@@ -101,6 +107,12 @@ export default {
       if (types.kinds == "role") {
         if (types.keys == 0) {
           //编辑
+          // pagedata.dialogMsg.addvisible = true;
+          // pagedata.dialogMsg.isAdd = true;
+          let edits = {
+            rows: rows,
+            dialogMsg: pagedata.dialogMsg,
+          };
           ctx.emit("editClick", rows);
           store.commit("setEditClick", rows);
         } else if (types.keys == 1) {

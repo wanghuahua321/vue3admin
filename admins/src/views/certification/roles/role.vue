@@ -5,19 +5,26 @@
 
     <permissionDialog ref="permissionDialog"></permissionDialog>
 
-    <a-modal :title="diagoTit" :visible="visible" :maskClosable="false" :confirm-loading="confirmLoading" @ok="handleOk" @cancel="handleCancel">
-      <createForm v-if="visible" :formData="formData" ref="createRole"></createForm>
+    <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
+      @ok="handleOk" @cancel="handleCancel">
+      <createForm v-if="dialogMsgs.addvisible" :formData="formData" :isEdit="dialogMsgs.isAdd" ref="createRole"></createForm>
     </a-modal>
 
   </div>
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs, watch, toRef, PropType } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import createForm from "../component/createForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
+interface dialogMsgss {
+  isAdd?: boolean;
+  addTit?: string;
+  addvisible?: boolean;
+  confirmLoading?: boolean;
+}
 export default {
   name: "role",
   components: {
@@ -25,18 +32,20 @@ export default {
     permissionDialog,
     createForm,
   },
+
   props: {
-    isAdd: {
-      type: Boolean,
-      default: true,
+    dialogMsgs: {
+      type: Object,
+      default: () => {
+        return {};
+      },
     },
   },
-  setup() {
+
+  setup(props, ctx) {
     const pagedata = reactive({
-      visible: false,
       formData: {},
       roleData: [],
-      diagoTit: "新建角色",
       roleHeader: [
         {
           title: "角色名称",
@@ -73,9 +82,12 @@ export default {
           kinds: "role",
         },
       ],
+      // dialogMsgs: {},
     });
+    // pagedata.dialogMsgs = toRefs(props.dialogMsg);
     onMounted(() => {
       getRoles();
+      // console.log("dialogMsg", pagedata.dialogMsgs);
     });
     const getRoles = () => {
       certification.roles
@@ -88,17 +100,39 @@ export default {
         });
     };
 
+    // watch(
+    //   () => pagedata.dialogMsgs,
+    //   (newsvalue) => {
+    //     console.log("999", newsvalue);
+    //   },
+    //   { immediate: true, deep: true }
+    // );
+
     const handleOk = () => {
-      pagedata.visible = false;
+      // (props.dialogMsgs as dialogMsgs).addvisible = false;
+      ctx.emit("closedia");
     };
 
     const handleCancel = () => {
-      pagedata.visible = false;
+      ctx.emit("closedia");
+      // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
 
-    const editClick = (val, Boolean) => {
+    const editClick = (val) => {
+      let params = {
+        isAdd: false,
+        addTit: "编辑角色",
+        addvisible: false,
+        confirmLoading: false,
+      };
+      ctx.emit("editDialog", params);
+      // (pagedata.dialogMsgs as dialogMsgs).addvisible = true;
+      // (pagedata.dialogMsgs as dialogMsgs).isAdd = false;
+      // (pagedata.dialogMsgs as dialogMsgs).addTit = "bianji";
+
       console.log("vals", val);
-      pagedata.visible = true;
+      // pagedata.visible = true;
+      // pagedata.dialogMsgs = val.dialogMsg;
     };
     return {
       ...toRefs(pagedata),

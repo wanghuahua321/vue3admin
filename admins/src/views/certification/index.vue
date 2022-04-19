@@ -27,12 +27,11 @@
     </div>
 
     <div class="certCont">
-
       <router-view>
-        <component :is="showCom" :isAdd="isAdd"></component>
+        <component :is="showCom" :dialogMsgs="dialogMsg" @closedia="closedia" @editDialog="editDialog"></component>
       </router-view>
-
     </div>
+
   </div>
 </template>
 
@@ -73,13 +72,25 @@ export default {
         title: "角色",
       },
       showCom: "role",
-      isAdd: false,
+      dialogMsg: {
+        isAdd: true,
+        addTit: "新建角色",
+        addvisible: false,
+        confirmLoading: false,
+      },
     });
     const choseTab = (data) => {
       pageData.choseOne = data;
     };
     const addRoles = () => {
-      pageData.isAdd = true;
+      pageData.dialogMsg.addvisible = true;
+    };
+    const closedia = () => {
+      pageData.dialogMsg.addvisible = false;
+    };
+    const editDialog = (params) => {
+      pageData.dialogMsg = params;
+      addRoles();
     };
 
     watch(
@@ -88,11 +99,18 @@ export default {
         pageData.showCom = newsvalue.key;
       }
     );
+
+    const handleOk = () => {};
+    const handleCancel = () => {};
     onMounted(() => {});
     return {
       ...toRefs(pageData),
       choseTab,
       addRoles,
+      handleOk,
+      handleCancel,
+      closedia,
+      editDialog,
     };
   },
 };
