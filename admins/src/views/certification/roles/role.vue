@@ -3,7 +3,7 @@
     role
     <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick"></tables>
 
-    <permissionDialog ref="permissionDialog"></permissionDialog>
+    <permissionDialog ref="permissionDialog" providerName="R" :perFormData="formData"></permissionDialog>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">

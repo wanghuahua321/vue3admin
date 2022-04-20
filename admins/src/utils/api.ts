@@ -45,6 +45,14 @@ export const certification={
   },
   tenant:{
     getTenant:()=>http.get(portalBasicApi + "/multi-tenancy/tenants"), // 获取用户列表
+  },
+  Permissions:{
+    // 获取get 列表
+    getPermissions:(query)=>http.get(portalBasicApi + `/permission-management/permissions?providerKey=${query.providerKey}&providerName=${query.providerName}`),
+    
+    updataPermissions:(query,payload)=>http.put(portalBasicApi + `/permission-management/permissions?providerKey=${query.providerKey}&providerName=${query.providerName}`,payload), // 修改
   }
+
+
 
 }
