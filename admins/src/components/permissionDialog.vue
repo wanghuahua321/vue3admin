@@ -11,14 +11,11 @@
         </a-tab-pane>
       </a-tabs>
     </a-form>
-    <div slot="footer" class="dialog-footer">
-      <a-button @click="dialogPermissionFormVisible = false">
-        取消
-      </a-button>
-      <a-button type="primary" @click="updatePermissionData()">
-        保存
-      </a-button>
-    </div>
+    <template #footer>
+      <a-button key="back" @click="dialogPermissionFormVisible = false">取消</a-button>
+      <a-button key="submit" type="primary" :loading="loading" @click="updatePermissionData()">保存</a-button>
+    </template>
+
   </a-modal>
 </template>
 
@@ -131,6 +128,53 @@ export default {
       return false;
     }
 
+    function updatePermissionData() {
+      const tempData: any = [];
+      let permissionDatas = pageData.permissionData as any;
+      for (const i in permissionDatas.groups) {
+        const keys = pageData.checkedKeys;
+
+        const group = permissionDatas.groups[i];
+        for (const j in group.permissions) {
+          if (
+            group.permissions[j].isGranted &&
+            !keys.some((v: any) => v === group.permissions[j].name)
+          ) {
+            tempData.push({
+              isGranted: false,
+              name: group.permissions[j].name,
+            });
+          } else if (
+            !group.permissions[j].isGranted &&
+            keys.some((v: any) => v === group.permissions[j].name)
+          ) {
+            tempData.push({
+              isGranted: true,
+              name: group.permissions[j].name,
+            });
+          }
+        }
+      }
+
+      // console.log("permissionsQuery", pageData.permissionsQuery);
+
+      certification.Permissions.getPermissions(pageData.permissionsQuery)
+        .then((res) => {
+          pageData.dialogPermissionFormVisible = false;
+          console.log(
+            "permissionsQuery.providerKey,",
+            pageData.permissionsQuery.providerKey
+          );
+          console.log(
+            "permissionsQuery.providerName,",
+            pageData.permissionsQuery.providerName
+          );
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+
     onMounted(() => {
       getPermission();
     });
@@ -141,6 +185,7 @@ export default {
       getPermission,
       isGrantedByOtherProviderName,
       transformPermissionTree,
+      updatePermissionData,
     };
   },
 };
