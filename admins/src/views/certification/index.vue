@@ -68,12 +68,12 @@ export default {
         },
       ],
       choseOne: {
-        key: "role",
-        title: "角色",
+        key: "user",
+        title: "用户",
       },
-      showCom: "role",
+      showCom: "user",
       dialogMsg: {
-        isAdd: true,
+        isAdd: false,
         addTit: "新建角色",
         addvisible: false,
         confirmLoading: false,

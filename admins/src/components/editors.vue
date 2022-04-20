@@ -9,7 +9,7 @@
 
 <script>
 import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs } from 'vue';
-import WangEditor from 'wangeditor';
+// import WangEditor from 'wangeditor';
 import { useRoute } from 'vue-router'
 
 export default {
