@@ -79,11 +79,11 @@ export default {
           kinds: "tenant",
         },
         {
-          keys: 3,
+          keys: 2,
           ktit: "管理功能",
           icons: "glgn",
           colors: "#DBF0F3",
-          kinds: "user",
+          kinds: "tenant",
         },
         {
           keys: 3,

@@ -1,5 +1,4 @@
 <template>
-  {{isEdit}}
   <a-form v-if="isEdit" class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" label="租户名称" ref="names" name="userName">
       <a-input v-model:value="createRoleform.userName" placeholder="请输入租户名称" />

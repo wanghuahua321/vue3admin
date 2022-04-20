@@ -13,7 +13,12 @@
         <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
           <div class="taglis" :style="filterChange(tag.colors)">
             <svg-icon :iconName="tag.icons" />
-            <span class="tagspan"> {{ tag.ktit }}</span>
+            <span class="tagspan" v-if="tag.ktit=='删除'">
+              <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
+                删除
+              </a-popconfirm>
+            </span>
+            <span v-else class="tagspan"> {{ tag.ktit }}</span>
           </div>
         </a-tag>
         <!-- <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
@@ -110,13 +115,25 @@ export default {
       if (types.keys == 0) {
         //编辑
         ctx.emit("editClick", rows, types.kinds);
-        store.commit("setEditClick", rows);
       }
       if (types.kinds == "role") {
         if (types.keys == 1) {
           //权限
         }
+      } else if (types.kinds == "tenant") {
+        if (types.keys == 1) {
+          //管理链接字符串
+          ctx.emit("editClick", rows, types.kinds);
+        } else if (types.keys == 2) {
+          //管理功能
+          ctx.emit("editClick", rows, types.kinds);
+        }
       }
+      store.commit("setEditClick", rows);
+    };
+
+    const del_role_click = (record) => {
+      console.log("values", record);
     };
     return {
       ...toRefs(pagedata),
@@ -125,6 +142,7 @@ export default {
       permissions,
       filterChange,
       editTagClick,
+      del_role_click,
     };
   },
 };
