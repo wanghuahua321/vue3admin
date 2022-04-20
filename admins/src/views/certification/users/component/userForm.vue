@@ -16,7 +16,8 @@
   <a-form v-else class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-tabs tab-position="top">
       <a-tab-pane key="1" tab="用户信息">
-        <a-form-item label="头像">
+        <a-form-item>
+          <ImgCropper></ImgCropper>
           <!-- <a-input v-model:value="createRoleform.email" placeholder="请输入管理员电子邮箱地址" /> -->
         </a-form-item>
         <a-form-item label="用户名称" name="userName">
@@ -59,13 +60,13 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs, ref } from "vue";
 import { certification } from "@/utils/api";
-// import ImgCropper from "./ImgCropper.vue";
+import ImgCropper from "./ImgCropper.vue";
 import { useStore } from "vuex";
 
 export default {
   name: "createForm",
   components: {
-    // ImgCropper,
+    ImgCropper,
   },
   props: {
     isEdit: {
