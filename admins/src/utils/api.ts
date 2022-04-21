@@ -37,16 +37,21 @@ export const certification={
   roles:{
     getRoles:()=>http.get(portalBasicApi + "/identity/roles"), // 获取角色列表
     editRoles:(id,params)=>http.put(portalBasicApi + "/identity/roles/"+id+"",params), // 获取角色列表  
+
   },
 
   user:{
     getUsers:()=>http.get(portalBasicApi + "/identity/users"), // 获取用户列表
     deleteUser:(id)=>http.delete(portalBasicApi + `/identity/users/${id}`), // 删除
+    addUser:(params)=>http.post(portalBasicApi + "/app/user/rpa",params), //新增
+    updataUser:(id,params)=>http.put(portalBasicApi + "/api/identity/users/"+id+"",params), // 修改
 
   },
   tenant:{
     getTenant:()=>http.get(portalBasicApi + "/multi-tenancy/tenants"), // 获取用户列表
     delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa"), // 删除
+    addTenant:(params)=>http.post(portalBasicApi + "/app/tenant/rpa",params), //新增
+    updataTenant:(id,params)=>http.put(portalBasicApi + "/app/tenant/"+id+"/rpa",params), // 修改
   },
   Permissions:{
     // 获取get 列表
