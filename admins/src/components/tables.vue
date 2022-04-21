@@ -153,9 +153,19 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-      } else {
+      } else if (record.kinds == "tenant") {
         certification.tenant
           .delTenant(record.id)
+          .then((res) => {
+            message.success("删除成功");
+            ctx.emit("refrcoshAgain");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        certification.roles
+          .deleteRoles(record.id)
           .then((res) => {
             message.success("删除成功");
             ctx.emit("refrcoshAgain");

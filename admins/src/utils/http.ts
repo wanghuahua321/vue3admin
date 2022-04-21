@@ -96,6 +96,7 @@ export default {
       headers: {
         "X-Requested-With": "XMLHttpRequest",
         "Content-Type": "application/json;charset=UTF-8",
+        "accept-language":"zh-Hans"
       },
     })
       .then((response) => {
@@ -135,6 +136,7 @@ export default {
     // }
 const headersString:any = {
   "X-Requested-With": "XMLHttpRequest",
+  "accept-language":"zh-Hans"
 }
 // if(url.includes('facebook-operation/contacts')) {
 //   headersString = {...headersString, "accept": "*/*", RequestVerificationToken: "CfDJ8Dx0E8ZfzwBPsKhurp3byFR61YJJ4x2EUgA0JZG8wVROhQ-6b5ORZLGD38GJvLzewVJSPXmRbTL1tbWa7rEUzAnmPPsgI4a_nbFVxGqRxejJWER2BC1aItXcPQuLZd3xHw7ye-IVRpu6yqCEZaRD_rY"}

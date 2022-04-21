@@ -1,9 +1,11 @@
 <template>
   <div class="role">
     role
-    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @closes="closes"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @closes="closes" @refrcoshAgain="getRoles">
+    </tables>
 
-    <permissionDialog ref="permissionDialog" providerName="R" :perFormData="formData" :diaVisible="diaVisible"></permissionDialog>
+    <permissionDialog ref="permissionDialog" providerName="R" :perFormData="formData" :diaVisible="diaVisible" @closes="diaVisible=false">
+    </permissionDialog>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
@@ -20,6 +22,7 @@ import { certification } from "@/utils/api";
 import createForm from "../component/createForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
 import { message } from "ant-design-vue";
+import { useStore } from "vuex";
 interface dialogMsgss {
   isAdd?: boolean;
   addTit?: string;
@@ -45,6 +48,7 @@ export default {
 
   setup(props, ctx) {
     const createRole = ref();
+    const store = useStore();
     const pagedata = reactive({
       formData: {},
       editsId: "",
@@ -99,6 +103,7 @@ export default {
         addvisible: false,
         confirmLoading: false,
       },
+      types: "",
       // dialogMsgs: {},
     });
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
@@ -137,8 +142,11 @@ export default {
       createRole.value.roleForm
         .validate()
         .then(() => {
-          addRoles();
-          // editInterface();
+          if (props.dialogMsgs.isAdd) {
+            addRoles();
+          } else {
+            editInterface();
+          }
           ctx.emit("closedia");
         })
         .catch((error) => {
@@ -154,20 +162,30 @@ export default {
       pagedata.dioParams.addvisible = false;
     };
 
-    const editClick = (val, kinds) => {
+    const editClick = (val, kinds, ktit) => {
+      let dialogMsg = {
+        isAdd: false,
+        addTit: ktit,
+        addvisible: true,
+        confirmLoading: false,
+      };
       if (kinds == "permissions") {
         pagedata.diaVisible = true;
       } else {
-        ctx.emit("editDialog", pagedata.dioParams);
+        store.commit("setDialogMsg", dialogMsg);
       }
       pagedata.formData = val;
       pagedata.editsId = val.id;
+      pagedata.types = ktit;
+      console.log("formData", val);
       console.log("vals", kinds);
     };
     const editInterface = () => {
       certification.roles
-        .editRoles(pagedata.editsId, pagedata.formData)
-        .then((res) => {})
+        .editRoles(pagedata.editsId, createRole.value.createRoleform)
+        .then((res) => {
+          message.success("保存成功");
+        })
         .catch((error) => {
           console.log(error);
         });

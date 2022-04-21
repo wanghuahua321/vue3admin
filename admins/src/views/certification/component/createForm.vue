@@ -1,8 +1,7 @@
 <template>
-
   <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" ref="names" name="name">
-      <span slot="label">*name</span>
+      <template #label>name</template>
       <a-input v-model:value="createRoleform.name" placeholder="请输入渠道名称" />
     </a-form-item>
 
@@ -55,9 +54,9 @@ export default {
       },
     });
     if (props.isEdit) {
-      pagedata.createRoleform = { ...store.state.editClick };
-    } else {
       pagedata.createRoleform = {};
+    } else {
+      pagedata.createRoleform = { ...store.state.editClick };
     }
 
     onMounted(() => {

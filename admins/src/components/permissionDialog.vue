@@ -1,14 +1,23 @@
 <template>
-  <a-modal title="111" v-model:visible="diaVisible" :maskClosable="false" @cancel="cancels">
+  <a-modal :title=" '权限-'+ permissionsQuery.providerKey" v-model:visible="diaVisible" :maskClosable="false" @cancel="cancels">
     <a-form label-position="top">
       <a-tabs tab-position="left">
         <a-tab-pane v-for="group in permissionData.groups" :key="group.name" :tab="group.displayName">
           <a-form-item :label="group.displayName">
-            <a-tree ref="permissionTree" checkable :tree-data="
+            <a-tree ref="permissionTree" :tree-data="
                                 transformPermissionTree(group.permissions)
-                            " v-model:replaceFields="treeDefaultProps" v-model:checkedKeys="checkedKeys" checkedKeys defaultExpandAll />
+                            " v-model:replaceFields="treeDefaultProps" v-model:checkedKeys="checkedKeys" checkable defaultExpandAll />
           </a-form-item>
         </a-tab-pane>
+
+        <!-- <a-tab-pane v-for="group in permissionData.groups" :key="group.name" :tab="group.displayName">
+          <a-form-item :label="group.displayName">
+            <a-tree ref="permissionTree" :tree-data="
+                                transformPermissionTree(group.permissions)
+                            " :replace-fields="treeDefaultProps" :checked-keys="checkedKeys" checkable check-strictly default-expand-all
+              @check="onCheck" />
+          </a-form-item>
+        </a-tab-pane> -->
       </a-tabs>
     </a-form>
     <template #footer>
@@ -128,9 +137,12 @@ export default {
 
     const cancels = () => {
       ctx.emit("closes");
+      pageData.checkedKeys.length = 0;
     };
 
     function updatePermissionData() {
+      console.log("pageData", pageData.checkedKeys);
+
       const tempData: any = [];
       let permissionDatas = pageData.permissionData as any;
       for (const i in permissionDatas.groups) {
