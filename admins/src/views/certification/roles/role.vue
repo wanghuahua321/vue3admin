@@ -19,6 +19,7 @@ import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import createForm from "../component/createForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
+import { message } from "ant-design-vue";
 interface dialogMsgss {
   isAdd?: boolean;
   addTit?: string;
@@ -83,6 +84,13 @@ export default {
           colors: "#FBEBE6",
           kinds: "role",
         },
+        {
+          keys: 2,
+          ktit: "删除",
+          icons: "sc_17",
+          colors: "#FBEBE6",
+          kinds: "role",
+        },
       ],
       diaVisible: false,
       dioParams: {
@@ -129,7 +137,8 @@ export default {
       createRole.value.roleForm
         .validate()
         .then(() => {
-          editInterface();
+          addRoles();
+          // editInterface();
           ctx.emit("closedia");
         })
         .catch((error) => {
@@ -163,6 +172,17 @@ export default {
           console.log(error);
         });
     };
+    const addRoles = () => {
+      certification.roles
+        .addRoles(createRole.value.createRoleform)
+        .then((res) => {
+          message.success("新增成功");
+          getRoles();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     return {
       ...toRefs(pagedata),
       getRoles,
@@ -172,6 +192,7 @@ export default {
       createRole,
       editInterface,
       closes,
+      addRoles,
     };
   },
 };

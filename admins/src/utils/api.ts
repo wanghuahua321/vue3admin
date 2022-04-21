@@ -36,8 +36,8 @@ export const certification={
   
   roles:{
     getRoles:()=>http.get(portalBasicApi + "/identity/roles"), // 获取角色列表
-    editRoles:(id,params)=>http.put(portalBasicApi + "/identity/roles/"+id+"",params), // 获取角色列表  
-
+    editRoles:(id,params)=>http.put(portalBasicApi + "/identity/roles/"+id+"",params), // 获取角色列表   
+    addRoles:(params)=>http.post(portalBasicApi + "/identity/roles",params), //新增
   },
 
   user:{
