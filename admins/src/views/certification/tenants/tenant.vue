@@ -16,6 +16,7 @@ import { reactive, onMounted, toRefs, watch, toRef, PropType, ref } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import tenantForm from "./component/tenantForm.vue";
+import { useStore } from "vuex";
 
 interface dialogMsgss {
   isAdd?: boolean;
@@ -41,6 +42,7 @@ export default {
 
   setup(props, ctx) {
     const createRole = ref();
+    const store = useStore();
     const pagedata = reactive({
       formData: {},
       editsId: "",
@@ -138,22 +140,18 @@ export default {
 
     const handleCancel = () => {
       ctx.emit("closedia");
-      // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
 
-    const editClick = (val, kinds) => {
-      let params = {
-        isAdd: true,
-        addTit: "编辑角色",
-        addvisible: false,
+    const editClick = (val, kinds, ktit) => {
+      let dialogMsg = {
+        isAdd: false,
+        addTit: ktit,
+        addvisible: true,
         confirmLoading: false,
       };
-      ctx.emit("editDialog", params);
-
+      store.commit("setDialogMsg", dialogMsg);
       pagedata.formData = val;
       pagedata.editsId = val.id;
-      console.log("vals", kinds);
-      console.log("vals", val);
     };
     const editInterface = () => {
       certification.roles

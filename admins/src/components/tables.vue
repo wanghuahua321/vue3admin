@@ -117,31 +117,29 @@ export default {
     };
     const editTagClick = (types, rows) => {
       console.log("typestypes", types);
+
       if (types.keys == 0) {
         //编辑
-        ctx.emit("editClick", rows, types.kinds);
+        ctx.emit("editClick", rows, types.kinds, types.ktit);
       }
       if (types.kinds == "role") {
-        types.keys == 1 ? ctx.emit("editClick", rows, "permissions") : "";
+        types.keys == 1
+          ? ctx.emit("editClick", rows, "permissions", types.ktit)
+          : "";
       } else if (types.kinds == "user") {
-        types.keys == 1 ? ctx.emit("editClick", rows, "permissions") : "";
+        types.keys == 1
+          ? ctx.emit("editClick", rows, "permissions", types.ktit)
+          : "";
       } else if (types.kinds == "tenant") {
         if (types.keys == 1) {
           //管理链接字符串
-          ctx.emit("editClick", rows, types.kinds);
+          ctx.emit("editClick", rows, types.kinds, types.ktit);
         } else if (types.keys == 2) {
           //管理功能
-          ctx.emit("editClick", rows, types.kinds);
+          ctx.emit("editClick", rows, types.kinds, types.ktit);
         }
       }
       store.commit("setEditClick", rows);
-      let dialogMsg = {
-        isAdd: false,
-        addTit: "编辑角色",
-        addvisible: true,
-        confirmLoading: false,
-      };
-      store.commit("setDialogMsg", dialogMsg);
     };
 
     const del_role_click = (record) => {

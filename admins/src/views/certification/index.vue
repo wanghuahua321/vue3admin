@@ -10,7 +10,7 @@
           <template #icon>
             <div class="btns" @click="addRoles()">
               <svg-icon iconName="xj" />
-              新建角色
+              新建{{choseOne.title}}
             </div>
           </template>
         </a-button>
@@ -97,11 +97,12 @@ export default {
 
     const choseTab = (data) => {
       pageData.choseOne = data;
+      console.log("pageData.choseOne", pageData.choseOne);
     };
     const addRoles = () => {
       let dialogMsg = {
         isAdd: true,
-        addTit: "新建角色",
+        addTit: "新建" + pageData.choseOne.title + "",
         addvisible: true,
         confirmLoading: false,
       };
@@ -112,9 +113,10 @@ export default {
       store.commit("setDialogMsgClo", false);
     };
     const editDialog = (params) => {
+      //  store.commit("setDialogMsgTit", types.ktit);
       // pageData.dialogMsg = params;
       // console.log("090909", pageData.dialogMsg);
-      addRoles();
+      // addRoles();
     };
 
     watch(
