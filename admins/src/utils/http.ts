@@ -194,7 +194,7 @@ const headersString:any = {
       });
   },
 
-  delete(url, params) {
+  delete(url, params?) {
     // store.commit("LOADING");
     return axios({
       method: "DELETE",

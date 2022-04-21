@@ -41,17 +41,16 @@ export const certification={
 
   user:{
     getUsers:()=>http.get(portalBasicApi + "/identity/users"), // 获取用户列表
-    deleteUser:(id)=>http.delete(portalBasicApi + "identity/users/",id), // 删除
+    deleteUser:(id)=>http.delete(portalBasicApi + `/identity/users/${id}`), // 删除
 
   },
   tenant:{
     getTenant:()=>http.get(portalBasicApi + "/multi-tenancy/tenants"), // 获取用户列表
-    delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa",id), // 删除
+    delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa"), // 删除
   },
   Permissions:{
     // 获取get 列表
-    getPermissions:(query)=>http.get(portalBasicApi + `/permission-management/permissions?providerKey=${query.providerKey}&providerName=${query.providerName}`),
-    
+    getPermissions:(query)=>http.get(portalBasicApi + `/permission-management/permissions?providerKey=${query.providerKey}&providerName=${query.providerName}`),  
     updataPermissions:(query,payload)=>http.put(portalBasicApi + `/permission-management/permissions?providerKey=${query.providerKey}&providerName=${query.providerName}`,payload), // 修改
   }
 
