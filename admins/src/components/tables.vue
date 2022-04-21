@@ -117,9 +117,9 @@ export default {
         ctx.emit("editClick", rows, types.kinds);
       }
       if (types.kinds == "role") {
-        if (types.keys == 1) {
-          //权限
-        }
+        types.keys == 1 ? ctx.emit("editClick", rows, "permissions") : "";
+      } else if (types.kinds == "user") {
+        types.keys == 1 ? ctx.emit("editClick", rows, "permissions") : "";
       } else if (types.kinds == "tenant") {
         if (types.keys == 1) {
           //管理链接字符串

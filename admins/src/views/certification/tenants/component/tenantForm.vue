@@ -4,6 +4,15 @@
     <a-form-item class="formItems" label="租户名称" ref="names" name="name">
       <a-input v-model:value="createRoleform.name" placeholder="请输入租户名称" />
     </a-form-item>
+    <a-form-item class="formItems" label="管理员电子邮件地址" ref="names" name="name">
+      <a-input v-model:value="createRoleform.name" placeholder="请输入管理员电子邮件地址" />
+    </a-form-item>
+    <a-form-item class="formItems" label="管理员密码" ref="names" name="name">
+      <a-input v-model:value="createRoleform.name" placeholder="请输入管理员密码" />
+    </a-form-item>
+    <a-form-item class="formItems" label="手机号" ref="names" name="name">
+      <a-input v-model:value="createRoleform.name" placeholder="请输入手机号" />
+    </a-form-item>
 
   </a-form>
 

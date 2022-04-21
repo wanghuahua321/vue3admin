@@ -16,7 +16,7 @@ import { reactive, onMounted, toRefs, watch, toRef, PropType, ref } from "vue";
 import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import tenantForm from "./component/tenantForm.vue";
-import permissionDialog from "@/components/permissionDialog.vue";
+
 interface dialogMsgss {
   isAdd?: boolean;
   addTit?: string;
@@ -27,7 +27,6 @@ export default {
   name: "tenant",
   components: {
     tables,
-    permissionDialog,
     tenantForm,
   },
 

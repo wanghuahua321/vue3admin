@@ -1,9 +1,9 @@
 <template>
   <div class="role">
     role
-    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @closes="closes"></tables>
 
-    <permissionDialog ref="permissionDialog" providerName="R" :perFormData="formData"></permissionDialog>
+    <permissionDialog ref="permissionDialog" providerName="R" :perFormData="formData" :diaVisible="diaVisible"></permissionDialog>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
@@ -84,6 +84,13 @@ export default {
           kinds: "role",
         },
       ],
+      diaVisible: false,
+      dioParams: {
+        isAdd: true,
+        addTit: "编辑角色",
+        addvisible: false,
+        confirmLoading: false,
+      },
       // dialogMsgs: {},
     });
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
@@ -134,16 +141,16 @@ export default {
       ctx.emit("closedia");
       // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
+    const closes = () => {
+      pagedata.dioParams.addvisible = false;
+    };
 
     const editClick = (val, kinds) => {
-      let params = {
-        isAdd: true,
-        addTit: "编辑角色",
-        addvisible: false,
-        confirmLoading: false,
-      };
-      ctx.emit("editDialog", params);
-
+      if (kinds == "permissions") {
+        pagedata.diaVisible = true;
+      } else {
+        ctx.emit("editDialog", pagedata.dioParams);
+      }
       pagedata.formData = val;
       pagedata.editsId = val.id;
       console.log("vals", kinds);
@@ -164,6 +171,7 @@ export default {
       handleCancel,
       createRole,
       editInterface,
+      closes,
     };
   },
 };

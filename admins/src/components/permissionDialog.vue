@@ -1,5 +1,5 @@
 <template>
-  <a-modal title="111" v-model:visible="dialogPermissionFormVisible" :maskClosable="false" @cancel="dialogPermissionFormVisible = false">
+  <a-modal title="111" v-model:visible="diaVisible" :maskClosable="false" @cancel="cancels">
     <a-form label-position="top">
       <a-tabs tab-position="left">
         <a-tab-pane v-for="group in permissionData.groups" :key="group.name" :tab="group.displayName">
@@ -12,7 +12,7 @@
       </a-tabs>
     </a-form>
     <template #footer>
-      <a-button key="back" @click="dialogPermissionFormVisible = false">取消</a-button>
+      <a-button key="back" @click="cancels">取消</a-button>
       <a-button key="submit" type="primary" :loading="loading" @click="updatePermissionData()">保存</a-button>
     </template>
 
@@ -26,12 +26,6 @@ export default {
   name: "permissionDialog",
   components: {},
   props: {
-    tabbraList: {
-      type: Array,
-      default: () => {
-        return [];
-      },
-    },
     providerName: {
       type: String,
       default: "",
@@ -42,13 +36,16 @@ export default {
         return {};
       },
     },
+    diaVisible: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props, ctx) {
     // console.log("999", props.providerName);
 
     const pageData = reactive({
       activeKey: "role",
-      dialogPermissionFormVisible: true,
       permissionsQuery: {
         providerKey: "",
         providerName: "",
@@ -65,6 +62,7 @@ export default {
       pageData.activeKey = val.key;
       ctx.emit("choseTab", val);
     };
+
     // pageData.permissionsQuery.providerName = props.providerName;
     const onCheck = (checkedKeys) => {
       console.log("9999", onCheck);
@@ -128,6 +126,10 @@ export default {
       return false;
     }
 
+    const cancels = () => {
+      ctx.emit("closes");
+    };
+
     function updatePermissionData() {
       const tempData: any = [];
       let permissionDatas = pageData.permissionData as any;
@@ -160,7 +162,7 @@ export default {
 
       certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
-          pageData.dialogPermissionFormVisible = false;
+          // pageData.dialogPermissionFormVisible = false;
           console.log(
             "permissionsQuery.providerKey,",
             pageData.permissionsQuery.providerKey
@@ -186,6 +188,7 @@ export default {
       isGrantedByOtherProviderName,
       transformPermissionTree,
       updatePermissionData,
+      cancels,
     };
   },
 };

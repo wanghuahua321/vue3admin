@@ -41,10 +41,12 @@ export const certification={
 
   user:{
     getUsers:()=>http.get(portalBasicApi + "/identity/users"), // 获取用户列表
+    deleteUser:(id)=>http.delete(portalBasicApi + "identity/users/",id), // 删除
 
   },
   tenant:{
     getTenant:()=>http.get(portalBasicApi + "/multi-tenancy/tenants"), // 获取用户列表
+    delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa",id), // 删除
   },
   Permissions:{
     // 获取get 列表
