@@ -5,7 +5,7 @@
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
-      <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole"></tenantForm>
+      <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole" :types="types"></tenantForm>
     </a-modal>
 
   </div>
@@ -92,6 +92,7 @@ export default {
           kinds: "tenant",
         },
       ],
+      types: "",
       // dialogMsgs: {},
     });
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
@@ -152,6 +153,7 @@ export default {
       store.commit("setDialogMsg", dialogMsg);
       pagedata.formData = val;
       pagedata.editsId = val.id;
+      pagedata.types = ktit;
     };
     const editInterface = () => {
       certification.roles
