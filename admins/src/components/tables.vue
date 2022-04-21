@@ -12,13 +12,16 @@
 
         <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
           <div class="taglis" :style="filterChange(tag.colors)">
-            <svg-icon :iconName="tag.icons" />
-            <span class="tagspan" v-if="tag.ktit=='删除'">
-              <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
-                删除
-              </a-popconfirm>
+
+            <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(record)">
+              <svg-icon :iconName="tag.icons" />
+              删除
+            </a-popconfirm>
+
+            <span v-else class="tagspan">
+              <svg-icon :iconName="tag.icons" />
+              {{ tag.ktit }}
             </span>
-            <span v-else class="tagspan"> {{ tag.ktit }}</span>
           </div>
         </a-tag>
         <!-- <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
@@ -36,6 +39,8 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
+import { certification } from "@/utils/api";
+import { message } from "ant-design-vue";
 export default {
   name: "tables",
   components: {},
@@ -133,7 +138,27 @@ export default {
     };
 
     const del_role_click = (record) => {
-      console.log("values", record);
+      if (record.kinds == "user") {
+        certification.user
+          .deleteUser(record.id)
+          .then((res) => {
+            message.success("删除成功");
+            ctx.emit("refrcoshAgain");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        certification.tenant
+          .delTenant(record.id)
+          .then((res) => {
+            message.success("删除成功");
+            ctx.emit("refrcoshAgain");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
     return {
       ...toRefs(pagedata),
