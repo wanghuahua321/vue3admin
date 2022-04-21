@@ -29,7 +29,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs } from "vue";
+import { reactive, onMounted, toRefs, onBeforeMount } from "vue";
 import { certification } from "@/utils/api";
 export default {
   name: "permissionDialog",
@@ -67,12 +67,13 @@ export default {
       },
       permissionData: {},
     });
+
     const changeTabs = (val) => {
       pageData.activeKey = val.key;
       ctx.emit("choseTab", val);
     };
 
-    // pageData.permissionsQuery.providerName = props.providerName;
+    pageData.permissionsQuery.providerName = props.providerName as string;
     const onCheck = (checkedKeys) => {
       console.log("9999", onCheck);
       pageData.checkedKeys = checkedKeys.checked || [];
@@ -80,7 +81,7 @@ export default {
 
     const getPermission = () => {
       let query = {
-        providerKey: "111",
+        providerKey: "admin",
         providerName: "R",
       };
       certification.Permissions.getPermissions(query)
@@ -91,6 +92,34 @@ export default {
           console.log(error);
         });
     };
+    function handleUpdatePermission(row: any) {
+      if (pageData.permissionsQuery.providerName === "R") {
+        pageData.permissionsQuery.providerKey = row.name;
+      } else if (pageData.permissionsQuery.providerName === "U") {
+        pageData.permissionsQuery.providerKey = row.id;
+      }
+
+      certification.Permissions.getPermissions(pageData.permissionsQuery)
+        .then((res) => {
+          const keys: any = [];
+          for (let i in res.groups) {
+            const group: any = res.groups[i];
+            console.log("group", group);
+
+            for (let j in group.permissions) {
+              if (group.permissions[j].isGranted) {
+                keys.push(group.permissions[j].name);
+              }
+            }
+          }
+          setTimeout(() => {
+            pageData.checkedKeys = keys;
+          }, 200);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
 
     function transformPermissionTree(permissions, name = null) {
       let arr: any = [];
@@ -147,8 +176,9 @@ export default {
       let permissionDatas = pageData.permissionData as any;
       for (const i in permissionDatas.groups) {
         const keys = pageData.checkedKeys;
-
+        console.log("keys", keys);
         const group = permissionDatas.groups[i];
+        console.log("group", group);
         for (const j in group.permissions) {
           if (
             group.permissions[j].isGranted &&
@@ -170,26 +200,28 @@ export default {
         }
       }
 
-      // console.log("permissionsQuery", pageData.permissionsQuery);
+      console.log("permissionsQuery", tempData);
 
-      certification.Permissions.getPermissions(pageData.permissionsQuery)
-        .then((res) => {
-          // pageData.dialogPermissionFormVisible = false;
-          console.log(
-            "permissionsQuery.providerKey,",
-            pageData.permissionsQuery.providerKey
-          );
-          console.log(
-            "permissionsQuery.providerName,",
-            pageData.permissionsQuery.providerName
-          );
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // certification.Permissions.updataPermissions(pageData.permissionsQuery, {
+      //   permissions: tempData,
+      // })
+      //   .then((res) => {
+      //     // pageData.dialogPermissionFormVisible = false;
+      //     console.log(
+      //       "permissionsQuery.providerKey,",
+      //       pageData.permissionsQuery.providerKey
+      //     );
+      //     console.log(
+      //       "permissionsQuery.providerName,",
+      //       pageData.permissionsQuery.providerName
+      //     );
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     }
 
-    onMounted(() => {
+    onBeforeMount(() => {
       getPermission();
     });
     return {
@@ -201,6 +233,7 @@ export default {
       transformPermissionTree,
       updatePermissionData,
       cancels,
+      handleUpdatePermission,
     };
   },
 };

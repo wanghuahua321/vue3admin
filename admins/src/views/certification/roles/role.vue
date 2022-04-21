@@ -48,6 +48,7 @@ export default {
 
   setup(props, ctx) {
     const createRole = ref();
+    const permissionDialog = ref();
     const store = useStore();
     const pagedata = reactive({
       formData: {},
@@ -171,6 +172,7 @@ export default {
       };
       if (kinds == "permissions") {
         pagedata.diaVisible = true;
+        permissionDialog.value.handleUpdatePermission(val);
       } else {
         store.commit("setDialogMsg", dialogMsg);
       }
@@ -211,6 +213,7 @@ export default {
       editInterface,
       closes,
       addRoles,
+      permissionDialog,
     };
   },
 };
