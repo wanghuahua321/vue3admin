@@ -41,6 +41,7 @@ import tabbar from "@/components/tabbar.vue";
 import role from "./roles/role.vue";
 import user from "./users/user.vue";
 import tenant from "./tenants/tenant.vue";
+import { useStore } from "vuex";
 import { DownloadOutlined } from "@ant-design/icons-vue";
 export default {
   name: "certiFication",
@@ -52,6 +53,8 @@ export default {
     DownloadOutlined,
   },
   setup() {
+    const store = useStore();
+
     const pageData = reactive({
       tabbraList: [
         {
@@ -68,10 +71,10 @@ export default {
         },
       ],
       choseOne: {
-        key: "user",
-        title: "用户",
+        key: "tenant",
+        title: "租户",
       },
-      showCom: "user",
+      showCom: "tenant",
       dialogMsg: {
         isAdd: false,
         addTit: "新建角色",
@@ -79,17 +82,38 @@ export default {
         confirmLoading: false,
       },
     });
+
+    watch(
+      () => store.state.dialogMsg,
+      (newsvalue, oldvalues) => {
+        console.log("newsssss", newsvalue);
+        pageData.dialogMsg = store.state.dialogMsg;
+      },
+      {
+        immediate: true,
+        deep: true,
+      }
+    );
+
     const choseTab = (data) => {
       pageData.choseOne = data;
     };
     const addRoles = () => {
-      pageData.dialogMsg.addvisible = true;
+      let dialogMsg = {
+        isAdd: true,
+        addTit: "新建角色",
+        addvisible: true,
+        confirmLoading: false,
+      };
+
+      store.commit("setDialogMsg", dialogMsg);
     };
     const closedia = () => {
-      pageData.dialogMsg.addvisible = false;
+      store.commit("setDialogMsgClo", false);
     };
     const editDialog = (params) => {
-      pageData.dialogMsg = params;
+      // pageData.dialogMsg = params;
+      // console.log("090909", pageData.dialogMsg);
       addRoles();
     };
 

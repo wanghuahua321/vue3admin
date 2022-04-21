@@ -1,17 +1,23 @@
 <template>
 
-  <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
+  <a-form v-if="!isEdit" class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
+    <a-form-item class="formItems" label="租户名称" ref="names" name="name">
+      <a-input v-model:value="createRoleform.name" placeholder="请输入租户名称" />
+    </a-form-item>
+  </a-form>
+
+  <a-form v-else class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" label="租户名称" ref="names" name="name">
       <a-input v-model:value="createRoleform.name" placeholder="请输入租户名称" />
     </a-form-item>
     <a-form-item class="formItems" label="管理员电子邮件地址" ref="names" name="name">
-      <a-input v-model:value="createRoleform.name" placeholder="请输入管理员电子邮件地址" />
+      <a-input v-model:value="createRoleform.adminEmailAddress" placeholder="请输入管理员电子邮件地址" />
     </a-form-item>
     <a-form-item class="formItems" label="管理员密码" ref="names" name="name">
-      <a-input v-model:value="createRoleform.name" placeholder="请输入管理员密码" />
+      <a-input v-model:value="createRoleform.adminPassword" placeholder="请输入管理员密码" />
     </a-form-item>
     <a-form-item class="formItems" label="手机号" ref="names" name="name">
-      <a-input v-model:value="createRoleform.name" placeholder="请输入手机号" />
+      <a-input v-model:value="createRoleform.phoneNumber" placeholder="请输入手机号" />
     </a-form-item>
 
   </a-form>
@@ -48,12 +54,30 @@ export default {
           required: true,
           message: "Please input name",
         },
+        adminEmailAddress: {
+          required: true,
+          message: "Please input name",
+        },
+        adminPassword: {
+          required: true,
+          message: "Please input name",
+        },
+        phoneNumber: {
+          required: true,
+          message: "Please input name",
+        },
       },
     });
     if (props.isEdit) {
       pagedata.createRoleform = { ...store.state.editClick };
+      console.log("0000000", pagedata.createRoleform);
     } else {
-      pagedata.createRoleform = {};
+      pagedata.createRoleform = {
+        adminEmailAddress: "",
+        adminPassword: "",
+        name: "",
+        phoneNumber: "",
+      };
     }
 
     onMounted(() => {

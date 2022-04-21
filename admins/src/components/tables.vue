@@ -135,6 +135,13 @@ export default {
         }
       }
       store.commit("setEditClick", rows);
+      let dialogMsg = {
+        isAdd: false,
+        addTit: "编辑角色",
+        addvisible: true,
+        confirmLoading: false,
+      };
+      store.commit("setDialogMsg", dialogMsg);
     };
 
     const del_role_click = (record) => {

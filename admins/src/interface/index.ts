@@ -15,7 +15,8 @@ export interface storeState{
   token?:string,
   userInfo?:object,
   chatPerson?:object,
-  editClick?:object
+  editClick?:object,
+  dialogMsg?:object
 }
 export interface ValidateObj{
   required?:boolean;

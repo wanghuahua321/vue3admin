@@ -26,6 +26,12 @@ const mutations = {
 
   setEditClick(state:storeState,count:object){
     state.editClick=count
+  },
+  setDialogMsg(state:storeState,count:object){
+    state.dialogMsg=count
+  },
+  setDialogMsgClo(state:any,count:boolean){
+    state.dialogMsg.addvisible=count
   }
 };
 export default mutations;
