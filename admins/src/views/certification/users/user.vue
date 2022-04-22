@@ -3,7 +3,8 @@
     user
     <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick"></tables>
 
-    <permissionDialog ref="permissionDialog" providerName="U" :perFormData="formData" :diaVisible="diaVisible" @closes="closes"></permissionDialog>
+    <permissionDialog ref="permissionDialog" providerName="U" :perFormData="formData" :diaVisible="diaVisible" @closes="diaVisible=false">
+    </permissionDialog>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
