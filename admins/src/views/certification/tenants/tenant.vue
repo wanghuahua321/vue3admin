@@ -121,18 +121,11 @@ export default {
 
     const handleOk = () => {
       console.log("tenant", createRole.value.createRoleform);
-      // let editParam = {
-      //   name: createRole.value.createRoleform.name,
-      //   isDefault: createRole.value.createRoleform.isDefault,
-      //   isPublic: createRole.value.createRoleform.isPublic,
-      //   concurrencyStamp: createRole.value.createRoleform.concurrencyStamp,
-      // };
-      (pagedata.formData as any).name = "sdssss";
+
       createRole.value.roleForm
         .validate()
         .then(() => {
-          editInterface();
-          ctx.emit("closedia");
+          addTenants(createRole.value.createRoleform);
         })
         .catch((error) => {
           console.log("error", error);
@@ -150,15 +143,19 @@ export default {
         addvisible: true,
         confirmLoading: false,
       };
+      console.log("value", val);
       store.commit("setDialogMsg", dialogMsg);
       pagedata.formData = val;
       pagedata.editsId = val.id;
       pagedata.types = ktit;
     };
-    const editInterface = () => {
-      certification.roles
-        .editRoles(pagedata.editsId, pagedata.formData)
-        .then((res) => {})
+    //新增
+    const addTenants = (addParams) => {
+      certification.tenant
+        .addTenant(addParams)
+        .then((res) => {
+          ctx.emit("closedia");
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -170,7 +167,7 @@ export default {
       handleOk,
       handleCancel,
       createRole,
-      editInterface,
+      addTenants,
     };
   },
 };

@@ -31,16 +31,16 @@
   </a-form>
 
   <a-form v-else class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
-    <a-form-item class="formItems" label="租户名称" ref="names" name="name">
+    <a-form-item class="formItems" label="租户名称" name="name">
       <a-input v-model:value="createRoleform.name" placeholder="请输入租户名称" />
     </a-form-item>
-    <a-form-item class="formItems" label="管理员电子邮件地址" ref="names" name="name">
+    <a-form-item class="formItems" label="管理员电子邮件地址" name="adminEmailAddress">
       <a-input v-model:value="createRoleform.adminEmailAddress" placeholder="请输入管理员电子邮件地址" />
     </a-form-item>
-    <a-form-item class="formItems" label="管理员密码" ref="names" name="name">
+    <a-form-item class="formItems" label="管理员密码" name="adminPassword">
       <a-input v-model:value="createRoleform.adminPassword" placeholder="请输入管理员密码" />
     </a-form-item>
-    <a-form-item class="formItems" label="手机号" ref="names" name="name">
+    <a-form-item class="formItems" label="手机号" name="phoneNumber">
       <a-input v-model:value="createRoleform.phoneNumber" placeholder="请输入手机号" />
     </a-form-item>
 
@@ -74,25 +74,69 @@ export default {
   setup(props) {
     const roleForm = ref();
     const store = useStore();
+    const phoneNumberValidator = (rule: any, value: any, callback: any) => {
+      console.log("value", value);
+      if (!value) {
+        return new Promise((resolve, reject) => {
+          reject("字段手机号不可为空.");
+        });
+      }
+      const reg = /^[1][3,5,7,8][0-9]{9}$/;
+      if (!reg.test(value)) {
+        return new Promise((resolve, reject) => {
+          reject("手机号格式不对");
+        });
+      }
+      return Promise.resolve();
+    };
+
+    const passwordValidator = (rule: any, value: any, callback: any) => {
+      if (!value) {
+        return new Promise((resolve, reject) => {
+          reject("字段管理员密码不可为空.");
+        });
+      }
+      if (value.length < 6) {
+        return new Promise((resolve, reject) => {
+          reject("密码至少为6个字符.");
+        });
+      }
+      return Promise.resolve();
+    };
     const pagedata = reactive({
       formDatas: {},
       createRoleform: {},
       rules: {
         name: {
           required: true,
-          message: "Please input name",
+          message: "字段租户名称不可为空.",
         },
-        adminEmailAddress: {
-          required: true,
-          message: "Please input name",
-        },
+        adminEmailAddress: [
+          {
+            required: true,
+            message: "字段管理员电子邮件地址不可为空.",
+            trigger: "blur",
+          },
+          {
+            type: "email",
+            message: "字段邮箱地址不是有效的邮箱地址",
+            trigger: ["blur", "change"],
+          },
+          {
+            max: 256,
+            message: "字段邮箱地址不是有效的邮箱地址",
+            trigger: "blur",
+          },
+        ],
         adminPassword: {
           required: true,
-          message: "Please input name",
+          validator: passwordValidator,
+          trigger: ["blur", "change"],
         },
         phoneNumber: {
           required: true,
-          message: "Please input name",
+          validator: phoneNumberValidator,
+          trigger: ["blur", "change"],
         },
       },
       featuresQuery: {

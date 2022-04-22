@@ -133,12 +133,7 @@ export default {
 
     const handleOk = () => {
       console.log("createRole.value.roleForm", createRole.value.createRoleform);
-      // let editParam = {
-      //   name: createRole.value.createRoleform.name,
-      //   isDefault: createRole.value.createRoleform.isDefault,
-      //   isPublic: createRole.value.createRoleform.isPublic,
-      //   concurrencyStamp: createRole.value.createRoleform.concurrencyStamp,
-      // };
+
       createRole.value.roleForm
         .validate()
         .then(() => {

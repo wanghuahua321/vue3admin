@@ -26,6 +26,8 @@ const mutations = {
 
   setEditClick(state:storeState,count:object){
     state.editClick=count
+    console.log("999990-9",state.editClick);
+    
   },
   setDialogMsg(state:storeState,count:object){
     state.dialogMsg=count

@@ -133,6 +133,7 @@ export default {
       } else if (types.kinds == "tenant") {
         if (types.keys == 1) {
           //管理链接字符串
+
           ctx.emit("editClick", rows, types.kinds, types.ktit);
         } else if (types.keys == 2) {
           //管理功能
