@@ -93,11 +93,13 @@ export default {
         });
     };
     function handleUpdatePermission(row: any) {
+      console.log("走一个", row);
       if (pageData.permissionsQuery.providerName === "R") {
         pageData.permissionsQuery.providerKey = row.name;
       } else if (pageData.permissionsQuery.providerName === "U") {
         pageData.permissionsQuery.providerKey = row.id;
       }
+      console.log("000", pageData.permissionsQuery);
 
       certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
@@ -114,7 +116,7 @@ export default {
           }
           setTimeout(() => {
             pageData.checkedKeys = keys;
-          }, 200);
+          }, 500);
         })
         .catch((error) => {
           console.log(error);
@@ -182,7 +184,7 @@ export default {
         for (const j in group.permissions) {
           if (
             group.permissions[j].isGranted &&
-            !keys.some((v: any) => v === group.permissions[j].name)
+            !keys.some((v: any) => v == group.permissions[j].name)
           ) {
             tempData.push({
               isGranted: false,
@@ -190,7 +192,7 @@ export default {
             });
           } else if (
             !group.permissions[j].isGranted &&
-            keys.some((v: any) => v === group.permissions[j].name)
+            keys.some((v: any) => v == group.permissions[j].name)
           ) {
             tempData.push({
               isGranted: true,

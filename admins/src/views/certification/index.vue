@@ -71,10 +71,10 @@ export default {
         },
       ],
       choseOne: {
-        key: "tenant",
-        title: "租户",
+        key: "role",
+        title: "角色",
       },
-      showCom: "tenant",
+      showCom: "role",
       dialogMsg: {
         isAdd: false,
         addTit: "新建角色",

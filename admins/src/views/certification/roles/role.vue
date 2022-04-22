@@ -161,8 +161,10 @@ export default {
         confirmLoading: false,
       };
       if (kinds == "permissions") {
+        setTimeout(() => {
+          permissionDialog.value.handleUpdatePermission(val);
+        }, 1000);
         pagedata.diaVisible = true;
-        permissionDialog.value.handleUpdatePermission(val);
       } else {
         store.commit("setDialogMsg", dialogMsg);
       }
