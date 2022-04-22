@@ -99,7 +99,6 @@ export default {
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
     onMounted(() => {
       getTenants();
-      // console.log("dialogMsg", pagedata.dialogMsgs);
     });
     const getTenants = () => {
       certification.tenant
@@ -121,9 +120,6 @@ export default {
     // );
 
     const handleOk = () => {
-      console.log("tenant", createRole.value);
-      console.log("types", store.state.editClick);
-      console.log("dialogMsg", store.state.dialogMsg);
       const {
         createRoleform,
         temp,
@@ -156,13 +152,8 @@ export default {
               });
 
               featuresQuery.providerKey = pagedata.editsId;
-              console.log("featuresQuery111", featuresQuery);
-
               updataFeature(featuresQuery, tempData);
             }
-            console.log("typestypestypes", pagedata.types);
-
-            // updataTenants(createRole.value.createRoleform);
           }
         })
         .catch((error) => {
@@ -181,7 +172,6 @@ export default {
         addvisible: true,
         confirmLoading: false,
       };
-      console.log("value", val);
       store.commit("setDialogMsg", dialogMsg);
       pagedata.formData = val;
       pagedata.editsId = val.id;
@@ -222,9 +212,6 @@ export default {
     };
 
     const Connections = (useSharedDatabase, createRoleform) => {
-      console.log("useSharedDatabase", useSharedDatabase);
-      console.log("createRoleform", createRoleform);
-
       if (
         useSharedDatabase ||
         (!useSharedDatabase && !createRoleform.defaultConnectionString)

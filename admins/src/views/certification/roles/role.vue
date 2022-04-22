@@ -110,7 +110,6 @@ export default {
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
     onMounted(() => {
       getRoles();
-      // console.log("dialogMsg", pagedata.dialogMsgs);
     });
     const getRoles = () => {
       certification.roles
@@ -132,8 +131,6 @@ export default {
     // );
 
     const handleOk = () => {
-      console.log("createRole.value.roleForm", createRole.value.createRoleform);
-
       createRole.value.roleForm
         .validate()
         .then(() => {
@@ -151,7 +148,6 @@ export default {
 
     const handleCancel = () => {
       ctx.emit("closedia");
-      // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
     const closes = () => {
       pagedata.dioParams.addvisible = false;

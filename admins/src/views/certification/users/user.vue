@@ -110,7 +110,6 @@ export default {
     const permissionDialog = ref();
     onMounted(() => {
       getUser();
-      // console.log("dialogMsg", pagedata.dialogMsgs);
     });
     const getUser = () => {
       certification.user
@@ -123,25 +122,13 @@ export default {
         });
     };
 
-    // watch(
-    //   () => pagedata.dialogMsgs,
-    //   (newsvalue) => {
-    //     console.log("999", newsvalue);
-    //   },
-    //   { immediate: true, deep: true }
-    // );
-
     const handleOk = () => {
-      console.log("createRole.value.roleForm55", createRole.value);
       let addParam = {
         ...createRole.value.createRoleform,
       };
       addParam["extraProperties"] = {
         ...createRole.value.extraProperties,
       };
-
-      console.log("99999", addParam);
-
       createRole.value.roleForm
         .validate()
         .then(() => {

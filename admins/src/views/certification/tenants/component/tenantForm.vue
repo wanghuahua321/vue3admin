@@ -80,7 +80,6 @@ export default {
     const roleForm = ref();
     const store = useStore();
     const phoneNumberValidator = (rule: any, value: any, callback: any) => {
-      console.log("value", value);
       if (!value) {
         return new Promise((resolve, reject) => {
           reject("字段手机号不可为空.");
@@ -166,7 +165,6 @@ export default {
       };
     } else {
       pagedata.createRoleform = { ...store.state.editClick };
-      console.log("0000000", pagedata.createRoleform);
     }
 
     onMounted(() => {
@@ -181,7 +179,6 @@ export default {
         .getFeatures(pagedata.featuresQuery)
         .then((res) => {
           pagedata.features = res.groups[0].features;
-          console.log("00000", pagedata.features);
 
           pagedata.features.map((feature: any) => {
             if (feature.valueType.name === "ToggleStringValueType") {
@@ -192,7 +189,6 @@ export default {
               feature.valueType.name === "SelectionStringValueType"
             ) {
               pagedata.temp[feature.name] = feature.value;
-              console.log("+++++++++++++++", pagedata.temp);
             }
           });
         })

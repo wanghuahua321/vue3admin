@@ -75,7 +75,6 @@ export default {
     const imgCroppers = ref();
     const store = useStore();
     const phoneNumberValidator = (rule: any, value: any, callback: any) => {
-      console.log("value", value);
       if (!value) {
         return new Promise((resolve, reject) => {
           reject("22");

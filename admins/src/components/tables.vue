@@ -65,8 +65,6 @@ export default {
     },
   },
   setup(props, ctx) {
-    console.log("props", props.table_data);
-
     const store = useStore();
     const pagedata = reactive({
       pagination: {
@@ -144,8 +142,6 @@ export default {
     };
 
     const del_role_click = (tag, record) => {
-      console.log("record.kindsrecord.kinds", record.kinds);
-
       if (tag.kinds == "user") {
         certification.user
           .deleteUser(record.id)

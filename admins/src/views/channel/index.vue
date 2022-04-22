@@ -211,7 +211,6 @@ export default {
       pagedata.showDialogue = true;
     };
     const confimAdd = () => {
-      console.log("pagedata.dial", pagedata.dialogType);
       let formData = JSON.parse(JSON.stringify(pagedata.dialogueData));
       (formData as any).channelConfiguration = JSON.stringify(
         formData.channelConfiguration
@@ -309,8 +308,6 @@ export default {
     };
     const choseTab = (data) => {
       pagedata.choseOne = data;
-      console.log("pageData.choseOne", pagedata.choseOne);
-      console.log("data", data);
       if (data.key == "mines") {
         myloadData();
       }
