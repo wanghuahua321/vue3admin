@@ -22,68 +22,60 @@
     </div>
 
     <div>
-      <keep-alive>
-        <a-tabs v-model:activeKey="activeKey" @change="changeTab">
-          <a-tab-pane key="1" tab="全部">
-            <div class="channels">
-              <div class="channels_item">
-                <div class="c_tit">
-                  <img src="@/assets/images/facebook.png" alt="" title="" />
-                </div>
-                <div class="c_cont">
-                  <h2>Facebook Messenger</h2>
-                  <p>1分钟完成配置</p>
-                </div>
-                <div class="addchan">
-                  <a-button type="primary" @click="addchannel('news','')">添加</a-button>
-                </div>
-              </div>
+      <tabbar :tabbraList="tabbraList" @choseTab="choseTab"></tabbar>
 
-            </div>
+      <div v-if="choseOne.key=='alls'" class="channels">
+        <div class="channels_item">
+          <div class="c_tit">
+            <img src="@/assets/images/facebook.png" alt="" title="" />
+          </div>
+          <div class="c_cont">
+            <h2>Facebook Messenger</h2>
+            <p>1分钟完成配置</p>
+          </div>
+          <div class="addchan">
+            <a-button type="primary" @click="addchannel('news','')">添加</a-button>
+          </div>
+        </div>
 
-          </a-tab-pane>
-          <a-tab-pane key="2" tab="我的" force-render>
+      </div>
 
-            <div class="mychannel">
-              <div class="my_items" v-for="items in channelData" :key="items.id">
-                <div class="left_img">
-                  <img src="@/assets/images/facebook.png" alt="" title="" />
-                </div>
-                <div class="rig_cont">
-                  <h2 class="r_tit">Facebook Messenger</h2>
-                  <dl class="my_info">
-                    <dt>名称:</dt>
-                    <dd>{{items.name}}</dd>
-                  </dl>
-                  <dl class="my_info">
-                    <dt>最近修改:</dt>
-                    <dd>{{items.editDate}}</dd>
-                  </dl>
+      <div v-else-if="choseOne.key=='mines' " class="mychannel">
+        <div class="my_items" v-for="items in channelData" :key="items.id">
+          <div class="left_img">
+            <img src="@/assets/images/facebook.png" alt="" title="" />
+          </div>
+          <div class="rig_cont">
+            <h2 class="r_tit">Facebook Messenger</h2>
+            <dl class="my_info">
+              <dt>名称:</dt>
+              <dd>{{items.name}}</dd>
+            </dl>
+            <dl class="my_info">
+              <dt>最近修改:</dt>
+              <dd>{{items.editDate}}</dd>
+            </dl>
 
-                </div>
+          </div>
 
-                <div class="handles">
+          <div class="handles">
 
-                  <a-button @click="addchannel('edit',items)" shape="round">
-                    <template #icon>
-                      <EditOutlined />
-                      修改
-                    </template>
-                  </a-button>
-                  <a-button @click="addchannel('delete',items)" shape="circle">
-                    <template #icon>
-                      <DeleteOutlined />
-                      删除
-                    </template>
-                  </a-button>
-                </div>
-              </div>
+            <a-button @click="addchannel('edit',items)" shape="round">
+              <template #icon>
+                <EditOutlined />
+                修改
+              </template>
+            </a-button>
+            <a-button @click="addchannel('delete',items)" shape="circle">
+              <template #icon>
+                <DeleteOutlined />
+                删除
+              </template>
+            </a-button>
+          </div>
+        </div>
 
-            </div>
-
-          </a-tab-pane>
-        </a-tabs>
-      </keep-alive>
+      </div>
 
       <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
         <template #modalCon>
@@ -130,12 +122,14 @@ import modalCon from "@/components/modalCon.vue";
 import { channels } from "@/utils/api";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
+import tabbar from "@/components/tabbar.vue";
 export default {
   name: "channelIndex",
   components: {
     modalCon,
     EditOutlined,
     DeleteOutlined,
+    tabbar,
   },
   setup() {
     const formRef = ref();
@@ -163,6 +157,21 @@ export default {
       dialogType: "",
       seletItems: {},
       seletItemsId: "",
+      tabbraList: [
+        {
+          key: "alls",
+          title: "全部",
+        },
+        {
+          key: "mines",
+          title: "我的",
+        },
+      ],
+      choseOne: {
+        key: "alls",
+        title: "全部",
+      },
+      showCom: "alls",
     });
 
     const rules = {
@@ -300,6 +309,13 @@ export default {
         myloadData();
       }
     };
+    const choseTab = (data) => {
+      pagedata.choseOne = data;
+      console.log("pageData.choseOne", pagedata.choseOne);
+      if (data.key == "mines ") {
+        myloadData();
+      }
+    };
 
     return {
       addchannel,
@@ -314,6 +330,7 @@ export default {
       getOneChannel,
       addChannels,
       editInterface,
+      choseTab,
     };
   },
 };
