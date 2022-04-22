@@ -1,5 +1,5 @@
 <template>
-  <a-form v-if="isEdit" class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
+  <a-form v-if="!isEdit" class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" label="租户名称" ref="names" name="userName">
       <a-input v-model:value="createRoleform.userName" placeholder="请输入租户名称" />
     </a-form-item>
@@ -16,11 +16,8 @@
     <a-tabs tab-position="top">
       <a-tab-pane key="1" tab="用户信息">
         <a-form-item>
-          <ImgCropper></ImgCropper>
+          <ImgCropper ref="imgCroppers" @okHandels="okHandels"></ImgCropper>
           <!-- <a-input v-model:value="createRoleform.email" placeholder="请输入管理员电子邮箱地址" /> -->
-        </a-form-item>
-        <a-form-item label="用户名称" name="userName">
-          <a-input v-model:value="createRoleform.userName" placeholder="请输入用户名称" />
         </a-form-item>
         <a-form-item label="用户名称" name="userName">
           <a-input v-model:value="createRoleform.userName" placeholder="请输入用户名称" />
@@ -40,6 +37,12 @@
         <a-form-item label="手机号" name="phoneNumber">
           <a-input v-model:value="createRoleform.phoneNumber" placeholder="请输入手机号" />
         </a-form-item>
+        <a-form-item name="lockoutEnabled">
+          <a-checkbox v-model:checked="createRoleform.lockoutEnabled">
+            登录失败,账户被锁定
+          </a-checkbox>
+        </a-form-item>
+
       </a-tab-pane>
       <a-tab-pane key="2" tab="角色">
         <a-form-item>
@@ -81,10 +84,46 @@ export default {
   },
   setup(props) {
     const roleForm = ref();
+    const imgCroppers = ref();
     const store = useStore();
+    const phoneNumberValidator = (rule: any, value: any, callback: any) => {
+      console.log("value", value);
+      if (!value) {
+        return new Promise((resolve, reject) => {
+          reject("22");
+        });
+      }
+      const reg = /^[1][3,5,7,8][0-9]{9}$/;
+      if (!reg.test(value)) {
+        return new Promise((resolve, reject) => {
+          reject("手机号格式不对");
+        });
+      }
+      return Promise.resolve();
+    };
+
+    const passwordValidator = (rule: any, value: any, callback: any) => {
+      if (!value) {
+        return new Promise((resolve, reject) => {
+          reject("error");
+        });
+      }
+      if (value.length < 6) {
+        return new Promise((resolve, reject) => {
+          reject("不能小于六位");
+        });
+      }
+      return Promise.resolve();
+    };
+
     const pagedata = reactive({
       formDatas: {},
-      createRoleform: {},
+      createRoleform: {
+        lockoutEnabled: "",
+      },
+      extraProperties: {
+        Title: "",
+      },
       value2: ["Apple"],
       plainOptions: ["Apple", "Pear", "Orange"],
       rules: {
@@ -94,22 +133,39 @@ export default {
         },
         phoneNumber: {
           required: true,
-          message: "Please input name",
+          validator: phoneNumberValidator,
+          trigger: ["blur", "change"],
         },
         password: {
           required: true,
-          message: "Please input name",
+          validator: passwordValidator,
+          trigger: ["blur", "change"],
         },
-        email: {
-          required: true,
-          message: "字段邮箱地址不是有效的邮箱地址",
-        },
+        email: [
+          {
+            required: true,
+            message: "字段邮箱地址不是有效的邮箱地址",
+            trigger: "blur",
+          },
+          {
+            type: "email",
+            message: "字段邮箱地址不是有效的邮箱地址",
+            trigger: ["blur", "change"],
+          },
+          {
+            max: 256,
+            message: "字段邮箱地址不是有效的邮箱地址",
+            trigger: "blur",
+          },
+        ],
       },
     });
     if (props.isEdit) {
+      console.log("999", store.state.editClick);
       pagedata.createRoleform = { ...store.state.editClick };
     } else {
-      pagedata.createRoleform = {};
+      console.log("999000", store.state.editClick);
+      // pagedata.createRoleform = {};
     }
 
     onMounted(() => {
@@ -119,9 +175,15 @@ export default {
       // }
     });
 
+    const okHandels = (vals) => {
+      pagedata.extraProperties.Title = vals;
+    };
+
     return {
       ...toRefs(pagedata),
       roleForm,
+      imgCroppers,
+      okHandels,
     };
   },
 };
@@ -131,6 +193,9 @@ export default {
 .createForm {
   width: 100%;
   min-height: 180px;
+  :deep(.ant-col) {
+    min-width: 80px !important;
+  }
   .formItems {
     // flex-direction: column !important;
     // // justify-content: space-around;

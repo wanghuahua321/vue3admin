@@ -5,8 +5,8 @@
       <VueCropper ref="cropperImg" :img="option.img" :outputSize="option.size" :outputType="option.outputType" :info="true" :full="option.full"
         :fixed="option.fixed" :fixedNumber="option.fixedNumber" :can-move="option.canMove" :can-move-box="option.canMoveBox"
         :fixed-box="option.fixedBox" :original="option.original" :auto-crop="option.autoCrop" :auto-crop-width="option.autoCropWidth"
-        :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox" @realTime="realTime" :high="option.high" @img-load="imgLoad"
-        mode="100% auto" :max-img-size="option.max" @crop-moving="cropMoving"></VueCropper>
+        :auto-crop-height="option.autoCropHeight" :center-box="option.centerBox" :high="option.high" mode="100% auto" :max-img-size="option.max">
+      </VueCropper>
 
       <div class="cropper-tool">
         <a-upload :before-upload="beforeUpload" @change="handleChange" accept="image/png, image/jpeg" :showUploadList="false">
@@ -38,7 +38,7 @@ export default {
   components: {
     VueCropper,
   },
-  setup() {
+  setup(props, ctx) {
     const pagedata = reactive({
       imgSrc: "",
       cropper: "",
@@ -72,6 +72,7 @@ export default {
     const handleChange = (info) => {
       getBase64(info.file.originFileObj, (imgUrl) => {
         console.log("imgUrl", imgUrl);
+        ctx.emit("okHandels", imgUrl);
         let target = {
           name: info.file.name,
           img: imgUrl,

@@ -19,6 +19,7 @@ import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import userForm from "./component/userForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
+import { message } from "ant-design-vue";
 interface dialogMsgss {
   isAdd?: boolean;
   addTit?: string;
@@ -127,19 +128,20 @@ export default {
     // );
 
     const handleOk = () => {
-      console.log("createRole.value.roleForm", createRole.value.createRoleform);
-      // let editParam = {
-      //   name: createRole.value.createRoleform.name,
-      //   isDefault: createRole.value.createRoleform.isDefault,
-      //   isPublic: createRole.value.createRoleform.isPublic,
-      //   concurrencyStamp: createRole.value.createRoleform.concurrencyStamp,
-      // };
-      (pagedata.formData as any).name = "sdssss";
+      console.log("createRole.value.roleForm55", createRole.value);
+      let addParam = {
+        ...createRole.value.createRoleform,
+      };
+      addParam["extraProperties"] = {
+        ...createRole.value.extraProperties,
+      };
+
+      console.log("99999", addParam);
+
       createRole.value.roleForm
         .validate()
         .then(() => {
-          editInterface();
-          ctx.emit("closedia");
+          addUsers(addParam);
         })
         .catch((error) => {
           console.log("error", error);
@@ -164,10 +166,19 @@ export default {
         ctx.emit("editDialog", pagedata.dioParams);
       }
     };
-    const editInterface = () => {
-      certification.roles
-        .editRoles(pagedata.editsId, pagedata.formData)
-        .then((res) => {})
+    const addUsers = (addUserPar) => {
+      certification.user
+        .addUser(addUserPar)
+        .then((res) => {
+          console.log("res", res);
+
+          if (!res) {
+            message.error("该手机号已被注册");
+          } else {
+            message.success("新增用户成功");
+            ctx.emit("closedia");
+          }
+        })
         .catch((error) => {
           console.log(error);
         });
@@ -179,7 +190,7 @@ export default {
       handleOk,
       handleCancel,
       createRole,
-      editInterface,
+      addUsers,
       closes,
     };
   },

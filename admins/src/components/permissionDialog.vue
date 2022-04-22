@@ -22,7 +22,7 @@
     </a-form>
     <template #footer>
       <a-button key="back" @click="cancels">取消</a-button>
-      <a-button key="submit" type="primary" :loading="loading" @click="updatePermissionData()">保存</a-button>
+      <a-button key="submit" type="primary" @click="updatePermissionData()">保存</a-button>
     </template>
 
   </a-modal>
