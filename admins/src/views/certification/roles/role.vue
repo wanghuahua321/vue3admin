@@ -181,6 +181,7 @@ export default {
         .editRoles(pagedata.editsId, createRole.value.createRoleform)
         .then((res) => {
           message.success("保存成功");
+          getRoles();
         })
         .catch((error) => {
           console.log(error);

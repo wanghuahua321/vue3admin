@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     user
-    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @refrcoshAgain="getRoles"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @refrcoshAgain="getUser()"></tables>
 
     <permissionDialog ref="permissionDialog" providerName="U" :perFormData="formData" :diaVisible="diaVisible" @closes="diaVisible=false">
     </permissionDialog>

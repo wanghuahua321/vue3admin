@@ -19,11 +19,14 @@ export default {
         return [];
       },
     },
+    activeKeys: {
+      type: String,
+      default: "role",
+    },
   },
   setup(props, ctx) {
-    const pageData = reactive({
-      activeKey: "role",
-    });
+    const pageData = reactive(<any>{});
+    pageData.activeKey = props.activeKeys;
     const changeTabs = (val) => {
       pageData.activeKey = val.key;
       ctx.emit("choseTab", val);
@@ -47,7 +50,7 @@ export default {
   border-radius: 10px;
   justify-content: space-between;
   .tabBar_li {
-    width: 33%;
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;

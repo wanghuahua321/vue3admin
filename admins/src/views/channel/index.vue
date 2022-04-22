@@ -22,7 +22,7 @@
     </div>
 
     <div>
-      <tabbar :tabbraList="tabbraList" @choseTab="choseTab"></tabbar>
+      <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="alls"></tabbar>
 
       <div v-if="choseOne.key=='alls'" class="channels">
         <div class="channels_item">
@@ -59,7 +59,6 @@
           </div>
 
           <div class="handles">
-
             <a-button @click="addchannel('edit',items)" shape="round">
               <template #icon>
                 <EditOutlined />
@@ -134,7 +133,6 @@ export default {
   setup() {
     const formRef = ref();
     const pagedata = reactive({
-      activeKey: "1",
       formState: {
         name: undefined,
         sub: { name: undefined },
@@ -312,7 +310,8 @@ export default {
     const choseTab = (data) => {
       pagedata.choseOne = data;
       console.log("pageData.choseOne", pagedata.choseOne);
-      if (data.key == "mines ") {
+      console.log("data", data);
+      if (data.key == "mines") {
         myloadData();
       }
     };

@@ -13,7 +13,7 @@
         <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
           <div class="taglis" :style="filterChange(tag.colors)">
 
-            <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(record)">
+            <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(tag,record)">
               <svg-icon :iconName="tag.icons" />
               删除
             </a-popconfirm>
@@ -143,8 +143,10 @@ export default {
       store.commit("setEditClick", rows);
     };
 
-    const del_role_click = (record) => {
-      if (record.kinds == "user") {
+    const del_role_click = (tag, record) => {
+      console.log("record.kindsrecord.kinds", record.kinds);
+
+      if (tag.kinds == "user") {
         certification.user
           .deleteUser(record.id)
           .then((res) => {
@@ -154,7 +156,7 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-      } else if (record.kinds == "tenant") {
+      } else if (tag.kinds == "tenant") {
         certification.tenant
           .delTenant(record.id)
           .then((res) => {
