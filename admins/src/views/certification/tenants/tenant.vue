@@ -17,6 +17,7 @@ import tables from "@/components/tables.vue";
 import { certification } from "@/utils/api";
 import tenantForm from "./component/tenantForm.vue";
 import { useStore } from "vuex";
+import { message } from "ant-design-vue";
 
 interface dialogMsgss {
   isAdd?: boolean;
@@ -120,12 +121,24 @@ export default {
     // );
 
     const handleOk = () => {
-      console.log("tenant", createRole.value.createRoleform);
+      console.log("tenant", createRole.value);
+      console.log("types", store.state.editClick);
+      console.log("dialogMsg", store.state.dialogMsg);
+      const { createRoleform, temp, useSharedDatabase } = createRole.value;
 
       createRole.value.roleForm
         .validate()
         .then(() => {
-          addTenants(createRole.value.createRoleform);
+          if (props.dialogMsgs.isAdd) {
+            addTenants(createRole.value.createRoleform);
+          } else {
+            if (pagedata.types.includes("链接")) {
+              Connections(useSharedDatabase, createRoleform);
+            }
+            console.log("typestypestypes", pagedata.types);
+
+            // updataTenants(createRole.value.createRoleform);
+          }
         })
         .catch((error) => {
           console.log("error", error);
@@ -154,11 +167,56 @@ export default {
       certification.tenant
         .addTenant(addParams)
         .then((res) => {
+          getTenants();
           ctx.emit("closedia");
         })
         .catch((error) => {
           console.log(error);
         });
+    };
+    //编辑
+    const updataTenants = (params) => {
+      certification.tenant
+        .updataTenant(params.id, params)
+        .then((res) => {
+          getTenants();
+          ctx.emit("closedia");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+
+    const Connections = (useSharedDatabase, createRoleform) => {
+      console.log("useSharedDatabase", useSharedDatabase);
+      console.log("createRoleform", createRoleform);
+
+      if (
+        useSharedDatabase ||
+        (!useSharedDatabase && !createRoleform.defaultConnectionString)
+      ) {
+        certification.tenant
+          .delConnect(createRoleform.id)
+          .then((res) => {
+            ctx.emit("closedia");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("123");
+        let objs: any = {};
+        objs.defaultConnectionString = createRoleform.defaultConnectionString;
+        certification.tenant
+          .updataConnection(createRoleform.id, objs)
+          .then((res) => {
+            ctx.emit("closedia");
+            message.success("管理链接字符串保存成功");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     };
     return {
       ...toRefs(pagedata),
@@ -168,6 +226,8 @@ export default {
       handleCancel,
       createRole,
       addTenants,
+      updataTenants,
+      Connections,
     };
   },
 };

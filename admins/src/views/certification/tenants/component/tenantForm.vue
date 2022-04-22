@@ -52,7 +52,6 @@
 import { reactive, onMounted, toRefs, ref } from "vue";
 import { certification } from "@/utils/api";
 import { useStore } from "vuex";
-import { tuple } from "ant-design-vue/lib/_util/type";
 
 export default {
   name: "createForm",
@@ -209,6 +208,7 @@ export default {
           if (res) {
             pagedata.useSharedDatabase = false;
             (pagedata.temp as any).defaultConnectionString = res;
+            console.log("++++++++", pagedata.temp);
           } else {
             pagedata.useSharedDatabase = true;
           }

@@ -233,6 +233,25 @@ const headersString:any = {
         return checkCode(res);
       });
   },
+  puts(url, data) {
+    // store.commit("LOADING");
+    return axios({
+      method: "PUT",
+      url: baseUrl + url,
+      params: data,
+      timeout: httpTimeout,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    })
+      .then((response) => {
+        return checkStatus(response);
+      })
+      .catch((res) => {
+        return checkCode(res);
+      });
+  },
 
   postImage(url:string, params?:any){
     return axios({
