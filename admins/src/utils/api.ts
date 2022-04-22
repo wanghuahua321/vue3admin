@@ -53,8 +53,9 @@ export const certification={
     delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa"), // 删除
     addTenant:(params)=>http.post(portalBasicApi + "/app/tenant/rpa",params), //新增
     updataTenant:(id,params)=>http.put(portalBasicApi + "/app/tenant/"+id+"/rpa",params), // 修改
-    getFeatures:(params)=>http.get(portalBasicApi + `/feature-management/features/${params.providerKey}`,params), // 获取身份验证
-    updataFeatures:(query,params)=>http.put(portalBasicApi + "/feature-management/features",params), // 修改  
+
+    getFeatures:(params)=>http.get(portalBasicApi + `/feature-management/features`,params), // 获取管理功能 
+    updataFeatures:(query,params)=>http.puts(portalBasicApi + "/feature-management/features",query,params), // 修改管理功能 
  
     getConnection:(id)=>http.get(portalBasicApi + `/multi-tenancy/tenants/${id}/default-connection-string`), // 获取连接字符串
     updataConnection:(id,params)=>http.puts(portalBasicApi + `/multi-tenancy/tenants/${id}/default-connection-string`,params), // 修改连接字符串

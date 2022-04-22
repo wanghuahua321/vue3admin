@@ -233,12 +233,13 @@ const headersString:any = {
         return checkCode(res);
       });
   },
-  puts(url, data) {
+  puts(url, data,types?) {
     // store.commit("LOADING");
     return axios({
       method: "PUT",
       url: baseUrl + url,
       params: data,
+      data:types? types:'',
       timeout: httpTimeout,
       headers: {
         "X-Requested-With": "XMLHttpRequest",

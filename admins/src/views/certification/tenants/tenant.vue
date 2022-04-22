@@ -5,7 +5,7 @@
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
-      <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole" :types="types"></tenantForm>
+      <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole" :types="types" :editsId="editsId"></tenantForm>
     </a-modal>
 
   </div>
@@ -124,7 +124,13 @@ export default {
       console.log("tenant", createRole.value);
       console.log("types", store.state.editClick);
       console.log("dialogMsg", store.state.dialogMsg);
-      const { createRoleform, temp, useSharedDatabase } = createRole.value;
+      const {
+        createRoleform,
+        temp,
+        useSharedDatabase,
+        features,
+        featuresQuery,
+      } = createRole.value;
 
       createRole.value.roleForm
         .validate()
@@ -134,6 +140,25 @@ export default {
           } else {
             if (pagedata.types.includes("链接")) {
               Connections(useSharedDatabase, createRoleform);
+            } else if (pagedata.types.includes("功能")) {
+              const tempData: any = { features: [] };
+              features.map((feature: any) => {
+                if (
+                  feature.valueType.name === "FreeTextStringValueType" ||
+                  feature.valueType.name === "SelectionStringValueType" ||
+                  feature.valueType.name === "ToggleStringValueType"
+                ) {
+                  tempData.features.push({
+                    name: feature.name,
+                    value: temp[feature.name],
+                  });
+                }
+              });
+
+              featuresQuery.providerKey = pagedata.editsId;
+              console.log("featuresQuery111", featuresQuery);
+
+              updataFeature(featuresQuery, tempData);
             }
             console.log("typestypestypes", pagedata.types);
 
@@ -186,6 +211,15 @@ export default {
           console.log(error);
         });
     };
+    const updataFeature = (featuresQuery, tempData) => {
+      certification.tenant
+        .updataFeatures(featuresQuery, tempData)
+        .then((res) => {
+          message.success("管理功能保存成功");
+          ctx.emit("closedia");
+        })
+        .catch((error) => {});
+    };
 
     const Connections = (useSharedDatabase, createRoleform) => {
       console.log("useSharedDatabase", useSharedDatabase);
@@ -228,6 +262,7 @@ export default {
       addTenants,
       updataTenants,
       Connections,
+      updataFeature,
     };
   },
 };

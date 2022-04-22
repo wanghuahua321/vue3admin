@@ -71,6 +71,10 @@ export default {
       type: String,
       default: "",
     },
+    editsId: {
+      type: String,
+      default: "",
+    },
   },
   setup(props) {
     const roleForm = ref();
@@ -172,6 +176,7 @@ export default {
 
     const getFeaturess = () => {
       //管理功能
+      pagedata.featuresQuery.providerKey = props.editsId;
       certification.tenant
         .getFeatures(pagedata.featuresQuery)
         .then((res) => {
@@ -181,21 +186,15 @@ export default {
           pagedata.features.map((feature: any) => {
             if (feature.valueType.name === "ToggleStringValueType") {
               pagedata.temp[feature.name] = feature.value === "true";
+              debugger;
             } else if (
               feature.valueType.name === "FreeTextStringValueType" ||
               feature.valueType.name === "SelectionStringValueType"
             ) {
               pagedata.temp[feature.name] = feature.value;
+              console.log("+++++++++++++++", pagedata.temp);
             }
           });
-        })
-        .catch((error) => {});
-    };
-    const updataFeature = () => {
-      certification.tenant
-        .updataFeatures("", pagedata.featuresQuery)
-        .then((res) => {
-          console.log(res);
         })
         .catch((error) => {});
     };
@@ -208,7 +207,6 @@ export default {
           if (res) {
             pagedata.useSharedDatabase = false;
             (pagedata.temp as any).defaultConnectionString = res;
-            console.log("++++++++", pagedata.temp);
           } else {
             pagedata.useSharedDatabase = true;
           }
@@ -221,7 +219,6 @@ export default {
       ...toRefs(pagedata),
       roleForm,
       getFeaturess,
-      updataFeature,
       getConnection,
     };
   },
