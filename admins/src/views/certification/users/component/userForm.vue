@@ -1,18 +1,6 @@
 <template>
-  <a-form v-if="!isEdit" class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
-    <a-form-item class="formItems" label="租户名称" ref="names" name="userName">
-      <a-input v-model:value="createRoleform.userName" placeholder="请输入租户名称" />
-    </a-form-item>
 
-    <!-- <a-form-item class="formItems" label="管理员密码" ref="names" name="name">
-      <a-input v-model:value="createRoleform.name" placeholder="请输入管理员密码" />
-    </a-form-item> -->
-    <a-form-item class="formItems" label="手机号" ref="names" name="phoneNumber">
-      <a-input v-model:value="createRoleform.phoneNumber" placeholder="请输入手机号" />
-    </a-form-item>
-  </a-form>
-
-  <a-form v-else class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
+  <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-tabs tab-position="top">
       <a-tab-pane key="1" tab="用户信息">
         <a-form-item>
@@ -165,7 +153,7 @@ export default {
       pagedata.createRoleform = { ...store.state.editClick };
     } else {
       console.log("999000", store.state.editClick);
-      // pagedata.createRoleform = {};
+      pagedata.createRoleform = { ...store.state.editClick };
     }
 
     onMounted(() => {
