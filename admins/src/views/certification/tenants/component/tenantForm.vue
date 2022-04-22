@@ -5,11 +5,12 @@
       <a-input v-model:value="createRoleform.name" placeholder="请输入租户名称" />
     </a-form-item>
     <div v-else-if="types=='管理链接字符串'">
-      <a-form-item class="formItems" label="租户名称" ref="names" name="name">
-        <a-checkbox v-model="useSharedDatabase">11</a-checkbox>
+      <!-- defaultConnectionString -->
+      <a-form-item class="formItems" label="使用共享数据库">
+        <a-checkbox v-model:checked="useSharedDatabase"></a-checkbox>
       </a-form-item>
-      <a-form-item class="formItems" label="租户名称" ref="names" name="name">
-        <a-checkbox v-model="useSharedDatabase">11</a-checkbox>
+      <a-form-item label="默认连接字符串" v-if="!useSharedDatabase" name="defaultConnectionString">
+        <a-input v-model:value="createRoleform.defaultConnectionString" />
       </a-form-item>
     </div>
 
@@ -51,6 +52,7 @@
 import { reactive, onMounted, toRefs, ref } from "vue";
 import { certification } from "@/utils/api";
 import { useStore } from "vuex";
+import { tuple } from "ant-design-vue/lib/_util/type";
 
 export default {
   name: "createForm",
@@ -138,6 +140,10 @@ export default {
           validator: phoneNumberValidator,
           trigger: ["blur", "change"],
         },
+        defaultConnectionString: {
+          required: false,
+          message: "字段租户名称不可为空.",
+        },
       },
       featuresQuery: {
         providerKey: "",
@@ -145,24 +151,28 @@ export default {
       },
       features: [],
       temp: {},
+      useSharedDatabase: true, // 使用共享数据库
     });
     if (props.isEdit) {
-      pagedata.createRoleform = { ...store.state.editClick };
-      console.log("0000000", pagedata.createRoleform);
-    } else {
+      //新增
       pagedata.createRoleform = {
         adminEmailAddress: "",
         adminPassword: "",
         name: "",
         phoneNumber: "",
       };
+    } else {
+      pagedata.createRoleform = { ...store.state.editClick };
+      console.log("0000000", pagedata.createRoleform);
     }
 
     onMounted(() => {
       getFeaturess();
+      getConnection();
     });
 
     const getFeaturess = () => {
+      //管理功能
       certification.tenant
         .getFeatures(pagedata.featuresQuery)
         .then((res) => {
@@ -191,11 +201,28 @@ export default {
         .catch((error) => {});
     };
 
+    const getConnection = () => {
+      //获取连接数据
+      certification.tenant
+        .getConnection((pagedata.createRoleform as any).id)
+        .then((res) => {
+          if (res) {
+            pagedata.useSharedDatabase = false;
+            (pagedata.temp as any).defaultConnectionString = res;
+          } else {
+            pagedata.useSharedDatabase = true;
+          }
+          console.log(res);
+        })
+        .catch((error) => {});
+    };
+
     return {
       ...toRefs(pagedata),
       roleForm,
       getFeaturess,
       updataFeature,
+      getConnection,
     };
   },
 };
