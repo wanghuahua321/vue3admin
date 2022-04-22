@@ -20,6 +20,7 @@ import { certification } from "@/utils/api";
 import userForm from "./component/userForm.vue";
 import permissionDialog from "@/components/permissionDialog.vue";
 import { message } from "ant-design-vue";
+import { useStore } from "vuex";
 interface dialogMsgss {
   isAdd?: boolean;
   addTit?: string;
@@ -45,6 +46,7 @@ export default {
 
   setup(props, ctx) {
     const createRole = ref();
+    const store = useStore();
     const pagedata = reactive({
       formData: {},
       editsId: "",
@@ -102,8 +104,9 @@ export default {
         addvisible: false,
         confirmLoading: false,
       },
+      types: "",
     });
-    // pagedata.dialogMsgs = toRefs(props.dialogMsg);
+    const permissionDialog = ref();
     onMounted(() => {
       getUser();
       // console.log("dialogMsg", pagedata.dialogMsgs);
@@ -157,14 +160,24 @@ export default {
       // (props.dialogMsgs as dialogMsgs).addvisible = false;
     };
 
-    const editClick = (val, kinds) => {
-      pagedata.formData = val;
-      pagedata.editsId = val.id;
+    const editClick = (val, kinds, ktit) => {
+      let dialogMsg = {
+        isAdd: false,
+        addTit: ktit,
+        addvisible: true,
+        confirmLoading: false,
+      };
       if (kinds == "permissions") {
         pagedata.diaVisible = true;
+        permissionDialog.value.handleUpdatePermission(val);
       } else {
-        ctx.emit("editDialog", pagedata.dioParams);
+        store.commit("setDialogMsg", dialogMsg);
       }
+      pagedata.formData = val;
+      pagedata.editsId = val.id;
+      pagedata.types = ktit;
+      console.log("formData", val);
+      console.log("vals", kinds);
     };
     const addUsers = (addUserPar) => {
       certification.user
@@ -192,6 +205,7 @@ export default {
       createRole,
       addUsers,
       closes,
+      permissionDialog,
     };
   },
 };

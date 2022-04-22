@@ -139,7 +139,6 @@ export default {
       //   isPublic: createRole.value.createRoleform.isPublic,
       //   concurrencyStamp: createRole.value.createRoleform.concurrencyStamp,
       // };
-      (pagedata.formData as any).name = "sdssss";
       createRole.value.roleForm
         .validate()
         .then(() => {
