@@ -2,7 +2,7 @@
   <!-- 发帖相关 -->
   <div class="Posting">
     <div class="tops">
-      <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="1"></tabbar>
+      <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="104161248870206" tabKinds="Post"></tabbar>
       <div class="certsRig">
         <a-button class="antActive">
           <template #icon>
@@ -56,7 +56,7 @@
 
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
-import { channels } from "@/utils/api";
+import { Posting } from "@/utils/api";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -81,12 +81,16 @@ export default {
       seletItemsId: "",
       tabbraList: [
         {
-          key: "1",
-          title: "Fashion&Fancy",
+          page_id: "104161248870206",
+          page_name: "上海十六面体服装销售有限公司",
         },
         {
-          key: "2",
-          title: "fashionandfancy2021",
+          page_id: "104381945586170",
+          page_name: "购物平台公共主页",
+        },
+        {
+          page_id: "108983731714273",
+          page_name: "售卖板块",
         },
       ],
       dialogueData: {
@@ -102,11 +106,11 @@ export default {
         sinchPassword: "",
       },
       choseOne: {
-        key: "1",
-        title: "Fashion&Fancy",
+        page_id: "104161248870206",
+        page_name: "上海十六面体服装销售有限公司",
       },
       showCom: "Fashion&Fancy",
-      showDialogue: true,
+      showDialogue: false,
       checkedList: ["Apple", "Orange"],
       plainOptions: ["Apple", "Pear", "Orange"],
       fileList: [],
@@ -119,31 +123,27 @@ export default {
           title: "post",
           dataIndex: "name",
           width: "30%",
+          slots: { customRender: "postInx" },
         },
         {
           title: "评论",
           dataIndex: "isPublic",
-          slots: { customRender: "isPublic" },
         },
         {
           title: "喜欢",
           dataIndex: "isPublic",
-          slots: { customRender: "isPublic" },
         },
         {
           title: "点击",
           dataIndex: "isPublic",
-          slots: { customRender: "isPublic" },
         },
         {
           title: "触达",
           dataIndex: "isPublic",
-          slots: { customRender: "isPublic" },
         },
         {
           title: "分享",
           dataIndex: "isPublic",
-          slots: { customRender: "isPublic" },
         },
       ],
       pagination: {
@@ -161,7 +161,9 @@ export default {
       textarea: "",
     });
 
-    onMounted(() => {});
+    onMounted(() => {
+      // getPostdata();
+    });
     const addPost = () => {
       pagedata.showDialogue = true;
     };
@@ -232,6 +234,19 @@ export default {
       pagedata.pageParms.MaxResultCount = pagedatas.pageSize;
       // getRoles();
     };
+    const getPostdata = () => {
+      Posting.getPosting()
+        .then((res) => {
+          if (res) {
+            pagedata.tabbraList = res;
+          } else {
+            message.error("获取列表失败");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     return {
       ...toRefs(pagedata),
       addPost,
@@ -243,6 +258,7 @@ export default {
       changePage,
       confimAdd,
       choseTab,
+      getPostdata,
     };
   },
 };

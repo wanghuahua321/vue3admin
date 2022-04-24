@@ -2,6 +2,7 @@
   <div class="tables">
 
     <a-table :rowKey="record=>record.id" :columns="table_header" :data-source="table_data" :pagination="pagination" @change="handleTableChange">
+
       <template #isPublic="{text}">
         {{filterData(text)}}
       </template>
@@ -29,7 +30,7 @@
         </a-popconfirm> -->
         <!-- <a href="javascript:;" @click="permissions(record)">权限</a> -->
       </template>
-      <template #customTitle>
+      <template #postInx>
         1111
       </template>
     </a-table>

@@ -1,5 +1,12 @@
 <template>
-  <div class="tabBar">
+  <div class="tabBar" v-if="tabKinds=='Post'">
+    <div :class="activeKey==items.page_id? 'tabBar_li actives':'tabBar_li' " v-for="items in tabbraList" :key="items.page_id"
+      @click="changeTabs(items)">
+      {{items.page_name}}
+    </div>
+
+  </div>
+  <div class="tabBar" v-else>
     <div :class="activeKey==items.key? 'tabBar_li actives':'tabBar_li' " v-for="items in tabbraList" :key="items.key" @click="changeTabs(items)">
       {{items.title}}
     </div>
@@ -19,6 +26,10 @@ export default {
         return [];
       },
     },
+    tabKinds: {
+      type: String,
+      default: "certification",
+    },
     activeKeys: {
       type: String,
       default: "role",
@@ -27,8 +38,13 @@ export default {
   setup(props, ctx) {
     const pageData = reactive(<any>{});
     pageData.activeKey = props.activeKeys;
+
     const changeTabs = (val) => {
-      pageData.activeKey = val.key;
+      console.log("props.tabKinds", props.tabKinds);
+
+      props.tabKinds == "certification"
+        ? (pageData.activeKey = val.key)
+        : (pageData.activeKey = val.page_id);
       ctx.emit("choseTab", val);
     };
 
