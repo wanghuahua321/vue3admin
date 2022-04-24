@@ -16,7 +16,8 @@
       </div>
     </div>
     <div v-if="choseOne.key=='1'" class="channels">
-      1
+      <tables :table_header="postHeader" :table_data="postData" :pagination="pagination" @changePage="changePage">
+      </tables>
     </div>
     <div v-else-if="choseOne.key=='2' " class="mychannel">
       2
@@ -28,7 +29,7 @@
           <a-checkbox-group v-model:value="checkedList" :options="plainOptions" />
           <div>
             <span>内容:</span>
-            <a-textarea v-model:value="value" placeholder="Basic usage" :rows="4" />
+            <a-textarea v-model:value="textarea" placeholder="Basic usage" :rows="4" />
           </div>
 
           <div v-if="showupImgs" class="uploads">
@@ -64,6 +65,7 @@ import {
 import { message } from "ant-design-vue";
 import tabbar from "@/components/tabbar.vue";
 import modalCon from "@/components/modalCon.vue";
+import tables from "@/components/tables.vue";
 export default {
   name: "posTing",
   components: {
@@ -72,6 +74,7 @@ export default {
     PlusOutlined,
     tabbar,
     modalCon,
+    tables,
   },
   setup() {
     const pagedata = reactive({
@@ -110,6 +113,52 @@ export default {
       previewVisible: false,
       previewImage: "",
       showupImgs: false,
+      postData: [{}],
+      postHeader: [
+        {
+          title: "post",
+          dataIndex: "name",
+          width: "30%",
+        },
+        {
+          title: "评论",
+          dataIndex: "isPublic",
+          slots: { customRender: "isPublic" },
+        },
+        {
+          title: "喜欢",
+          dataIndex: "isPublic",
+          slots: { customRender: "isPublic" },
+        },
+        {
+          title: "点击",
+          dataIndex: "isPublic",
+          slots: { customRender: "isPublic" },
+        },
+        {
+          title: "触达",
+          dataIndex: "isPublic",
+          slots: { customRender: "isPublic" },
+        },
+        {
+          title: "分享",
+          dataIndex: "isPublic",
+          slots: { customRender: "isPublic" },
+        },
+      ],
+      pagination: {
+        current: 1,
+        total: 0,
+        pageSize: 8, //每页中显示10条数据
+        showSizeChanger: true,
+        pageSizeOptions: ["8", "10", "20", "50", "100"], //每页中显示的数据
+        showTotal: (total) => `共有 ${total} 条数据`, //分页中显示总的数据
+      },
+      pageParms: {
+        SkipCount: 0, //跳过1页就传10
+        MaxResultCount: 8, //每页的数据
+      },
+      textarea: "",
     });
 
     onMounted(() => {});
@@ -170,6 +219,19 @@ export default {
     const upImgs = () => {
       pagedata.showupImgs = true;
     };
+    const choseTab = (data) => {
+      // pagedata.choseOne = data;
+      // if (data.key == "1") {
+      // }
+    };
+    const changePage = (pagedatas) => {
+      pagedata.pagination.current = pagedatas.current;
+      pagedata.pagination.pageSize = pagedatas.pageSize;
+      (pagedata.pageParms as any).SkipCount =
+        (pagedatas.current - 1) * pagedatas.pageSize;
+      pagedata.pageParms.MaxResultCount = pagedatas.pageSize;
+      // getRoles();
+    };
     return {
       ...toRefs(pagedata),
       addPost,
@@ -178,6 +240,9 @@ export default {
       handleCancel,
       handlePreview,
       handleChange,
+      changePage,
+      confimAdd,
+      choseTab,
     };
   },
 };

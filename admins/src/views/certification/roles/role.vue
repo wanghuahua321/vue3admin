@@ -228,6 +228,7 @@ export default {
       closes,
       addRoles,
       permissionDialog,
+      changePage,
     };
   },
 };
