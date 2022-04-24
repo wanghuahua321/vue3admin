@@ -1,7 +1,8 @@
 <template>
   <div class="user">
     tenant
-    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @refrcoshAgain="getTenants()"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :pagination="pagination" :tagList="tagLists" @editClick="editClick"
+      @refrcoshAgain="getTenants()" @changePage="changePage"></tables>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
       @ok="handleOk" @cancel="handleCancel">
@@ -94,6 +95,18 @@ export default {
         },
       ],
       types: "",
+      pagination: {
+        current: 1,
+        total: 0,
+        pageSize: 8, //每页中显示10条数据
+        showSizeChanger: true,
+        pageSizeOptions: ["8", "10", "20", "50", "100"], //每页中显示的数据
+        showTotal: (total) => `共有 ${total} 条数据`, //分页中显示总的数据
+      },
+      pageParms: {
+        SkipCount: 0, //跳过1页就传10
+        MaxResultCount: 8, //每页的数据
+      },
       // dialogMsgs: {},
     });
     // pagedata.dialogMsgs = toRefs(props.dialogMsg);
@@ -102,9 +115,10 @@ export default {
     });
     const getTenants = () => {
       certification.tenant
-        .getTenant()
+        .getTenant(pagedata.pageParms)
         .then((res) => {
           pagedata.roleData = res.items;
+          pagedata.pagination.total = res.totalCount;
         })
         .catch((error) => {
           console.log(error);
@@ -239,6 +253,14 @@ export default {
           });
       }
     };
+    const changePage = (pagedatas) => {
+      pagedata.pagination.current = pagedatas.current;
+      pagedata.pagination.pageSize = pagedatas.pageSize;
+      (pagedata.pageParms as any).SkipCount =
+        (pagedatas.current - 1) * pagedatas.pageSize;
+      pagedata.pageParms.MaxResultCount = pagedatas.pageSize;
+      getTenants();
+    };
     return {
       ...toRefs(pagedata),
       getTenants,
@@ -250,6 +272,7 @@ export default {
       updataTenants,
       Connections,
       updataFeature,
+      changePage,
     };
   },
 };

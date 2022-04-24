@@ -1,7 +1,8 @@
 <template>
   <div class="user">
     user
-    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" @editClick="editClick" @refrcoshAgain="getUser()"></tables>
+    <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" :pagination="pagination" @editClick="editClick"
+      @refrcoshAgain="getUser()" @changePage="changePage"></tables>
 
     <permissionDialog ref="permissionDialog" providerName="U" :perFormData="formData" :diaVisible="diaVisible" @closes="diaVisible=false">
     </permissionDialog>
@@ -106,6 +107,18 @@ export default {
         confirmLoading: false,
       },
       types: "",
+      pagination: {
+        current: 1,
+        total: 0,
+        pageSize: 8, //每页中显示10条数据
+        showSizeChanger: true,
+        pageSizeOptions: ["8", "10", "20", "50", "100"], //每页中显示的数据
+        showTotal: (total) => `共有 ${total} 条数据`, //分页中显示总的数据
+      },
+      pageParms: {
+        SkipCount: 0, //跳过1页就传10
+        MaxResultCount: 8, //每页的数据
+      },
     });
     const permissionDialog = ref();
     onMounted(() => {
@@ -113,7 +126,7 @@ export default {
     });
     const getUser = () => {
       certification.user
-        .getUsers()
+        .getUsers(pagedata.pageParms)
         .then((res) => {
           pagedata.roleData = res.items;
         })
@@ -184,6 +197,14 @@ export default {
           console.log(error);
         });
     };
+    const changePage = (pagedatas) => {
+      pagedata.pagination.current = pagedatas.current;
+      pagedata.pagination.pageSize = pagedatas.pageSize;
+      (pagedata.pageParms as any).SkipCount =
+        (pagedatas.current - 1) * pagedatas.pageSize;
+      pagedata.pageParms.MaxResultCount = pagedatas.pageSize;
+      getUser();
+    };
     return {
       ...toRefs(pagedata),
       getUser,
@@ -194,6 +215,7 @@ export default {
       addUsers,
       closes,
       permissionDialog,
+      changePage,
     };
   },
 };

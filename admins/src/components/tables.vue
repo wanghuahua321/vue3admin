@@ -63,18 +63,16 @@ export default {
         return [];
       },
     },
+    pagination: {
+      type: Object,
+      default: () => {
+        return {};
+      },
+    },
   },
   setup(props, ctx) {
     const store = useStore();
     const pagedata = reactive({
-      pagination: {
-        current: 1,
-        total: 0,
-        pageSize: 8, //每页中显示10条数据
-        showSizeChanger: true,
-        pageSizeOptions: ["8", "10", "20", "50", "100"], //每页中显示的数据
-        showTotal: (total) => `共有 ${total} 条数据`, //分页中显示总的数据
-      },
       table_header: [],
       table_data: [],
       dialogMsg: {
@@ -85,7 +83,10 @@ export default {
       },
     });
     onMounted(() => {});
-    const handleTableChange = () => {};
+    const handleTableChange = (pagination) => {
+      console.log("99pagination9", pagination);
+      ctx.emit("changePage", pagination);
+    };
 
     function filterData(val) {
       let isPub = "";
