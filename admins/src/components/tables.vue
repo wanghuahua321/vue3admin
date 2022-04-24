@@ -30,8 +30,18 @@
         </a-popconfirm> -->
         <!-- <a href="javascript:;" @click="permissions(record)">权限</a> -->
       </template>
-      <template #postInx>
-        1111
+      <template #postInx="{record}">
+        <div class="posting">
+          <div class="p_img">
+            <img
+              src="https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/278728548_130870952865902_8921852071585078014_n.png?_nc_cat=111&ccb=1-5&_nc_sid=2d5d41&_nc_ohc=U_xhxwbUr_cAX_tbpmK&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT_311buYnBzTWLZNcPm7W2BaezpU5FqZyLOEykyQis1ag&oe=626A0CE0" />
+          </div>
+          <div class="p_fig">
+            <span>11</span>
+            <span>333</span>
+          </div>
+        </div>
+        <!-- {{record.message}} -->
       </template>
     </a-table>
   </div>
