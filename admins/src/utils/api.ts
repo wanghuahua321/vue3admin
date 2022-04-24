@@ -45,7 +45,7 @@ export const certification={
     getUsers:(params)=>http.get(portalBasicApi + "/identity/users",params), // 获取用户列表
     deleteUser:(id)=>http.delete(portalBasicApi + `/identity/users/${id}`), // 删除
     addUser:(params)=>http.post(portalBasicApi + "/app/user/rpa",params), //新增
-    updataUser:(id,params)=>http.put(portalBasicApi + "/api/identity/users/"+id+"",params), // 修改
+    updataUser:(id,params)=>http.put(portalBasicApi + "/identity/users/"+id+"",params), // 修改
 
   },
   tenant:{

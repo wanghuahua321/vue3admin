@@ -145,7 +145,11 @@ export default {
       createRole.value.roleForm
         .validate()
         .then(() => {
-          addUsers(addParam);
+          if (props.dialogMsgs.isAdd) {
+            addUsers(addParam);
+          } else {
+            updataUsers(addParam);
+          }
         })
         .catch((error) => {
           console.log("error", error);
@@ -192,6 +196,23 @@ export default {
             message.success("新增用户成功");
             ctx.emit("closedia");
           }
+          getUser();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    const updataUsers = (addUserPar) => {
+      certification.user
+        .updataUser(addUserPar.id, addUserPar)
+        .then((res) => {
+          getUser();
+          if (!res) {
+            message.error("修改用户保存失败");
+          } else {
+            message.success("修改用户保存成功");
+            ctx.emit("closedia");
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -216,6 +237,7 @@ export default {
       closes,
       permissionDialog,
       changePage,
+      updataUsers,
     };
   },
 };

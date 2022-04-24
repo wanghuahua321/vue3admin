@@ -167,6 +167,8 @@ export default {
 
               featuresQuery.providerKey = pagedata.editsId;
               updataFeature(featuresQuery, tempData);
+            } else {
+              updataTenants(createRole.value.createRoleform);
             }
           }
         })
