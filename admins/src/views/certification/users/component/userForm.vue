@@ -77,7 +77,7 @@ export default {
     const phoneNumberValidator = (rule: any, value: any, callback: any) => {
       if (!value) {
         return new Promise((resolve, reject) => {
-          reject("22");
+          reject("字段手机号不可为空");
         });
       }
       const reg = /^[1][3,5,7,8][0-9]{9}$/;
@@ -92,12 +92,12 @@ export default {
     const passwordValidator = (rule: any, value: any, callback: any) => {
       if (!value) {
         return new Promise((resolve, reject) => {
-          reject("error");
+          reject("字段管理员密码不可为空");
         });
       }
       if (value.length < 6) {
         return new Promise((resolve, reject) => {
-          reject("不能小于六位");
+          reject("密码至少为6个字符");
         });
       }
       return Promise.resolve();
@@ -116,7 +116,7 @@ export default {
       rules: {
         userName: {
           required: true,
-          message: "Please input name",
+          message: "字段用户名称不可为空",
         },
         phoneNumber: {
           required: true,
@@ -148,6 +148,7 @@ export default {
       },
     });
     if (props.isEdit) {
+      //新增
       console.log("999", store.state.editClick);
       pagedata.createRoleform = { ...store.state.editClick };
     } else {
