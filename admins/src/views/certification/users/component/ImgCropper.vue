@@ -29,7 +29,7 @@
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs, ref } from "vue";
+import { reactive, onMounted, toRefs, ref, toRef } from "vue";
 import "vue-cropper/dist/index.css";
 import { VueCropper } from "vue-cropper";
 import { getBase64, dataURLtoFile } from "@/utils/file";
@@ -38,13 +38,19 @@ export default {
   components: {
     VueCropper,
   },
+  props: {
+    extraProperties: {
+      type: String,
+      default: "",
+    },
+  },
   setup(props, ctx) {
     const pagedata = reactive({
       imgSrc: "",
       cropper: "",
       option: {
         name: "",
-        img: "https://avatars2.githubusercontent.com/u/15681693?s=460&v=4",
+        img: "",
         size: 1,
         full: false,
         outputType: "png",
@@ -64,6 +70,13 @@ export default {
       },
       cropDisabled: true,
     });
+
+    const { extraProperties } = toRefs(props);
+
+    extraProperties.value
+      ? ((pagedata.option as any).img = extraProperties.value)
+      : ((pagedata.option as any).img =
+          " https://avatars2.githubusercontent.com/u/15681693?s=460&v=4");
 
     const cropperImg = ref();
 

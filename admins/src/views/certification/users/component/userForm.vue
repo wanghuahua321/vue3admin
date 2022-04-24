@@ -4,7 +4,7 @@
     <a-tabs tab-position="top">
       <a-tab-pane key="1" tab="用户信息">
         <a-form-item>
-          <ImgCropper ref="imgCroppers" @okHandels="okHandels"></ImgCropper>
+          <ImgCropper ref="imgCroppers" @okHandels="okHandels" :extraProperties="createRoleform.extraProperties.Title"></ImgCropper>
           <!-- <a-input v-model:value="createRoleform.email" placeholder="请输入管理员电子邮箱地址" /> -->
         </a-form-item>
         <a-form-item label="用户名称" name="userName">
