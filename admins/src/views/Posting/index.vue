@@ -384,7 +384,7 @@ export default {
       postHeader: [
         {
           title: "post",
-          width: "30%",
+          width: "48%",
           slots: { customRender: "postInx" },
         },
         {
@@ -575,21 +575,6 @@ export default {
   }
   .Posting_tit {
     .p_tit_tabs {
-    }
-  }
-
-  .posting {
-    display: flex;
-    .p_img {
-      width: 50%;
-      height: 100%;
-      img {
-        width: 100%;
-      }
-    }
-    .p_fig {
-      display: flex;
-      flex-direction: column;
     }
   }
 }

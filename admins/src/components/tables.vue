@@ -37,11 +37,11 @@
               src="https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/278728548_130870952865902_8921852071585078014_n.png?_nc_cat=111&ccb=1-5&_nc_sid=2d5d41&_nc_ohc=U_xhxwbUr_cAX_tbpmK&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT_311buYnBzTWLZNcPm7W2BaezpU5FqZyLOEykyQis1ag&oe=626A0CE0" />
           </div>
           <div class="p_fig">
-            <span>11</span>
-            <span>333</span>
+            <span class="span1">{{record.message}}</span>
+            <span class="span2">{{record.created_time}}</span>
           </div>
         </div>
-        <!-- {{record.message}} -->
+        <!--  -->
       </template>
     </a-table>
   </div>
@@ -229,6 +229,32 @@ export default {
     letter-spacing: 1px;
     font-weight: 500;
     font-family: SourceHanSansCN-Medium;
+  }
+}
+
+.posting {
+  display: flex;
+  .p_img {
+    height: 82px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .p_fig {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 10px;
+    .span1 {
+      color: #3e414a;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .span2 {
+      font-size: 12px;
+      color: #9fa4bb;
+    }
   }
 }
 </style>

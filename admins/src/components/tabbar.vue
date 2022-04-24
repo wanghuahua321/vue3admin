@@ -2,7 +2,7 @@
   <div class="tabBar" v-if="tabKinds=='Post'">
     <div :class="activeKey==items.page_id? 'tabBar_li actives':'tabBar_li' " v-for="items in tabbraList" :key="items.page_id"
       @click="changeTabs(items)">
-      {{items.page_name}}
+      <span class="titles"> {{items.page_name}}</span>
     </div>
 
   </div>
@@ -82,5 +82,12 @@ export default {
     left: -1px;
     color: #fff;
   }
+}
+
+.titles {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 85px;
 }
 </style>
