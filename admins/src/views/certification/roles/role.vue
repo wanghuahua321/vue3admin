@@ -1,6 +1,5 @@
 <template>
   <div class="role">
-    role
     <tables :table_header="roleHeader" :table_data="roleData" :pagination="pagination" :tagList="tagLists" @editClick="editClick" @closes="closes"
       @refrcoshAgain="getRoles" @changePage="changePage">
     </tables>
@@ -59,17 +58,18 @@ export default {
         {
           title: "角色名称",
           dataIndex: "name",
-          width: "30%",
+          width: "32%",
         },
         {
           title: "是否公开",
           dataIndex: "isPublic",
+          width: "32%",
           slots: { customRender: "isPublic" },
         },
         {
           title: "操作",
           dataIndex: "operation",
-          // slots: { customRender: "operation" },
+          width: "36%",
           slots: { customRender: "operation" },
         },
       ],

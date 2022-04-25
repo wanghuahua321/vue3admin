@@ -1,6 +1,5 @@
 <template>
   <div class="user">
-    tenant
     <tables :table_header="roleHeader" :table_data="roleData" :pagination="pagination" :tagList="tagLists" @editClick="editClick"
       @refrcoshAgain="getTenants()" @changePage="changePage"></tables>
 
@@ -53,7 +52,7 @@ export default {
         {
           title: "租户名称",
           dataIndex: "name",
-          width: "30%",
+          width: "50%",
         },
         {
           title: "操作",

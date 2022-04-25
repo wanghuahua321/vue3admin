@@ -1,6 +1,5 @@
 <template>
   <div class="user">
-    user
     <tables :table_header="roleHeader" :table_data="roleData" :tagList="tagLists" :pagination="pagination" @editClick="editClick"
       @refrcoshAgain="getUser()" @changePage="changePage"></tables>
 
@@ -57,19 +56,22 @@ export default {
         {
           title: "用户名称",
           dataIndex: "userName",
-          width: "30%",
+          width: "22%",
         },
         {
           title: "邮箱地址",
           dataIndex: "email",
+          width: "22%",
         },
         {
           title: "手机号码 ",
           dataIndex: "phoneNumber",
+          width: "22%",
         },
         {
           title: "操作",
           dataIndex: "operation",
+          width: "32%",
           // slots: { customRender: "operation" },
           slots: { customRender: "operation" },
         },

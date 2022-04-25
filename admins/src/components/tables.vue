@@ -245,6 +245,8 @@ export default {
 .tagalls {
   display: flex;
   align-items: center;
+  width: 73%;
+  justify-content: space-around;
 }
 .taglis {
   display: flex;
@@ -254,11 +256,12 @@ export default {
   padding: 0px 6px;
   .tagspan {
     display: inline-block;
-    margin-left: 8px;
+    // margin-left: 8px;
     font-size: 13px;
     letter-spacing: 1px;
     font-weight: 500;
     font-family: SourceHanSansCN-Medium;
+    padding: 0px 4px;
     .icons {
       display: flex;
     }
@@ -306,9 +309,15 @@ export default {
   bottom: 16px;
 }
 :deep(.ant-table-tbody > tr > td) {
+  padding: 12px 12px;
   border-bottom: 10px solid #f8f9fb !important;
+  color: #3e414a;
+  font-weight: 500;
 }
 :deep(.ant-table-thead > tr > th) {
   font-weight: 600;
+}
+:deep(.ant-table-thead > tr > th) {
+  border-bottom: 0px solid #ccc;
 }
 </style>
