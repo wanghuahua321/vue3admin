@@ -22,7 +22,7 @@
     <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
       <template #modalCon>
         <div class="diaforms">
-          <a-checkbox-group v-model:value="checkedList" :options="plainOptions" />
+          <a-checkbox-group v-model:value="checkedList" :options="tabbraList" />
           <div>
             <span>内容:</span>
             <a-textarea v-model:value="textarea" placeholder="Basic usage" :rows="4" />
@@ -108,7 +108,6 @@ export default {
       showCom: "Fashion&Fancy",
       showDialogue: false,
       checkedList: ["Apple", "Orange"],
-      plainOptions: ["Apple", "Pear", "Orange"],
       fileList: [],
       previewVisible: false,
       previewImage: "",
