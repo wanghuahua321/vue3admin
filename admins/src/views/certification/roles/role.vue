@@ -93,8 +93,8 @@ export default {
         {
           keys: 2,
           ktit: "删除",
-          icons: "sc_17",
-          colors: "#FBEBE6",
+          icons: "sc_13",
+          colors: "#DBF0F3",
           kinds: "role",
         },
       ],

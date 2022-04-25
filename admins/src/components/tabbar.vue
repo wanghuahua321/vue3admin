@@ -89,6 +89,7 @@ export default {
     // position: relative;
     // left: -1px;
     color: #fff;
+    text-align: center;
   }
 }
 

@@ -48,6 +48,8 @@ export default {
   width: 100%;
   .con-left {
     width: 7%;
+    height: 100vh;
+    overflow: hidden;
     min-width: 86px;
   }
   .con-rig {

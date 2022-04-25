@@ -35,8 +35,10 @@
       <template #postInx="{record}">
         <div class="posting">
           <div class="p_img">
-            <img
-              :src="record.full_picture?record.full_picture:'https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/278728548_130870952865902_8921852071585078014_n.png?_nc_cat=111&ccb=1-5&_nc_sid=2d5d41&_nc_ohc=U_xhxwbUr_cAX_tbpmK&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT_311buYnBzTWLZNcPm7W2BaezpU5FqZyLOEykyQis1ag&oe=626A0CE0'" />
+            <div class="imgs">
+              <img
+                :src="record.full_picture?record.full_picture:'https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/278728548_130870952865902_8921852071585078014_n.png?_nc_cat=111&ccb=1-5&_nc_sid=2d5d41&_nc_ohc=U_xhxwbUr_cAX_tbpmK&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT_311buYnBzTWLZNcPm7W2BaezpU5FqZyLOEykyQis1ag&oe=626A0CE0'" />
+            </div>
           </div>
           <div class="p_fig">
             <span class="span1">{{record.message?record.message:"--"}}</span>
@@ -46,9 +48,9 @@
         <!--  -->
       </template>
       <template #operation1="{record}">
-        <a-popconfirm class="tagspan" title="确定要删除吗?" @confirm.stop="() => del_role_click1(record)">
-          <div class="icons" style="color:DBF0F3">
-            <svg-icon style="height:18px" iconName="sc_13" />
+        <a-popconfirm class="tagspan1" title="确定要删除吗?" @confirm.stop="() => del_role_click1(record)">
+          <div class="icons1">
+            <svg-icon style="height:18px" iconName="sc_17" />
             <span class="ospan">删除</span>
           </div>
         </a-popconfirm>
@@ -273,13 +275,28 @@ export default {
     }
   }
 }
-
+.tagspan1 {
+  background-color: rgb(251, 235, 230);
+  width: 72%;
+  padding: 8px 4px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  .ospan {
+    padding-left: 10px;
+    color: #ff6b48;
+  }
+}
 .posting {
   display: flex;
   .p_img {
+    width: 40%;
     height: 82px;
+    .imgs {
+      min-width: 80%;
+      height: 100%;
+    }
     img {
-      width: 100%;
       height: 100%;
     }
   }
@@ -306,7 +323,7 @@ export default {
 :deep(.ant-table-pagination.ant-pagination) {
   position: fixed;
   right: 0px;
-  bottom: 16px;
+  bottom: 20px;
 }
 :deep(.ant-table-tbody > tr > td) {
   padding: 12px 12px;
