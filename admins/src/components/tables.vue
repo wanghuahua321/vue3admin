@@ -45,6 +45,16 @@
         </div>
         <!--  -->
       </template>
+      <template #operation1="{record}">
+        <a-popconfirm class="tagspan" title="确定要删除吗?" @confirm.stop="() => del_role_click1(record)">
+          <div class="icons" style="color:DBF0F3">
+            <svg-icon style="height:18px" iconName="sc_13" />
+            <span class="ospan">删除</span>
+          </div>
+        </a-popconfirm>
+
+      </template>
+
     </a-table>
   </div>
 </template>
@@ -52,7 +62,7 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs } from "vue";
 import { useStore } from "vuex";
-import { certification } from "@/utils/api";
+import { certification, Posting } from "@/utils/api";
 import { message } from "ant-design-vue";
 export default {
   name: "tables",
@@ -188,6 +198,22 @@ export default {
           });
       }
     };
+
+    const del_role_click1 = (record) => {
+      console.log("record", record);
+      Posting.delPost(record.post_id)
+        .then((res) => {
+          if (res.isSuccess) {
+            message.success("删除成功");
+          } else {
+            message.error(res.message);
+          }
+          ctx.emit("refrcoshAgain");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     return {
       ...toRefs(pagedata),
       handleTableChange,
@@ -196,6 +222,7 @@ export default {
       filterChange,
       editTagClick,
       del_role_click,
+      del_role_click1,
     };
   },
 };

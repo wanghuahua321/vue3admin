@@ -75,5 +75,6 @@ export const Posting={
   getPosting:()=>http.get(portalBasicApi + "/app/facebook-operation/post-infobefore-send-post"),
   getPostdata:(id)=>http.get(portalBasicApi + "/app/facebook-operation/post-list/"+id+""),
   sentPost:(query,params)=>http.posts(portalBasicApi + "/app/facebook-operation/send-post",query,params),
-  
+  delPost:(id)=>http.delete(portalBasicApi + "/app/facebook-operation/post/"+id+""),
+
 }

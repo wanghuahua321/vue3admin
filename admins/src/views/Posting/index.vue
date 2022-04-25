@@ -15,9 +15,10 @@
 
       </div>
     </div>
-
-    <tables :table_header="postHeader" :table_data="postData" :pagination="pagination" @changePage="changePage">
-    </tables>
+    <keep-alive>
+      <tables :table_header="postHeader" :table_data="postData" :pagination="pagination" @changePage="changePage" @refrcoshAgain="getPostdata">
+      </tables>
+    </keep-alive>
 
     <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
       <template #modalCon>
@@ -153,6 +154,12 @@ export default {
           title: "分享",
           dataIndex: "sharesCount",
         },
+        {
+          title: "操作",
+          dataIndex: "operation1",
+          // slots: { customRender: "operation" },
+          slots: { customRender: "operation1" },
+        },
       ],
       pagination: {
         current: 1,
@@ -195,19 +202,9 @@ export default {
         console.log("imgUrl", imgUrl);
         pagedata.previewImage = imgUrl;
       });
-
-      // if (!file.url && !file.preview) {
-      //   file.preview = (await getBase64(file.originFileObj)) as string;
-      //   console.log("666", file);
-      // }
-      // console.log("filefile", file);
-      // file.preview = (await getBase64(file.originFileObj)) as string;
-      // pagedata.previewVisible = file.url || file.preview;
       pagedata.previewVisible = true;
     };
     const handleChange = ({ fileList: newFileList }: any) => {
-      console.log("999999", newFileList);
-
       pagedata.fileList = newFileList;
     };
     const confimAdd = () => {
@@ -221,29 +218,7 @@ export default {
       for (let i = 0; i < pagedata.fileList.length; i++) {
         formData.append("file", (pagedata.fileList[i] as any).originFileObj);
       }
-      // console.log("000 pagedata.fileList", pagedata.fileList);
-
-      console.log("999", params);
-
       sentPosts(params, formData);
-
-      // pagedata.formData = formData;
-      // if (pagedata.dialogType == "delete") {
-      //   deleteData();
-      // } else {
-      //   formRef.value
-      //     .validate()
-      //     .then(() => {
-      //       if (pagedata.dialogType == "news") {
-      //         addChannels();
-      //       } else if (pagedata.dialogType == "edit") {
-      //         editInterface();
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       console.log("error", error);
-      //     });
-      // }
     };
     const closeDia = () => {
       // 取消按钮
@@ -310,6 +285,7 @@ export default {
             }
           });
           isPost ? message.success("发帖成功") : "";
+          pagedata.previewVisible = false;
           getPostdata();
         })
         .catch((error) => {
@@ -320,6 +296,8 @@ export default {
     const onChange = (checkedValue) => {
       pagedata.hasCheck = checkedValue;
     };
+
+    const delPosts = () => {};
     return {
       ...toRefs(pagedata),
       addPost,
@@ -335,6 +313,7 @@ export default {
       getPosttab,
       onChange,
       sentPosts,
+      delPosts,
     };
   },
 };
