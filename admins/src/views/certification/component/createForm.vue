@@ -1,11 +1,11 @@
 <template>
   <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" ref="names" name="name">
-      <template #label>name</template>
+      <template #label>角色名称</template>
       <a-input v-model:value="createRoleform.name" placeholder="请输入渠道名称" />
     </a-form-item>
 
-    <a-form-item>
+    <a-form-item class="checks">
       <a-checkbox v-model:checked="createRoleform.isDefault">
         <!-- 默认 -->
         默认
@@ -83,5 +83,15 @@ export default {
     // // justify-content: space-around;
     // align-items: flex-start;
   }
+}
+:deep(.ant-row) {
+  flex-flow: row wrap;
+  flex-direction: column;
+}
+:deep(.ant-col) {
+  text-align: left;
+}
+.checks {
+  padding-top: 26px;
 }
 </style>

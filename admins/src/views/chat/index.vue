@@ -59,7 +59,13 @@ export default {
     });
 
     const fences = (inx, item) => {
-      pagesDatas.selectinx = inx;
+      let ids = pagesDatas.fencesData.items.findIndex((value) => {
+        return value.id == item.id;
+      });
+      pagesDatas.fencesData.items.splice(ids, 1);
+      pagesDatas.fencesData.items.unshift(item);
+
+      pagesDatas.selectinx = 0;
       pagesDatas.chatData = item;
       sessionStorage.setItem("initSelectinx", inx);
 
