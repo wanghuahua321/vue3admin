@@ -29,9 +29,8 @@
           </div>
 
           <div v-if="showupImgs" class="uploads">
-            <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" list-type="picture-card" v-model:file-list="fileList"
-              @preview="handlePreview">
-              <div v-if="fileList.length < 8">
+            <a-upload list-type="picture-card" v-model:file-list="fileList" @preview="handlePreview" @change="handleChange">
+              <div v-if="fileList.length < 1">
                 <plus-outlined />
               </div>
             </a-upload>
@@ -61,6 +60,7 @@ import { message } from "ant-design-vue";
 import tabbar from "@/components/tabbar.vue";
 import modalCon from "@/components/modalCon.vue";
 import tables from "@/components/tables.vue";
+import { getBase64, dataURLtoFile } from "@/utils/file";
 export default {
   name: "posTing",
   components: {
@@ -178,25 +178,36 @@ export default {
 
       pagedata.showDialogue = true;
     };
-    function getBase64(file: any) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    }
+    // function getBase64(file: any) {
+    //   return new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = (error) => reject(error);
+    //   });
+    // }
+
     const handleCancel = () => {
       pagedata.previewVisible = false;
     };
     const handlePreview = async (file: any) => {
-      if (!file.url && !file.preview) {
-        file.preview = (await getBase64(file.originFileObj)) as string;
-      }
-      pagedata.previewVisible = file.url || file.preview;
+      getBase64(file.originFileObj, (imgUrl) => {
+        console.log("imgUrl", imgUrl);
+        pagedata.previewImage = imgUrl;
+      });
+
+      // if (!file.url && !file.preview) {
+      //   file.preview = (await getBase64(file.originFileObj)) as string;
+      //   console.log("666", file);
+      // }
+      // console.log("filefile", file);
+      // file.preview = (await getBase64(file.originFileObj)) as string;
+      // pagedata.previewVisible = file.url || file.preview;
       pagedata.previewVisible = true;
     };
     const handleChange = ({ fileList: newFileList }: any) => {
+      console.log("999999", newFileList);
+
       pagedata.fileList = newFileList;
     };
     const confimAdd = () => {
@@ -206,7 +217,15 @@ export default {
         message: pagedata.textarea,
       };
 
-      sentPosts(params);
+      const formData = new FormData();
+      for (let i = 0; i < pagedata.fileList.length; i++) {
+        formData.append("file", (pagedata.fileList[i] as any).originFileObj);
+      }
+      // console.log("000 pagedata.fileList", pagedata.fileList);
+
+      console.log("999", params);
+
+      sentPosts(params, formData);
 
       // pagedata.formData = formData;
       // if (pagedata.dialogType == "delete") {
@@ -237,8 +256,7 @@ export default {
     };
     const choseTab = (data) => {
       pagedata.choseOne = data;
-      // if (data.key == "1") {
-      // }
+      getPostdata();
     };
     const changePage = (pagedatas) => {
       pagedata.pagination.current = pagedatas.current;
@@ -281,8 +299,8 @@ export default {
         });
     };
 
-    const sentPosts = (params) => {
-      Posting.sentPost(params, "")
+    const sentPosts = (params, formData) => {
+      Posting.sentPost(params, formData)
         .then((res) => {
           let isPost = true;
           res.forEach((items) => {
@@ -292,7 +310,7 @@ export default {
             }
           });
           isPost ? message.success("发帖成功") : "";
-          // getPostdata();
+          getPostdata();
         })
         .catch((error) => {
           console.log(error);
@@ -369,5 +387,9 @@ export default {
 :deep(.ant-upload-list-picture-card .ant-upload-list-item) {
   width: 72px;
   height: 72px;
+}
+:deep(.ant-upload-list-picture-card-container) {
+  width: 80px;
+  height: 80px;
 }
 </style>

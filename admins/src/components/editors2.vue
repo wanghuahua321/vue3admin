@@ -105,6 +105,7 @@ export default {
     };
 
     const FilesCustomRequest = async (info) => {
+      console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
       formData.append('TempleteFile', info.file.name)
