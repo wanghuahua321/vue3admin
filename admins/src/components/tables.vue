@@ -9,26 +9,28 @@
 
       <template #operation="{record}">
 
-        <!-- <a href="javascript:;" @click="edit_role_click(record)">修改</a> -->
+        <div class="tagalls">
+          <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
+            <div class="taglis" :style="filterChange(tag.colors)">
 
-        <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
-          <div class="taglis" :style="filterChange(tag.colors)">
+              <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(tag,record)">
+                <div class="icons">
+                  <svg-icon style="height:18px" :iconName="tag.icons" />
+                  <span class="ospan">删除</span>
+                </div>
+              </a-popconfirm>
 
-            <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(tag,record)">
-              <svg-icon :iconName="tag.icons" />
-              删除
-            </a-popconfirm>
+              <span v-else class="tagspan">
+                <div class="icons">
+                  <svg-icon :iconName="tag.icons" />
+                  <span class="ospan"> {{ tag.ktit }}</span>
+                </div>
 
-            <span v-else class="tagspan">
-              <svg-icon :iconName="tag.icons" />
-              {{ tag.ktit }}
-            </span>
-          </div>
-        </a-tag>
-        <!-- <a-popconfirm title="确定要删除吗?" @confirm="() => del_role_click(record)">
-          <a href="javascript:;">删除</a>
-        </a-popconfirm> -->
-        <!-- <a href="javascript:;" @click="permissions(record)">权限</a> -->
+              </span>
+            </div>
+          </a-tag>
+        </div>
+
       </template>
       <template #postInx="{record}">
         <div class="posting">
@@ -215,7 +217,10 @@ export default {
     font-weight: 600;
   }
 }
-
+.tagalls {
+  display: flex;
+  align-items: center;
+}
 .taglis {
   display: flex;
   justify-content: center;
@@ -229,6 +234,15 @@ export default {
     letter-spacing: 1px;
     font-weight: 500;
     font-family: SourceHanSansCN-Medium;
+    .icons {
+      display: flex;
+    }
+    .ospan {
+      font-size: 14px;
+      font-weight: 500;
+      padding-left: 6px;
+      letter-spacing: 1px;
+    }
   }
 }
 
