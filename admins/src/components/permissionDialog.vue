@@ -4,9 +4,9 @@
       <a-tabs tab-position="left">
         <a-tab-pane v-for="group in permissionData.groups" :key="group.name" :tab="group.displayName">
           <a-form-item :label="group.displayName">
-            <a-tree ref="permissionTree" :tree-data="
+            <a-tree ref="permissionTree" @check="onCheck" :tree-data="
                                 transformPermissionTree(group.permissions)
-                            " v-model:replaceFields="treeDefaultProps" v-model:checkedKeys="checkedKeys" checkable defaultExpandAll />
+                            " :replace-fields="treeDefaultProps" :checked-keys="checkedKeys" checkable defaultExpandAll />
           </a-form-item>
         </a-tab-pane>
 
@@ -31,6 +31,7 @@
 <script lang='ts'>
 import { reactive, onMounted, toRefs, onBeforeMount } from "vue";
 import { certification } from "@/utils/api";
+import { message } from "ant-design-vue";
 export default {
   name: "permissionDialog",
   components: {},
@@ -66,6 +67,7 @@ export default {
         key: "name",
       },
       permissionData: {},
+      permissionData2: {},
     });
 
     const changeTabs = (val) => {
@@ -75,16 +77,12 @@ export default {
 
     pageData.permissionsQuery.providerName = props.providerName as string;
     const onCheck = (checkedKeys) => {
-      console.log("9999", onCheck);
-      pageData.checkedKeys = checkedKeys.checked || [];
+      pageData.checkedKeys = checkedKeys || [];
+      console.log("checkedKeys", pageData.checkedKeys);
     };
 
     const getPermission = () => {
-      let query = {
-        providerKey: "admin",
-        providerName: "R",
-      };
-      certification.Permissions.getPermissions(query)
+      certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
           pageData.permissionData = res;
         })
@@ -93,30 +91,24 @@ export default {
         });
     };
     function handleUpdatePermission(row: any) {
-      console.log("走一个", row);
       if (pageData.permissionsQuery.providerName === "R") {
         pageData.permissionsQuery.providerKey = row.name;
       } else if (pageData.permissionsQuery.providerName === "U") {
         pageData.permissionsQuery.providerKey = row.id;
       }
-      console.log("000", pageData.permissionsQuery);
-
       certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
+          pageData.permissionData = res;
           const keys: any = [];
           for (let i in res.groups) {
             const group: any = res.groups[i];
-            console.log("group", group);
-
             for (let j in group.permissions) {
               if (group.permissions[j].isGranted) {
                 keys.push(group.permissions[j].name);
               }
             }
           }
-          setTimeout(() => {
-            pageData.checkedKeys = keys;
-          }, 500);
+          pageData.checkedKeys = keys;
         })
         .catch((error) => {
           console.log(error);
@@ -172,15 +164,12 @@ export default {
     };
 
     function updatePermissionData() {
-      console.log("pageData", pageData.checkedKeys);
-
       const tempData: any = [];
       let permissionDatas = pageData.permissionData as any;
+
       for (const i in permissionDatas.groups) {
         const keys = pageData.checkedKeys;
-        console.log("keys", keys);
         const group = permissionDatas.groups[i];
-        console.log("group", group);
         for (const j in group.permissions) {
           if (
             group.permissions[j].isGranted &&
@@ -204,27 +193,23 @@ export default {
 
       console.log("permissionsQuery", tempData);
 
-      // certification.Permissions.updataPermissions(pageData.permissionsQuery, {
-      //   permissions: tempData,
-      // })
-      //   .then((res) => {
-      //     // pageData.dialogPermissionFormVisible = false;
-      //     console.log(
-      //       "permissionsQuery.providerKey,",
-      //       pageData.permissionsQuery.providerKey
-      //     );
-      //     console.log(
-      //       "permissionsQuery.providerName,",
-      //       pageData.permissionsQuery.providerName
-      //     );
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
+      certification.Permissions.updataPermissions(pageData.permissionsQuery, {
+        permissions: tempData,
+      })
+        .then((res) => {
+          if (res) {
+            message.success("保存成功");
+          } else {
+            message.success("保存失败");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 
-    onBeforeMount(() => {
-      getPermission();
+    onMounted(() => {
+      // getPermission();
     });
     return {
       changeTabs,
