@@ -74,5 +74,6 @@ export const certification={
 export const Posting={
   getPosting:()=>http.get(portalBasicApi + "/app/facebook-operation/post-infobefore-send-post"),
   getPostdata:(id)=>http.get(portalBasicApi + "/app/facebook-operation/post-list/"+id+""),
+  sentPost:(query,params)=>http.posts(portalBasicApi + "/app/facebook-operation/send-post",query,params),
   
 }

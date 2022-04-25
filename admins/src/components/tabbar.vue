@@ -72,14 +72,22 @@ export default {
     justify-content: center;
     font-size: 14px;
     color: $mFontcolor;
+    &:nth-child(1) {
+      position: relative;
+      left: -1px;
+    }
+    &:nth-last-child(1) {
+      position: relative;
+      left: 1px;
+    }
   }
 
   .actives {
     height: 36px;
     background: #ff6b48;
     border-radius: 10px;
-    position: relative;
-    left: -1px;
+    // position: relative;
+    // left: -1px;
     color: #fff;
   }
 }

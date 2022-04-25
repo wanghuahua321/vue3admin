@@ -79,14 +79,6 @@ function checkCode(res:any) {
 
 export default {
   post(url:string, params?:any) {
-    // if (
-    //   url.indexOf("InitQMC") > 0 ||
-    //   url.indexOf("AuthorizationSoftware") > 0
-    // ) {
-    //   httpTimeout = 360000;
-    // } else {
-    //   httpTimeout = 100000;
-    // }
 
     return axios({
       method: "post",
@@ -112,6 +104,26 @@ export default {
       method: "post",
       url: baseUrl + url,
       data: params,
+      timeout: httpTimeout,
+      headers: {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "multipart/form-data",
+      },
+    })
+      .then((response) => {
+        return checkStatus(response);
+      })
+      .catch((res) => {
+        return checkCode(res);
+      });
+  },
+  posts(url, data,types?) {
+    // store.commit("LOADING");
+    return axios({
+      method: "POST",
+      url: baseUrl + url,
+      params: data,
+      data:types? types:'',
       timeout: httpTimeout,
       headers: {
         "X-Requested-With": "XMLHttpRequest",
