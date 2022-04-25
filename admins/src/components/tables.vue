@@ -271,4 +271,13 @@ export default {
     }
   }
 }
+
+:deep(.ant-spin-container) {
+  position: inherit !important;
+}
+:deep(.ant-table-pagination.ant-pagination) {
+  position: fixed;
+  right: 0px;
+  bottom: 16px;
+}
 </style>
