@@ -20,12 +20,12 @@
       </tables>
     </keep-alive>
 
-    <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
+    <modalCon titles="添加新帖" :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
       <template #modalCon>
         <div class="diaforms">
           <a-checkbox-group :options="checkedList" @change="onChange" />
-          <div>
-            <span>内容:</span>
+          <div class="sentValue">
+            <span class="spans">内容:</span>
             <a-textarea v-model:value="textarea" placeholder="Basic usage" :rows="4" />
           </div>
 
@@ -383,5 +383,19 @@ export default {
 :deep(.ant-upload-list-picture-card-container) {
   width: 80px;
   height: 80px;
+}
+.sentValue {
+  padding-top: 14px;
+  .spans {
+    padding: 10px 0px;
+    display: inline-block;
+    font-size: 14px;
+    color: #181818;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+}
+.kinds {
+  padding-top: 25px;
 }
 </style>

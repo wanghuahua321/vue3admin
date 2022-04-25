@@ -11,7 +11,7 @@
         <div class="flex-item login-info">
           <div class="info-box">
             <img alt="JC Admin" src="../assets/images/123.png" />
-            <h1 class="enter-x-r">Admin后台管理系统</h1>
+            <h1 class="enter-x-r">聊天</h1>
             <p class="enter-x-r"><span>欢迎使用</span></p>
           </div>
         </div>

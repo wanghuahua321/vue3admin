@@ -1,6 +1,6 @@
 <template>
-  <div class="modals">
-    <a-modal title="添加Fancebook Messager" :visible="showDialogue" @cancel="onCancel" @ok="handleOk">
+  <div class="modals" ref="mod">
+    <a-modal :title="titles" :getContainer='()=>$refs.mod' :visible="showDialogue" @cancel="onCancel" @ok="handleOk">
       <slot name="modalCon"></slot>
     </a-modal>
 
@@ -15,6 +15,10 @@ export default {
     showDialogue: {
       type: Boolean,
       require: true,
+    },
+    titles: {
+      type: String,
+      default: "添加Fancebook Messager",
     },
   },
   components: {},
@@ -46,7 +50,27 @@ export default {
     background-color: #f8f9fb !important;
   }
 
+  :deep(.ant-modal-body) {
+    padding: 14px 24px 14px 24px;
+    font-size: 14px;
+    line-height: 1.5715;
+    word-wrap: break-word;
+    background-color: #f8f9fb;
+  }
+  :deep(.ant-modal-header) {
+    border-bottom: 0px solid #f0f0f0;
+    background-color: #f8f9fb;
+  }
+  :deep(.ant-modal-footer) {
+    border-top: 0px solid #f0f0f0;
+    background-color: #f8f9fb;
+  }
   :deep(.ant-modal-title) {
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.9);
+    line-height: 24px;
+    font-weight: 600;
   }
 }
 </style>

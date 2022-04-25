@@ -15,24 +15,23 @@ router.beforeEach(async (to,from,next)=>{
   const tokens=store.getters.token
   const { token, userInfo } = store.state;
  
-  //  if(to.path==='/login'){
-  //   console.log("tokens",token);
-  //    next()
-  //  }else{
-  //     if (tokens) {
-  //       /* 重新发起缓存配置 */
-  //       if(!token){
-  //         store.commit("setToken",tokens)
-  //       }
-  //       if(Object.keys(userInfo).length===0){
-  //         await store.dispatch('getCurrentUser');  
-  //       }
-  //       next()
-  //     }else{ 
-  //     next('/login')
-  //     }
-  //  }
-  next()
+   if(to.path==='/login'){
+    console.log("tokens",token);
+     next()
+   }else{
+      if (tokens) {
+        /* 重新发起缓存配置 */
+        if(!token){
+          store.commit("setToken",tokens)
+        }
+        if(Object.keys(userInfo).length===0){
+          await store.dispatch('getCurrentUser');  
+        }
+        next()
+      }else{ 
+      next('/login')
+      }
+   }
   
 })
 
