@@ -31,7 +31,7 @@
 
           <div v-if="showupImgs" class="uploads">
             <a-upload list-type="picture-card" v-model:file-list="fileList" @preview="handlePreview" @change="handleChange">
-              <div v-if="fileList.length < 1">
+              <div v-if="fileList.length <3">
                 <plus-outlined />
               </div>
             </a-upload>
@@ -77,18 +77,18 @@ export default {
       seletItemsId: "",
 
       tabbraList: [
-        // {
-        //   page_id: "104161248870206",
-        //   page_name: "上海十六面体服装销售有限公司",
-        // },
-        // {
-        //   page_id: "104381945586170",
-        //   page_name: "购物平台公共主页",
-        // },
-        // {
-        //   page_id: "108983731714273",
-        //   page_name: "售卖板块",
-        // },
+        {
+          page_id: "104161248870206",
+          page_name: "上海十六面体服装销售有限公司",
+        },
+        {
+          page_id: "104381945586170",
+          page_name: "购物平台公共主页",
+        },
+        {
+          page_id: "108983731714273",
+          page_name: "售卖板块",
+        },
       ],
       dialogueData: {
         name: "",
@@ -115,18 +115,18 @@ export default {
       previewImage: "",
       showupImgs: false,
       postData: [
-        // {
-        //   post_id: "104161248870206_104163088870022",
-        //   full_picture:
-        //     "https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/274114846_104163012203363_8641908049846933570_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dd9801&_nc_ohc=T-UsBw7h6o8AX_4VJUX&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT8y74Br6WCDrdtNJfZZbL3YlwkoC8g2BBQ7fNJfCGYJqw&oe=62697F9E",
-        //   created_time: "2022-02-16 09:59:30",
-        //   message: "",
-        //   likesCount: 0,
-        //   commentsCount: 0,
-        //   sharesCount: 0,
-        //   clickCount: 0,
-        //   dealCount: 0,
-        // },
+        {
+          post_id: "104161248870206_104163088870022",
+          full_picture:
+            "https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/274114846_104163012203363_8641908049846933570_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dd9801&_nc_ohc=T-UsBw7h6o8AX_4VJUX&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT8y74Br6WCDrdtNJfZZbL3YlwkoC8g2BBQ7fNJfCGYJqw&oe=62697F9E",
+          created_time: "2022-02-16 09:59:30",
+          message: "",
+          likesCount: 0,
+          commentsCount: 0,
+          sharesCount: 0,
+          clickCount: 0,
+          dealCount: 0,
+        },
       ],
       postHeader: [
         {
@@ -177,8 +177,14 @@ export default {
     });
 
     onBeforeMount(() => {
-      getPosttab();
-      getPostdata();
+      // getPosttab();
+      pagedata.checkedList = (pagedata.tabbraList as any).map((item) => {
+        let ress: any = {};
+        ress.label = item.page_name;
+        ress.value = item.page_id;
+        return ress;
+      });
+      // getPostdata();
     });
     const addPost = () => {
       console.log("checkedList", pagedata.checkedList);
@@ -215,9 +221,16 @@ export default {
       };
 
       const formData = new FormData();
+      const flists: any = [];
       for (let i = 0; i < pagedata.fileList.length; i++) {
-        formData.append("file", (pagedata.fileList[i] as any).originFileObj);
+        formData.append("files", (pagedata.fileList[i] as any).originFileObj);
       }
+      // formData.append("file", );
+      // for (let j = 0; j < formData.getAll("files").length; j++) {
+      //   flists.push(formData.getAll("files")[j]);
+      // }
+      console.log("formData");
+
       sentPosts(params, formData);
     };
     const closeDia = () => {
@@ -231,7 +244,7 @@ export default {
     };
     const choseTab = (data) => {
       pagedata.choseOne = data;
-      getPostdata();
+      // getPostdata();
     };
     const changePage = (pagedatas) => {
       pagedata.pagination.current = pagedatas.current;
@@ -286,7 +299,7 @@ export default {
           });
           isPost ? message.success("发帖成功") : "";
           pagedata.previewVisible = false;
-          getPostdata();
+          // getPostdata();
         })
         .catch((error) => {
           console.log(error);

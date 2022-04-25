@@ -236,9 +236,7 @@ export default {
     font-size: 13px;
     color: #3e414a;
   }
-  :deep(.ant-table-tbody > tr > td) {
-    border-bottom: 0px solid #f0f0f0 !important;
-  }
+
   :deep(.ant-tag) {
     border-radius: 6px;
     font-weight: 600;
@@ -306,5 +304,11 @@ export default {
   position: fixed;
   right: 0px;
   bottom: 16px;
+}
+:deep(.ant-table-tbody > tr > td) {
+  border-bottom: 10px solid #f8f9fb !important;
+}
+:deep(.ant-table-thead > tr > th) {
+  font-weight: 600;
 }
 </style>
