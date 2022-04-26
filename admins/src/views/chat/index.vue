@@ -4,7 +4,8 @@
       <div class="fence">
         <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(item,inx) in fencesData.items" :key="inx" @click="fences(inx,item)">
           <div class="fence_img">
-            <img :src="item.phoneurl" />
+            <!-- fix -->
+            <!-- <img :src="item.ant-image-img" /> -->
           </div>
           <div class="fence_info">
             <div class="chatname">
@@ -61,7 +62,6 @@ export default {
 
     const fences = (inx, item, isexit?) => {
       console.log("itemitem", item);
-
       if (isexit) {
         pagesDatas.isChang = true;
         let ids = pagesDatas.fencesData.items.findIndex((value) => {
