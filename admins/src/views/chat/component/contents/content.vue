@@ -23,8 +23,9 @@
                   <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
                   <a-avatar :size="50">
                     <template #icon>
-                      <a-image :width="50" :src="$store.state.chatPerson.phoneurl" />
-                      <!-- <UserOutlined /> -->
+                      <!-- fix -->
+                      <!-- <a-image :width="50" :src="$store.state.chatPerson.phoneurl" /> -->
+                      <UserOutlined />
                     </template>
                   </a-avatar>
 
@@ -58,7 +59,7 @@
             </div>
           </div>
           <div class="message-input">
-            <editors @sents="sents"></editors>
+            <editors @sents="sents" :contactId="contactId"></editors>
             <!-- <msginput @sents="sents" sentTime="20:9"></msginput> -->
           </div>
         </div>

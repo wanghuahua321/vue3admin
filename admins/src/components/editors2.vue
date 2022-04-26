@@ -15,7 +15,6 @@
       <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit">
 
       </p>
-
     </div>
     <div class="sents" @click="submit">发送</div>
   </div>
@@ -24,7 +23,7 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs } from 'vue';
+import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs, inject } from 'vue';
 import { uploads } from '@/utils/api'
 import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
@@ -34,6 +33,12 @@ export default {
   name: 'app',
   components: {
     PictureOutlined
+  },
+  props: {
+    contactId: {
+      type: String,
+      default: ""
+    },
   },
   setup (props, ctx) {
     const editCons = ref(null);
@@ -94,12 +99,14 @@ export default {
           pageData.sentResults.forEach((res) => {
             ctx.emit('sents', res)
           })
+        } else {
+          ctx.emit('sents', editCons.value.innerHTML)
         }
-        ctx.emit('sents', editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, ''))
+
       }
 
-      // pageData.editHtml = ""
-      // pageData.sentResults.length = 0;
+      pageData.editHtml = ""
+      pageData.sentResults.length = 0;
       // pageData.fileList.length = 0;
       // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
@@ -127,7 +134,7 @@ export default {
       formData.append('TempleteFile', info.file.name)
       pageData.isup = true
 
-      await uploads.fileUpload('01FYQR7YX49FGRMSKXYWYW9SSH', formData).then((res) => {
+      await uploads.fileUpload(props.contactId, formData).then((res) => {
         pageData.upResults = res
         pageData.fileList.push(res)
         pageData.sentResults.push(res)
@@ -141,7 +148,7 @@ export default {
 
     const dealHtml = () => {
       let doms = ""
-      pageData.editHtml = ""
+      pageData.editHtml = editCons.value.innerHTML
       // if (editCons.value.innerHTML) {
       //   console.log("有值", editCons.value.innerHTML);
       //   pageData.editHtml += editCons.value.innerHTML

@@ -12,7 +12,7 @@
     <!-- 
     1234 -->
     <div class="editimages">
-      <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit">
+      <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit(value)">
 
       </p>
 
@@ -20,6 +20,7 @@
     <!-- <div class="sents" @click="submit">发送</div> -->
     <div class="sents" @click="dealHtml('1')">图片</div>
     <div class="sents2" @click="dealHtml('2')">文件</div>
+    <div class="sents3" @click="submit">发送</div>
   </div>
 
   <!-- <div :innerHTML='content.html'></div> -->
@@ -30,7 +31,7 @@ import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs } from 'vue';
 import { uploads } from '@/utils/api'
 import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
-
+import { message } from "ant-design-vue";
 export default {
   name: 'app',
   components: {
@@ -92,19 +93,40 @@ export default {
       console.log("99999", editCons.value.innerHTML);
       console.log("setttttttttttt", pageData.sentResults);
       console.log("11111", pageData.fileList);
-      // pageData.sentResults.forEach((res) => {
-      //   ctx.emit('sents', res)
-      // })
+      if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
+        message.error("不能发送空白消息")
+      } else {
+        //发送之后移到顶端
+        if (pageData.isup) {
+          pageData.sentResults.forEach((res) => {
+            ctx.emit('sents', res)
+          })
+        }
+        ctx.emit('sents', editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, ''))
+      }
 
-      pageData.editHtml = ""
-      // pageData.sentResults.length = 0;
-      // pageData.fileList.length = 0;
-      editCons.value.innerHTML = ""
     }
-    function blurEdit () {
-      pageData.currentUser.url = editCons.value.innerHTML
-      console.log("888ssssssss", pageData.currentUser.url);
-      // dealHtml()
+    var iTime;
+    function blurEdit (val) {
+      console.log("val", val);
+      let onceValue = editCons.value.innerHTML
+
+      // console.log("onceValue", onceValue);
+
+      // clearTimeout(iTime);
+      // pageData.currentUser.url = editCons.value.innerHTML
+      // let doms
+
+      // iTime = setTimeout(function () {
+
+      //   doms = `<span>${onceValue}</span>`
+      //   console.log("888ssssssss", onceValue);
+      //   pageData.editHtml += doms
+
+      //   console.log("pageData.editHtml999", pageData.editHtml);
+      // }, 1000)
+
+
     }
 
     const beforeUpload = (file) => {
@@ -148,6 +170,7 @@ export default {
 
     const dealHtml = (type) => {
       let doms = ""
+      pageData.editHtml = editCons.value.innerHTML
       // pageData.editHtml = ""
       if (type == '1') {
         console.log("00000000000");
@@ -163,6 +186,11 @@ export default {
               </span>`
         pageData.editHtml += doms
       }
+
+      const domss = new DOMParser().parseFromString(pageData.editHtml, 'text/html')
+      const eleNodes = [...domss.body.childNodes]
+      console.log('[ domss ] >', domss)
+      console.log('[ eleNodes ] >', eleNodes)
 
     }
 
@@ -237,6 +265,11 @@ export default {
     position: absolute;
     bottom: 10px;
     right: 40px;
+  }
+  .sents3 {
+    position: absolute;
+    bottom: 10px;
+    right: 70px;
   }
 }
 </style>

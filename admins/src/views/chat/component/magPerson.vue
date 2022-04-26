@@ -2,7 +2,8 @@
   <div class="msgPagecon">
     <div class="pageInfo">
       <div class="pageimg">
-        <a-image :src="user.phoneurl" />
+        <!-- fix -->
+        <!-- <a-image :src="user.phoneurl" /> -->
       </div>
       <b>{{user.display_name}}</b>
       <a-button type="primary" :size="size" style="width:78%">
