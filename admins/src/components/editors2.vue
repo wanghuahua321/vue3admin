@@ -56,7 +56,8 @@ export default {
       fileUploads: "https://192.168.0.120/api/app/facebook-operation/file-upload/",
       editHtml: "",
       upResults: {},
-      sentResults: []
+      sentResults: [],
+      isup: false
     });
 
     onMounted(() => {
@@ -89,16 +90,22 @@ export default {
         message.error("不能发送空白消息")
       } else {
         //发送之后移到顶端
-        ctx.emit('sents', "12")
+        if (pageData.isup) {
+          pageData.sentResults.forEach((res) => {
+            ctx.emit('sents', res)
+          })
+        }
+        ctx.emit('sents', editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, ''))
       }
 
-      pageData.editHtml = ""
+      // pageData.editHtml = ""
       // pageData.sentResults.length = 0;
       // pageData.fileList.length = 0;
       // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
     }
     function blurEdit () {
+      pageData.isup = false
       pageData.currentUser.url = editCons.value.innerHTML
       console.log("888", pageData.currentUser.url);
     }
@@ -118,6 +125,7 @@ export default {
       let formData = new FormData()
       formData.append('file', info.file)
       formData.append('TempleteFile', info.file.name)
+      pageData.isup = true
 
       await uploads.fileUpload('01FYQR7YX49FGRMSKXYWYW9SSH', formData).then((res) => {
         pageData.upResults = res

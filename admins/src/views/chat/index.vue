@@ -84,10 +84,13 @@ export default {
       store.commit("setChatPerson", item);
     };
     const contactsLeft = async () => {
-      debugger;
       await Message.contacts().then((res) => {
         if (!pagesDatas.isChang) {
           pagesDatas.fencesData = res;
+          fences(
+            pagesDatas.selectinx,
+            pagesDatas.fencesData.items[pagesDatas.selectinx]
+          );
         }
 
         router.push({

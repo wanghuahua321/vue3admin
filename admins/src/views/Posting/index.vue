@@ -177,14 +177,14 @@ export default {
     });
 
     onBeforeMount(() => {
-      // getPosttab();
-      pagedata.checkedList = (pagedata.tabbraList as any).map((item) => {
-        let ress: any = {};
-        ress.label = item.page_name;
-        ress.value = item.page_id;
-        return ress;
-      });
-      // getPostdata();
+      getPosttab();
+      // pagedata.checkedList = (pagedata.tabbraList as any).map((item) => {
+      //   let ress: any = {};
+      //   ress.label = item.page_name;
+      //   ress.value = item.page_id;
+      //   return ress;
+      // });
+      getPostdata();
     });
     const addPost = () => {
       console.log("checkedList", pagedata.checkedList);
@@ -244,7 +244,7 @@ export default {
     };
     const choseTab = (data) => {
       pagedata.choseOne = data;
-      // getPostdata();
+      getPostdata();
     };
     const changePage = (pagedatas) => {
       pagedata.pagination.current = pagedatas.current;
@@ -299,7 +299,7 @@ export default {
           });
           isPost ? message.success("发帖成功") : "";
           pagedata.previewVisible = false;
-          // getPostdata();
+          getPostdata();
         })
         .catch((error) => {
           console.log(error);

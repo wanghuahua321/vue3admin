@@ -183,7 +183,6 @@ export default {
           pagedata.features.map((feature: any) => {
             if (feature.valueType.name === "ToggleStringValueType") {
               pagedata.temp[feature.name] = feature.value === "true";
-              debugger;
             } else if (
               feature.valueType.name === "FreeTextStringValueType" ||
               feature.valueType.name === "SelectionStringValueType"
