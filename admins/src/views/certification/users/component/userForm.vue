@@ -4,8 +4,9 @@
     <a-tabs tab-position="top">
       <a-tab-pane key="1" tab="用户信息">
         <a-form-item>
-          <ImgCropper ref="imgCroppers" @okHandels="okHandels" :extraProperties="createRoleform.extraProperties.Title"></ImgCropper>
-          <!-- <a-input v-model:value="createRoleform.email" placeholder="请输入管理员电子邮箱地址" /> -->
+          <ImgCropper ref="imgCroppers" @okHandels="okHandels"
+            :extraProperties="createRoleform.extraProperties&&createRoleform.extraProperties.Title?createRoleform.extraProperties.Title:''">
+          </ImgCropper>
         </a-form-item>
         <a-form-item label="用户名称" name="userName">
           <a-input v-model:value="createRoleform.userName" placeholder="请输入用户名称" />
