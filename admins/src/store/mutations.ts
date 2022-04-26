@@ -23,12 +23,10 @@ const mutations = {
 
   setChatPerson(state:storeState,count:object){
     state.chatPerson=count
-    console.log("state.chatPerson",state.chatPerson);  
   },
 
   setEditClick(state:storeState,count:object){
     state.editClick=count
-    console.log("999990-9",state.editClick);
     
   },
   setDialogMsg(state:storeState,count:object){
@@ -41,6 +39,9 @@ const mutations = {
     state.dialogMsg.addTit=count
     console.log("00000",state.dialogMsg.addTit);
     
-  }
+  },
+  setloadding(state,count){
+    state.loadding=count
+  },
 };
 export default mutations;

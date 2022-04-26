@@ -17,6 +17,7 @@ axios.interceptors.request.use((config:any)=>{
   if (config.url.indexOf("?") < 0)
   config.url = config.url + "?r=" + Math.random();
   else config.url = config.url + "&r=" + Math.random(); //IE对API有缓存，要加随机参数
+  store.commit('setloadding',true) // 全局loading
   return config;
 },(error)=>{
   return Promise.reject(error);
@@ -24,8 +25,7 @@ axios.interceptors.request.use((config:any)=>{
 
 /* 响应拦截器 */
 axios.interceptors.response.use((response)=>{
-
-  
+  store.dispatch('loaddingAct',false) // 全局loading
   return response;
 },(error)=>{
   if (error.response) {

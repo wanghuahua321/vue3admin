@@ -61,7 +61,6 @@ export default {
     });
 
     const fences = (inx, item, isexit?) => {
-      console.log("itemitem", item);
       if (isexit) {
         pagesDatas.isChang = true;
         let ids = pagesDatas.fencesData.items.findIndex((value) => {

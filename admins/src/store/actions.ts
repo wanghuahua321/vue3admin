@@ -8,5 +8,8 @@ const actions = {
       }
     });
   },
+  loaddingAct(context,loading){
+    context.commit("setloadding",loading)
+  }
 }
 export default actions;

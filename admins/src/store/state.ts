@@ -8,7 +8,8 @@ const state={
     addTit: "新建角色",
     addvisible: false,
     confirmLoading: false,
-  }
+  },
+  loadding:false,
   
 };
 

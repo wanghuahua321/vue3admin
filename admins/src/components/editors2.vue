@@ -54,7 +54,16 @@ export default {
       },
       messageTypess: "TextMessage",
       focus: false,
-      fileList: [],
+      fileList: [
+        {
+          messageType: "PhotoMessage",
+          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
+        },
+        {
+          messageType: "FileMessage",
+          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
+        }
+      ],
       uploads: {
         contactId: ''
       },
@@ -94,14 +103,15 @@ export default {
       if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
         message.error("不能发送空白消息")
       } else {
-        //发送之后移到顶端
-        if (pageData.isup) {
-          pageData.sentResults.forEach((res) => {
-            ctx.emit('sents', res)
-          })
-        } else {
-          ctx.emit('sents', editCons.value.innerHTML)
-        }
+        console.log("0000", pageData.sentResults.length);
+        // //发送之后移到顶端
+        // if (pageData.isup) {
+        //   pageData.sentResults.forEach((res) => {
+        //     ctx.emit('sents', res)
+        //   })
+        // } else {
+        //   ctx.emit('sents', editCons.value.innerHTML)
+        // }
 
       }
 
@@ -111,10 +121,16 @@ export default {
       // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
     }
+
+    var timer
     function blurEdit () {
       pageData.isup = false
-      pageData.currentUser.url = editCons.value.innerHTML
-      console.log("888", pageData.currentUser.url);
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        console.log("888", pageData.currentUser.url);
+        pageData.currentUser.url = editCons.value.innerHTML
+      }, 1000)
+
     }
 
     const beforeUpload = (file) => {
@@ -134,13 +150,13 @@ export default {
       formData.append('TempleteFile', info.file.name)
       pageData.isup = true
 
-      await uploads.fileUpload(props.contactId, formData).then((res) => {
-        pageData.upResults = res
-        pageData.fileList.push(res)
-        pageData.sentResults.push(res)
-      }).catch((error) => {
-        console.log(error);
-      })
+      // await uploads.fileUpload(props.contactId, formData).then((res) => {
+      //   pageData.upResults = res
+      //   pageData.fileList.push(res)
+      //   pageData.sentResults.push(res)
+      // }).catch((error) => {
+      //   console.log(error);
+      // })
 
       dealHtml()
 
@@ -149,15 +165,8 @@ export default {
     const dealHtml = () => {
       let doms = ""
       pageData.editHtml = editCons.value.innerHTML
-      // if (editCons.value.innerHTML) {
-      //   console.log("有值", editCons.value.innerHTML);
-      //   pageData.editHtml += editCons.value.innerHTML
-      //   /* push */
-      //   pageData.currentUser.url = editCons.value.innerHTML
-      //   pageData.sentResults.push(pageData.currentUser)
-      // }
-      if (pageData.fileList.length > 0) {
 
+      if (pageData.fileList.length > 0) {
         pageData.fileList.map((res) => {
           console.log("res999", res);
           if (res.messageType == "PhotoMessage") {
@@ -174,6 +183,12 @@ export default {
             pageData.editHtml += doms
           }
         })
+
+        const domss = new DOMParser().parseFromString(pageData.editHtml, 'text/html')
+        pageData.sentResults = [...domss.body.childNodes]
+        console.log('[ domss ] >', domss)
+        console.log('[ eleNodes ] >', pageData.sentResults)
+
       }
     }
 
