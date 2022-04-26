@@ -166,7 +166,7 @@ export default {
         cancelText: '取消',
         centered: true,
         async onOk () {
-          await store.dispatch('user/logout')
+          store.commit('Logout')
           router.push('/login')
         }
       })
