@@ -56,19 +56,27 @@ export default {
 
       fencesData: {}, //左侧数据
       chatData: {},
+      isChang: false,
     });
 
-    const fences = (inx, item) => {
-      let ids = pagesDatas.fencesData.items.findIndex((value) => {
-        return value.id == item.id;
-      });
-      pagesDatas.fencesData.items.splice(ids, 1);
-      pagesDatas.fencesData.items.unshift(item);
+    const fences = (inx, item, isexit?) => {
+      console.log("itemitem", item);
 
-      pagesDatas.selectinx = 0;
+      if (isexit) {
+        pagesDatas.isChang = true;
+        let ids = pagesDatas.fencesData.items.findIndex((value) => {
+          return value.id == item.id;
+        });
+        pagesDatas.fencesData.items.splice(ids, 1);
+        pagesDatas.fencesData.items.unshift(item);
+
+        pagesDatas.selectinx = 0;
+      } else {
+        pagesDatas.selectinx = inx;
+        pagesDatas.isChang = false;
+      }
       pagesDatas.chatData = item;
       sessionStorage.setItem("initSelectinx", inx);
-
       router.push({
         name: "chatinx",
         params: { type: item.id },
@@ -76,19 +84,28 @@ export default {
       store.commit("setChatPerson", item);
     };
     const contactsLeft = async () => {
+      debugger;
       await Message.contacts().then((res) => {
-        pagesDatas.fencesData = res;
+        if (!pagesDatas.isChang) {
+          pagesDatas.fencesData = res;
+        }
 
         router.push({
           name: "chatinx",
-          params: { type: res.items[pagesDatas.selectinx].id },
+          params: {
+            type: pagesDatas.fencesData.items[pagesDatas.selectinx].id,
+          },
         });
-        store.commit("setChatPerson", res.items[pagesDatas.selectinx]);
+        store.commit(
+          "setChatPerson",
+          pagesDatas.fencesData.items[pagesDatas.selectinx]
+        );
       });
     };
 
     const doneSent = () => {
       contactsLeft();
+      fences(0, pagesDatas.chatData, "types");
     };
 
     onMounted(() => {

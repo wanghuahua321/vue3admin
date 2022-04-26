@@ -28,6 +28,7 @@ import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs } from 'vue';
 import { uploads } from '@/utils/api'
 import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
+import { message } from "ant-design-vue";
 
 export default {
   name: 'app',
@@ -84,10 +85,18 @@ export default {
       //   ctx.emit('sents', res)
       // })
 
+      if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
+        message.error("不能发送空白消息")
+      } else {
+        //发送之后移到顶端
+        ctx.emit('sents', "12")
+      }
+
       pageData.editHtml = ""
       // pageData.sentResults.length = 0;
       // pageData.fileList.length = 0;
-      editCons.value.innerHTML = ""
+      // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
+
     }
     function blurEdit () {
       pageData.currentUser.url = editCons.value.innerHTML
@@ -135,7 +144,7 @@ export default {
       if (pageData.fileList.length > 0) {
 
         pageData.fileList.map((res) => {
-          console.log("res", res);
+          console.log("res999", res);
           if (res.messageType == "PhotoMessage") {
             doms = `<img class="fileimg" src="${res.url}" />`
             pageData.editHtml += doms
