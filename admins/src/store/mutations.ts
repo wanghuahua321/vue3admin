@@ -8,8 +8,10 @@ const mutations = {
   },
   Logout: (state: storeState) => {
     //退出登录的操作,需要清楚的一些状态
+    
     state.token = '';
     localStorage.removeItem(tokenAlias);
+    localStorage[tokenAlias]=""
     // state.user = null;
     // state.role = "";
   },
