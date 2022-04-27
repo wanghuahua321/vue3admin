@@ -7,6 +7,9 @@
         <svg-icon iconName="wj" />
       </a-upload>
     </div>
+    <div @click="smileClick">
+      <SmileOutlined />
+    </div>
   </div>
   <div class="editCon" @keyup.enter="submit">
     <!-- 
@@ -33,7 +36,8 @@ import { FileTextOutlined } from '@ant-design/icons-vue';
 export default {
   name: 'app',
   components: {
-    PictureOutlined
+    PictureOutlined,
+    SmileOutlined
   },
   props: {
     contactId: {
@@ -91,6 +95,8 @@ export default {
     );
 
 
+
+
     const submit = () => {
       console.log("999");
 
@@ -125,6 +131,11 @@ export default {
         // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
       }
+    }
+
+    const smileClick = () => {
+      console.log("999999");
+
     }
 
 
@@ -207,6 +218,7 @@ export default {
       FilesCustomRequest,
       submit,
       editCons,
+      smileClick,
       ...toRefs(pageData),
     };
   },
