@@ -5,9 +5,9 @@
     </div>
 
     <div class="searchs">
-      <a-input class="searchsinp" placeholder="Basic usage">
+      <a-input class="searchsinp" placeholder="搜索">
         <template #prefix>
-          <user-outlined type="user" />
+          <SearchOutlined />
         </template>
       </a-input>
 
@@ -99,7 +99,8 @@ import {
   LoginOutlined,
   ExclamationCircleOutlined,
   BellOutlined,
-  DownOutlined
+  DownOutlined,
+  SearchOutlined
 } from '@ant-design/icons-vue'
 // import Breadcrumb from '@/components/Breadcrumb'
 
@@ -114,7 +115,8 @@ export default {
     LoginOutlined,
     Breadcrumb,
     BellOutlined,
-    DownOutlined
+    DownOutlined,
+    SearchOutlined
   },
   props: {
     isCollapsed: {

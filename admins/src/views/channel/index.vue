@@ -21,8 +21,9 @@
       <svg-icon iconName="xj" />
 
       <svg-icon iconName="sp" />
-      <svg-icon iconName="tp" />
       <svg-icon iconName="tu" />
+
+      <svg-icon iconName="tp" />
       <svg-icon iconName="wj" />
       <svg-icon iconName="zhanghao" />
       <svg-icon iconName="mima" />
@@ -420,7 +421,7 @@ export default {
     padding: 22px;
     display: flex;
     position: relative;
-    box-shadow: 0 0 4px 1px rgba(73, 77, 81, 0.2);
+    box-shadow: 0px 0px 6px 0px rgba(214, 189, 179, 0.61);
     &:nth-child(4n) {
       margin-right: 0% !important;
     }

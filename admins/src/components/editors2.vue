@@ -4,7 +4,7 @@
     <div>
       <a-upload name="file" :show-upload-list="false" :file-list="fileList" :before-upload="beforeUpload" :customRequest="FilesCustomRequest">
         <!-- list-type="picture" :action='fileUploads' :header="{token:$store}" :action="fileUploads" :data="uploads" -->
-        <PictureOutlined />
+        <svg-icon iconName="wj" />
       </a-upload>
     </div>
   </div>
@@ -273,6 +273,7 @@ export default {
     color: #89d961;
     font-size: 13px;
     letter-spacing: 1px;
+    cursor: pointer;
   }
 }
 </style>

@@ -41,7 +41,9 @@
           </div>
 
           <div class="kinds">
-            <div @click="upImgs">图片</div>
+            <div @click="upImgs">
+              <svg-icon iconName="tp" />
+            </div>
           </div>
         </div>
       </template>
@@ -115,18 +117,18 @@ export default {
       previewImage: "",
       showupImgs: false,
       postData: [
-        {
-          post_id: "104161248870206_104163088870022",
-          full_picture:
-            "https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/274114846_104163012203363_8641908049846933570_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dd9801&_nc_ohc=T-UsBw7h6o8AX_4VJUX&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT8y74Br6WCDrdtNJfZZbL3YlwkoC8g2BBQ7fNJfCGYJqw&oe=62697F9E",
-          created_time: "2022-02-16 09:59:30",
-          message: "",
-          likesCount: 0,
-          commentsCount: 0,
-          sharesCount: 0,
-          clickCount: 0,
-          dealCount: 0,
-        },
+        // {
+        //   post_id: "104161248870206_104163088870022",
+        //   full_picture:
+        //     "https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/274114846_104163012203363_8641908049846933570_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=dd9801&_nc_ohc=T-UsBw7h6o8AX_4VJUX&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT8y74Br6WCDrdtNJfZZbL3YlwkoC8g2BBQ7fNJfCGYJqw&oe=62697F9E",
+        //   created_time: "2022-02-16 09:59:30",
+        //   message: "",
+        //   likesCount: 0,
+        //   commentsCount: 0,
+        //   sharesCount: 0,
+        //   clickCount: 0,
+        //   dealCount: 0,
+        // },
       ],
       postHeader: [
         {
@@ -265,12 +267,11 @@ export default {
               ress.value = item.page_id;
               return ress;
             });
-          } else {
-            message.error("获取列表失败");
           }
         })
         .catch((error) => {
           console.log(error);
+          message.error("获取列表失败");
         });
     };
     const getPostdata = () => {
@@ -278,12 +279,11 @@ export default {
         .then((res) => {
           if (res) {
             pagedata.postData = res[0].posts;
-          } else {
-            message.error("获取列表失败");
           }
         })
         .catch((error) => {
           console.log(error);
+          message.error("获取列表失败");
         });
     };
 
