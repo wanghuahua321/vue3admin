@@ -3,12 +3,12 @@
     <div class="pageInfo">
       <div class="pageimg">
         <!-- fix -->
-        <!-- <a-image :src="user.phoneurl" /> -->
+        <a-image :src="user.phoneurl" />
       </div>
       <b>{{user.display_name}}</b>
-      <a-button type="primary" :size="size" style="width:78%">
+      <a-button type="primary" style="width:78%">
         <template #icon>
-          <DownloadOutlined />
+          <!-- <DownloadOutlined /> -->
           浏览主页
         </template>
       </a-button>

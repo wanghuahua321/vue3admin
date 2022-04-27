@@ -5,7 +5,7 @@
         <div :class="selectinx==inx?'fence_item selected':'fence_item' " v-for="(item,inx) in fencesData.items" :key="inx" @click="fences(inx,item)">
           <div class="fence_img">
             <!-- fix -->
-            <!-- <img :src="item.ant-image-img" /> -->
+            <img :src="item.phoneurl" />
           </div>
           <div class="fence_info">
             <div class="chatname">
