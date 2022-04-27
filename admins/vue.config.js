@@ -18,7 +18,7 @@ module.exports = defineConfig({
     : path.resolve(__dirname, "D:/EarthResource/ui/default/wadmins"),
   // 生产环境是否生成 sourceMap 文件
   chainWebpack: config => {
-    config.plugin('html').tap(args => { console.log('[ args ] >', args); args[0].title = "观数台"; return args })
+    config.plugin('html').tap(args => { console.log('[ args ] >', args); args[0].title = "Marketing"; return args })
     config.module.rules.delete("svg"); //重点:删除默认配置中处理svg,
     config.module
       .rule('svg-sprite-loader')

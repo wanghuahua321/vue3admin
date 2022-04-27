@@ -1,41 +1,47 @@
 <template>
-  <div class="jc-login">
-    <div class="container">
-      <div class="wrapper">
-        <div class="login-logo enter-x-l">
-          <p>
-            <svg-icon iconName="logo" />
-            <span>Admin</span>
-          </p>
+  <div class="logins">
+    <div class="lefts_img"></div>
+    <div class="rig_img"></div>
+    <div class="logins_conts">
+      <div class="logins_conts_inner">
+        <div class="l_left">
+          <svg-icon iconName="tu" />
         </div>
-        <div class="flex-item login-info">
-          <div class="info-box">
-            <img alt="JC Admin" src="../assets/images/123.png" />
-            <h1 class="enter-x-r">聊天</h1>
-            <p class="enter-x-r"><span>欢迎使用</span></p>
-          </div>
-        </div>
-        <div class="flex-item login-form">
-          <div class="form-box enter-x-l">
-            <h1 class="login-title enter-x-l">登录</h1>
-            <a-form ref="loginForms" :model="formData" :rules="rules">
+        <div class="l_rig">
+          <div class="loginUser">
+            <div class="user_top">
+              <svg-icon class="logos" iconName="logo" />
+            </div>
+
+            <a-form style="width:90%,margin:0 auto" ref="loginForms" :model="formData" :rules="rules">
               <a-form-item name="username" class="enter-x-l">
-                <a-input aria-autocomplete="off" v-model:value="formData.username" size="large" placeholder="用户名" />
+                <a-input aria-autocomplete="off" v-model:value="formData.username" size="large" placeholder="用户名">
+                  <template #prefix>
+                    <svg-icon class="logins_icon" iconName="zhanghao" />
+                  </template>
+                </a-input>
               </a-form-item>
               <a-form-item name="password" class="enter-x-l">
-                <a-input-password aria-autocomplete="off" v-model:value="formData.password" size="large" placeholder="密码" @keyup.enter="logins" />
+                <a-input-password aria-autocomplete="off" v-model:value="formData.password" size="large" placeholder="密码" @keyup.enter="logins">
+                  <template #prefix>
+                    <svg-icon class="logins_icon" iconName="mima" />
+                  </template>
+                </a-input-password>
               </a-form-item>
-              <a-form-item class="enter-x-l" name="isCheckd">
+              <a-form-item class="ischecks" name="isCheckd">
                 <a-checkbox v-model:checked="formData.isChecked">记住我</a-checkbox>
               </a-form-item>
-              <a-form-item class="enter-x-l">
-                <a-button size="large" :loading="loading" class="btn-login" type="primary" @click="logins">登录</a-button>
+              <a-form-item class="buttons">
+                <a-button style="width:100%" size="large" :loading="loading" type="primary" @click="logins">登录</a-button>
               </a-form-item>
             </a-form>
+
           </div>
         </div>
       </div>
+
     </div>
+
   </div>
 </template>
 
@@ -43,7 +49,6 @@
 import { reactive, onMounted, toRefs, inject, ref, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { LoginInfo } from "../utils/api";
-import { encrypt } from "../utils/encrypt";
 import { useStore } from "vuex";
 // const store = useStore();
 
@@ -133,92 +138,112 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.jc-login {
-  overflow: hidden;
-  height: 100%;
-  padding: 0 16px;
+.logins {
+  width: 100%;
+  height: 100vh;
+  background-color: #ffded3;
   position: relative;
-  &::before {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .lefts_img {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin-left: -48%;
-    background-image: url("../assets/svgs/login-bg.svg");
+    left: 0%;
+    width: 24.8%;
+    min-height: 30%;
+    background-image: url("../assets/images/zuo.png");
     background-position: 100%;
     background-repeat: no-repeat;
-    background-size: auto 100%;
-    content: "";
+    background-size: 100% 100%;
   }
-  .container {
+  .rig_img {
+    position: absolute;
+    bottom: 0px;
+    right: 0%;
+    width: 18.6%;
+    min-height: 41%;
+    background-image: url("../assets/images/you.png");
+    background-position: 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+
+  .logins_conts {
+    width: 92%;
+    height: 88%;
     margin: 0 auto;
-    height: 100%;
-    box-sizing: border-box;
-    .wrapper {
-      display: flex;
+    background: #ffffff;
+    box-shadow: 0px 2px 14px 0px rgba(176, 110, 82, 0.61);
+    border-radius: 20px;
+    position: relative;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .logins_conts_inner {
+    width: 84%;
+    height: 88.5%;
+    display: flex;
+
+    .l_left {
+      width: 50%;
       height: 100%;
-      .login-logo {
-        position: absolute;
-        top: 8px;
-        display: none;
-        p {
-          color: #fff;
-          img {
-            width: 30px;
-            vertical-align: -7px;
-          }
-          span {
-            font-weight: bold;
-            font-size: 16px;
-            display: inline-block;
-            padding-left: 5px;
-          }
-        }
+      display: flex;
+      align-items: center;
+      .svg-icon {
+        width: 95%;
+        height: 90%;
       }
-      .flex-item {
-        width: 50%;
-      }
-      .login-info {
-        position: relative;
-        .info-box {
-          position: absolute;
-          top: 50%;
-          color: #fff;
-          margin-top: -159px;
-          width: 100%;
+    }
+    .l_rig {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+
+      .loginUser {
+        width: 70%;
+        height: 85%;
+        .user_top {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
           align-items: center;
-          img {
-            width: 45%;
-            vertical-align: middle;
-          }
-          h1 {
-            margin: 56px 0 20px 0;
-            font-weight: normal;
-            color: #fff;
+          justify-content: center;
+          margin-bottom: 20px;
+        }
+        .logins_icon {
+          margin-right: 8px;
+          .svg-icon {
+            width: 23px;
+            height: 23px;
           }
         }
-      }
-      .login-form {
-        position: relative;
-        .form-box {
-          position: absolute;
-          top: 50%;
-          margin-top: -168px;
-          margin-left: 90px;
-          width: 400px;
-          .login-title {
-            margin-bottom: 20px;
-          }
-          .btn-login {
-            width: 100%;
-          }
+        .ischecks {
+          margin-bottom: 10px;
+        }
+        .logos {
+          width: 23%;
+          height: 100%;
+        }
+
+        .buttons {
+          width: 100%;
         }
       }
     }
   }
+}
+:deep(.ant-input-affix-wrapper) {
+  border: 0px solid #d9d9d9 !important;
+  border-bottom: 2px solid #e8e8e8 !important;
+}
+:deep(.ant-input-affix-wrapper-focused) {
+  box-shadow: none !important;
+}
+:deep(.ant-input-affix-wrapper > input.ant-input) {
+  line-height: 32px;
 }
 </style>

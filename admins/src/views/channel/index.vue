@@ -1,6 +1,6 @@
 <template>
   <div class="channel">
-    <!-- <div style="backgroud: #ccc;">
+    <div style="backgroud: #ccc;">
       <svg-icon iconName="身份_ico_wx" />
       <svg-icon iconName="身份_ico_xz" />
       <svg-icon iconName="bj" />
@@ -19,7 +19,14 @@
       <svg-icon iconName="sx" />
       <svg-icon iconName="tishi" />
       <svg-icon iconName="xj" />
-    </div> -->
+
+      <svg-icon iconName="sp" />
+      <svg-icon iconName="tp" />
+      <svg-icon iconName="tu" />
+      <svg-icon iconName="wj" />
+      <svg-icon iconName="zhanghao" />
+      <svg-icon iconName="mima" />
+    </div>
     <div>
       <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="alls"></tabbar>
 
