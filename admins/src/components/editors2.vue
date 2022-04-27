@@ -75,8 +75,7 @@ export default {
     });
 
     onMounted(() => {
-      let hua = document.querySelector('.editCon')
-      // console.log("hua", hua.innerHTML);
+
     });
 
     watch(
@@ -92,45 +91,50 @@ export default {
 
 
     const submit = () => {
-      pageData.currentUser.url = editCons.value.innerHTML
-      console.log("99999", editCons.value.innerHTML);
-      console.log("setttttttttttt", pageData.sentResults);
-      console.log("11111", pageData.fileList);
-      // pageData.sentResults.forEach((res) => {
-      //   ctx.emit('sents', res)
-      // })
+
 
       if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
         message.error("不能发送空白消息")
       } else {
-        console.log("0000", pageData.sentResults.length);
-        // //发送之后移到顶端
-        // if (pageData.isup) {
-        //   pageData.sentResults.forEach((res) => {
-        //     ctx.emit('sents', res)
-        //   })
-        // } else {
-        //   ctx.emit('sents', editCons.value.innerHTML)
-        // }
+        let sentvalue = {}
+
+        for (let i = 0; i < pageData.sentResults.length; i++) {
+          console.log("pageData.sentResults[i].constructor.name", pageData.sentResults[i].constructor.name);
+          if (pageData.sentResults[i].constructor.name == 'HTMLImageElement') {
+            sentvalue.messageType = "PhotoMessage"
+            sentvalue.url = document.querySelector(".fileimg").src
+            ctx.emit('sents', sentvalue)
+          } else if (pageData.sentResults[i].constructor.name == 'HTMLSpanElement') {
+            sentvalue.messageType = "FileMessage"
+            sentvalue.url = document.querySelector(".fileimg").src
+            ctx.emit('sents', sentvalue)
+          } else {
+            sentvalue.messageType = "TextMessage"
+            sentvalue.url = pageData.sentResults[i].data
+            ctx.emit('sents', sentvalue)
+          }
+          // console.log("0000000000000000", document.getElementsByClassName("fileimg")[0].constructor.value);
+        }
+
+        pageData.editHtml = ""
+        pageData.sentResults.length = 0;
+        pageData.editHtml = ""
+        pageData.sentResults.length = 0;
+        // pageData.fileList.length = 0;
+        // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
       }
-
-      pageData.editHtml = ""
-      pageData.sentResults.length = 0;
-      // pageData.fileList.length = 0;
-      // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
-
     }
+
 
     var timer
     function blurEdit () {
-      pageData.isup = false
       clearTimeout(timer)
       timer = setTimeout(function () {
-        console.log("888", pageData.currentUser.url);
-        pageData.currentUser.url = editCons.value.innerHTML
-      }, 1000)
+        const domss = new DOMParser().parseFromString(editCons.value.innerHTML, 'text/html')
+        pageData.sentResults = [...domss.body.childNodes]
 
+      }, 1000)
     }
 
     const beforeUpload = (file) => {
@@ -147,8 +151,6 @@ export default {
       console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
-      formData.append('TempleteFile', info.file.name)
-      pageData.isup = true
 
       // await uploads.fileUpload(props.contactId, formData).then((res) => {
       //   pageData.upResults = res
@@ -168,9 +170,8 @@ export default {
 
       if (pageData.fileList.length > 0) {
         pageData.fileList.map((res) => {
-          console.log("res999", res);
           if (res.messageType == "PhotoMessage") {
-            doms = `<img class="fileimg" src="${res.url}" />`
+            doms = `<img  class="fileimg" src="${res.url}" />`
             pageData.editHtml += doms
           } else if (res.messageType == "FileMessage") {
             doms = `<span class="filespan">
