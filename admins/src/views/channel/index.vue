@@ -1,6 +1,25 @@
 <template>
   <div class="channel">
+    <!-- <div style="backgroud: #ccc;">
+      <svg-icon iconName="身份_ico_wx" />
+      <svg-icon iconName="身份_ico_xz" />
+      <svg-icon iconName="bj" />
+      <svg-icon iconName="fangda_14" />
 
+      <svg-icon iconName="glgn" />
+      <svg-icon iconName="glljzfc" />
+      <svg-icon iconName="logo_huise" />
+      <svg-icon iconName="logo" />
+      <svg-icon iconName="qx" />
+      <svg-icon iconName="sc_13" />
+      <svg-icon iconName="sc_17" />
+      <svg-icon iconName="shuaxin_14" />
+      <svg-icon iconName="suoxiao_14" />
+
+      <svg-icon iconName="sx" />
+      <svg-icon iconName="tishi" />
+      <svg-icon iconName="xj" />
+    </div> -->
     <div>
       <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="alls"></tabbar>
 
