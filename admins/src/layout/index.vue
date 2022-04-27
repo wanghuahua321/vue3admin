@@ -18,7 +18,9 @@
 // import { reactive, onMounted, toRefs } from "vue";
 import { reactive, toRefs, watch } from "vue";
 import leftpannel from "./leftpannel.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import { useStore } from "vuex";
+//  const route = useRoute();
 import Navbar from "./Navbar.vue";
 export default {
   name: "homeIndex",
@@ -28,7 +30,41 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const route = useRoute();
+    const store = useStore();
 
+    watch(
+      () => route.name,
+      (val, oldVal) => {
+        let switchValue = "";
+
+        switch (val) {
+          case "homeinx":
+            switchValue = "home";
+            break;
+          case "chatinx":
+            switchValue = "chat";
+            break;
+          case "postIndex":
+            switchValue = "posting";
+            break;
+          case "certification":
+            switchValue = "identity";
+            break;
+          case "channelIndex":
+            switchValue = "channel";
+            break;
+          default:
+            switchValue = "home";
+        }
+        //  homeinx home chatinx chat postIndex posting certification identity channelIndex channel
+        // console.log("valvava", val);
+        sessionStorage.setItem("itemskey", switchValue);
+
+        // store.commit("setLeftIcons", val);
+      },
+      { immediate: true, deep: true }
+    );
     const menuSel = (item) => {
       console.log("router", item);
       router.push({

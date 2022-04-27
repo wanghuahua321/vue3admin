@@ -11,6 +11,7 @@
 <script>
 import { reactive, toRefs, computed, ref } from 'vue';
 import { useStore } from 'vuex';
+
 export default ({
   setup () {
     const delayTime = 100;

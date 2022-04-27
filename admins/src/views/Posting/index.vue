@@ -257,7 +257,7 @@ export default {
     const getPosttab = () => {
       Posting.getPosting()
         .then((res) => {
-          if (res) {
+          if (res.length > 0) {
             pagedata.tabbraList = res;
             pagedata.checkedList = (pagedata.tabbraList as any).map((item) => {
               let ress: any = {};
