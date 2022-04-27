@@ -63,6 +63,7 @@ export default {
     let list2 =ref<string[]>(["1","2","3"])
     */
     const router = useRouter();
+    const route = useRoute();
     const pagedata = reactive<any>({
       selectedKeys:
         sessionStorage.getItem("itemskey") == null
@@ -165,6 +166,7 @@ export default {
         pagedata.preOpenKeys = oldVal;
       }
     );
+
     const toggleCollapsed = () => {
       pagedata.collapsed = !pagedata.collapsed;
       pagedata.openKeys = pagedata.collapsed ? [] : pagedata.preOpenKeys;
@@ -176,11 +178,6 @@ export default {
       pagedata.selectedKeys.length = 0;
       pagedata.selectedKeys.push(items.key);
       sessionStorage.setItem("itemskey", items.key);
-      // router.push({
-      //   name: items.key,
-      // });
-      console.log("huahuahau", pagedata.selectedKeys);
-      console.log("huahuahau", items);
 
       ctx.emit("menuSel", items.key);
     };
