@@ -28,6 +28,7 @@ import { uploads } from '@/utils/api'
 import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
 import { message } from "ant-design-vue";
+import { FileTextOutlined } from '@ant-design/icons-vue';
 
 export default {
   name: 'app',
@@ -55,14 +56,14 @@ export default {
       messageTypess: "TextMessage",
       focus: false,
       fileList: [
-        {
-          messageType: "PhotoMessage",
-          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
-        },
-        {
-          messageType: "FileMessage",
-          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
-        }
+        // {
+        //   messageType: "PhotoMessage",
+        //   url: "https://192.168.0.120:8080/Avatars/8.png"
+        // },
+        // {
+        //   messageType: "FileMessage",
+        //   url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
+        // }
       ],
       uploads: {
         contactId: ''
@@ -91,7 +92,7 @@ export default {
 
 
     const submit = () => {
-
+      console.log("999");
 
       if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
         message.error("不能发送空白消息")
@@ -118,8 +119,8 @@ export default {
 
         pageData.editHtml = ""
         pageData.sentResults.length = 0;
-        pageData.editHtml = ""
-        pageData.sentResults.length = 0;
+        pageData.fileList.length = 0
+        editCons.value.innerHTML = ""
         // pageData.fileList.length = 0;
         // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
 
@@ -136,7 +137,7 @@ export default {
 
       }, 1000)
     }
-
+    // https://192.168.0.120:8080/Avatars/8.png
     const beforeUpload = (file) => {
       console.log("file55", file);
       if (file.type.indexOf('image') == -1) {
@@ -151,14 +152,14 @@ export default {
       console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
-
-      // await uploads.fileUpload(props.contactId, formData).then((res) => {
-      //   pageData.upResults = res
-      //   pageData.fileList.push(res)
-      //   pageData.sentResults.push(res)
-      // }).catch((error) => {
-      //   console.log(error);
-      // })
+      pageData.fileList.length = 0
+      await uploads.fileUpload(props.contactId, formData).then((res) => {
+        pageData.upResults = res
+        pageData.fileList.push(res)
+        // pageData.sentResults.push(res)
+      }).catch((error) => {
+        console.log(error);
+      })
 
       dealHtml()
 
@@ -168,10 +169,12 @@ export default {
       let doms = ""
       pageData.editHtml = editCons.value.innerHTML
 
+      console.log(" pageData.fileList", pageData.fileList);
+
       if (pageData.fileList.length > 0) {
         pageData.fileList.map((res) => {
           if (res.messageType == "PhotoMessage") {
-            doms = `<img  class="fileimg" src="${res.url}" />`
+            doms = `<img  class="fileimg" alt="图片显示错误" src="${res.url}"  onerror="https://192.168.0.120:8080/Avatars/8.png"/>`
             pageData.editHtml += doms
           } else if (res.messageType == "FileMessage") {
             doms = `<span class="filespan">
@@ -185,12 +188,13 @@ export default {
           }
         })
 
-        const domss = new DOMParser().parseFromString(pageData.editHtml, 'text/html')
-        pageData.sentResults = [...domss.body.childNodes]
-        console.log('[ domss ] >', domss)
-        console.log('[ eleNodes ] >', pageData.sentResults)
-
       }
+
+      console.log("pageData.editHtml77", pageData.editHtml);
+      const domss = new DOMParser().parseFromString(pageData.editHtml, 'text/html')
+      pageData.sentResults = [...domss.body.childNodes]
+      console.log('[ domss ] >', domss)
+      console.log('[ eleNodes ] >', pageData.sentResults)
     }
 
 
@@ -217,6 +221,11 @@ export default {
   align-items: center;
   padding: 0px 10px;
   border-bottom: 2px solid #ccc;
+}
+.fileimg {
+  min-width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
 }
 .editCon {
   width: 100%;
@@ -257,6 +266,13 @@ export default {
     position: absolute;
     bottom: 10px;
     right: 10px;
+    padding: 6px 10px;
+    z-index: 9999;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    color: #89d961;
+    font-size: 13px;
+    letter-spacing: 1px;
   }
 }
 </style>
@@ -294,5 +310,8 @@ export default {
 }
 .fileimg {
   width: 32%;
+  min-width: 50px;
+  min-height: 50px;
+  border: 1px solid #ccc;
 }
 </style>
