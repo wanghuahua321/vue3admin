@@ -4,11 +4,11 @@
     <div>
       <a-upload name="file" :show-upload-list="false" :file-list="fileList" :before-upload="beforeUpload" :customRequest="FilesCustomRequest">
         <!-- list-type="picture" :action='fileUploads' :header="{token:$store}" :action="fileUploads" :data="uploads" -->
-        <svg-icon iconName="wj" />
+        <svg-icon style="cursor: pointer;" iconName="wj" />
       </a-upload>
     </div>
-    <div @click="smileClick">
-      <SmileOutlined />
+    <div style="paddingLeft:10px; cursor: pointer;" @click="smileClick">
+      <svg-icon iconName="biaoqing" />
     </div>
   </div>
   <div class="editCon" @keyup.enter="submit">
@@ -78,7 +78,7 @@ export default {
       editHtml: "",
       upResults: {},
       sentResults: [],
-      isup: false
+      isup: false,
     });
 
     onMounted(() => {
@@ -165,14 +165,14 @@ export default {
       console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
-      pageData.fileList.length = 0
-      await uploads.fileUpload(props.contactId, formData).then((res) => {
-        pageData.upResults = res
-        pageData.fileList.push(res)
-        // pageData.sentResults.push(res)
-      }).catch((error) => {
-        console.log(error);
-      })
+      // pageData.fileList.length = 0
+      // await uploads.fileUpload(props.contactId, formData).then((res) => {
+      //   pageData.upResults = res
+      //   pageData.fileList.push(res)
+      //   // pageData.sentResults.push(res)
+      // }).catch((error) => {
+      //   console.log(error);
+      // })
 
       dealHtml()
 
@@ -192,7 +192,10 @@ export default {
           } else if (res.messageType == "FileMessage") {
             doms = `<div class="filespans">
                 <div class="filespan">     
-              <LoadingOutlined />
+                 <b>
+                 <img  src="../images/txt.png" />
+                 </b>
+                 
                 <b class="_text">
                 <i>文件夹</i>
                 <i>222</i>
