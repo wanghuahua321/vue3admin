@@ -60,14 +60,16 @@ export default {
       messageTypess: "TextMessage",
       focus: false,
       fileList: [
-        // {
-        //   messageType: "PhotoMessage",
-        //   url: "https://192.168.0.120:8080/Avatars/8.png"
-        // },
-        // {
-        //   messageType: "FileMessage",
-        //   url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
-        // }
+        {
+          messageType: "PhotoMessage",
+          url: "https://192.168.0.120:8080/Avatars/8.png"
+        },
+        {
+          messageType: "FileMessage",
+          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
+        }
+
+        // <FileTextOutlined />
       ],
       uploads: {
         contactId: ''
@@ -111,9 +113,9 @@ export default {
             sentvalue.messageType = "PhotoMessage"
             sentvalue.url = document.querySelector(".fileimg").src
             ctx.emit('sents', sentvalue)
-          } else if (pageData.sentResults[i].constructor.name == 'HTMLSpanElement') {
+          } else if (pageData.sentResults[i].constructor.name == 'HTMLDivElement') {
             sentvalue.messageType = "FileMessage"
-            sentvalue.url = document.querySelector(".fileimg").src
+            sentvalue.url = document.querySelector(".fileimg2").src
             ctx.emit('sents', sentvalue)
           } else {
             sentvalue.messageType = "TextMessage"
@@ -188,13 +190,15 @@ export default {
             doms = `<img  class="fileimg" alt="图片显示错误" src="${res.url}"  onerror="https://192.168.0.120:8080/Avatars/8.png"/>`
             pageData.editHtml += doms
           } else if (res.messageType == "FileMessage") {
-            doms = `<span class="filespan">
-               <b class="_img"><img src="${res.url}" /></b>
-               <b class="_text">
+            doms = `<div class="filespans">
+                <div class="filespan">     
+              <LoadingOutlined />
+                <b class="_text">
                 <i>文件夹</i>
                 <i>222</i>
-               </b>
-              </span>`
+                </b></div>
+                <img  class="fileimg2" style="display:none"  src="${res.url}" />
+                </div>`
             pageData.editHtml += doms
           }
         })
@@ -237,7 +241,7 @@ export default {
 .fileimg {
   min-width: 50px;
   height: 50px;
-  border: 1px solid #ccc;
+  // border: 1px solid #ccc;
 }
 .editCon {
   width: 100%;
