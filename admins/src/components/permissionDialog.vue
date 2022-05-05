@@ -197,11 +197,12 @@ export default {
         permissions: tempData,
       })
         .then((res) => {
-          if (res) {
-            message.success("保存成功");
-          } else {
-            message.success("保存失败");
-          }
+          // if (res) {
+          //   message.success("保存成功");
+          // } else {
+          //   message.success("保存失败");
+          // }
+          message.success("保存成功");
         })
         .catch((error) => {
           console.log(error);

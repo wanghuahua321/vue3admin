@@ -93,11 +93,21 @@
               <a-form-item label="name" name="name">
                 <a-input v-model:value="dialogueData.name" placeholder="请输入渠道名称" />
               </a-form-item>
-              <a-form-item label="emailorphoneno" :name="['channelConfiguration','emailorphoneno']">
-                <a-input v-model:value="dialogueData.channelConfiguration.emailorphoneno" placeholder="请输入账号" />
+              <a-form-item label="emailorphoneno" :name="['channelConfiguration','EmailorPhoneNo']">
+                <a-input v-model:value="dialogueData.channelConfiguration.EmailorPhoneNo" placeholder="请输入账号" />
               </a-form-item>
-              <a-form-item label="password" :name="['channelConfiguration','password']">
-                <a-input v-model:value="dialogueData.channelConfiguration.password" placeholder="请输入密码" />
+              <a-form-item label="PassWord" :name="['channelConfiguration','PassWord']">
+                <a-input v-model:value="dialogueData.channelConfiguration.PassWord" placeholder="请输入密码" />
+              </a-form-item>
+
+              <a-form-item label="FBApp_Key" :name="['channelConfiguration','EmailorPhoneNo']">
+                <a-input v-model:value="dialogueData.channelConfiguration.PassWord" placeholder="请输入EmailorPhoneNo" />
+              </a-form-item>
+              <a-form-item label="FBApp_Secret" :name="['channelConfiguration','FBApp_Secret']">
+                <a-input v-model:value="dialogueData.channelConfiguration.FBApp_Secret" placeholder="请输入FBApp_Secret" />
+              </a-form-item>
+              <a-form-item label="FBUserAccessToken" :name="['channelConfiguration','FBUserAccessToken']">
+                <a-input v-model:value="dialogueData.channelConfiguration.FBUserAccessToken" placeholder="请输入FBUserAccessToken" />
               </a-form-item>
 
               <a-form-item label="appId" name="appId">
@@ -150,8 +160,11 @@ export default {
         name: "",
         channelValue: 0,
         channelConfiguration: {
-          emailorphoneno: "",
-          password: "",
+          EmailorPhoneNo: "",
+          PassWord: "",
+          FBApp_Key: "",
+          FBApp_Secret: "",
+          FBUserAccessToken: "",
         },
         appId: "",
         projectId: "",
@@ -189,9 +202,21 @@ export default {
           required: true,
           message: "Please input password",
         },
-        emailorphoneno: {
+        EmailorPhoneNo: {
           required: true,
           message: "Please input emailorphoneno",
+        },
+        FBApp_Key: {
+          required: true,
+          message: "Please input FBApp_Key",
+        },
+        FBApp_Secret: {
+          required: true,
+          message: "Please input FBApp_Secret",
+        },
+        FBUserAccessToken: {
+          required: true,
+          message: "Please input FBUserAccessToken",
         },
       },
       projectId: {

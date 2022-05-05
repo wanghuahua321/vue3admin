@@ -199,6 +199,8 @@ export default {
       certification.tenant
         .getConnection((pagedata.createRoleform as any).id)
         .then((res) => {
+          console.log("000000000", res);
+
           if (res) {
             pagedata.useSharedDatabase = false;
             (pagedata.temp as any).defaultConnectionString = res;

@@ -247,7 +247,7 @@ export default {
 .tagalls {
   display: flex;
   align-items: center;
-  width: 73%;
+  width: 88%;
   justify-content: space-around;
 }
 .taglis {
