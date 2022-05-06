@@ -74,7 +74,7 @@ function checkCode(res:any) {
   // 如果code异常(这里已经包括网络错误，服务器错误，后端抛出的错误)
   console.error(res, "HTTP请求的错误信息");
 
-  return false;
+  return res.data;
 }
 
 export default {

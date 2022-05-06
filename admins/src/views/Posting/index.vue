@@ -299,6 +299,7 @@ export default {
           });
           isPost ? message.success("发帖成功") : "";
           pagedata.previewVisible = false;
+          pagedata.showDialogue = false;
           getPostdata();
         })
         .catch((error) => {

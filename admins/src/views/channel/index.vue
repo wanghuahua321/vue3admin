@@ -1,6 +1,6 @@
 <template>
   <div class="channel">
-    <div style="backgroud: #ccc;">
+    <!-- <div style="backgroud: #ccc;">
       <svg-icon iconName="身份_ico_wx" />
       <svg-icon iconName="身份_ico_xz" />
       <svg-icon iconName="bj" />
@@ -27,7 +27,7 @@
       <svg-icon iconName="wj" />
       <svg-icon iconName="zhanghao" />
       <svg-icon iconName="mima" />
-    </div>
+    </div> -->
     <div>
       <tabbar :tabbraList="tabbraList" @choseTab="choseTab" activeKeys="alls"></tabbar>
 
@@ -100,8 +100,8 @@
                 <a-input v-model:value="dialogueData.channelConfiguration.PassWord" placeholder="请输入密码" />
               </a-form-item>
 
-              <a-form-item label="FBApp_Key" :name="['channelConfiguration','EmailorPhoneNo']">
-                <a-input v-model:value="dialogueData.channelConfiguration.PassWord" placeholder="请输入EmailorPhoneNo" />
+              <a-form-item label="FBApp_Key" :name="['channelConfiguration','FBApp_Key']">
+                <a-input v-model:value="dialogueData.channelConfiguration.FBApp_Key" placeholder="请输入EmailorPhoneNo" />
               </a-form-item>
               <a-form-item label="FBApp_Secret" :name="['channelConfiguration','FBApp_Secret']">
                 <a-input v-model:value="dialogueData.channelConfiguration.FBApp_Secret" placeholder="请输入FBApp_Secret" />
@@ -423,7 +423,7 @@ export default {
     margin: 0 7%;
   }
   :deep(.ant-form-horizontal .ant-form-item-label) {
-    width: 21%;
+    width: 28%;
   }
 }
 

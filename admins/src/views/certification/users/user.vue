@@ -192,8 +192,8 @@ export default {
         .then((res) => {
           console.log("res", res);
 
-          if (!res) {
-            message.error("该手机号已被注册");
+          if (res.error) {
+            message.error(res.error.message);
           } else {
             message.success("新增用户成功");
             ctx.emit("closedia");

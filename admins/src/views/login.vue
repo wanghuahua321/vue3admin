@@ -50,6 +50,7 @@ import { reactive, onMounted, toRefs, inject, ref, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { LoginInfo } from "../utils/api";
 import { useStore } from "vuex";
+import { message } from "ant-design-vue";
 // const store = useStore();
 
 export default {
@@ -86,11 +87,6 @@ export default {
 
     // onMounted(() => {});
     const logins = () => {
-      console.log("  loginForm.value", loginForms.value);
-      // router.push({
-      //   path: "/home",
-      // });
-
       loginForms.value
         .validate() /*  */
         .then(() => {
@@ -102,12 +98,14 @@ export default {
             password: pagesDatas.formData.password,
             scope: "Basic",
           };
-
-          console.log("1234");
           // router.push({ path: redirect.value || "/", query: otherQuery.value });
           LoginInfo.Login(data).then((res) => {
-            store.commit("setToken", res.token);
-            getUsers();
+            if (res.token) {
+              store.commit("setToken", res.token);
+              getUsers();
+            } else {
+              message.error(res.error.message);
+            }
           });
         })
         .catch((error) => {

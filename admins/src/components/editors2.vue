@@ -11,11 +11,11 @@
       <svg-icon iconName="biaoqing" />
     </div>
   </div>
-  <div class="editCon" @keyup.enter="submit">
+  <div class="editCon">
     <!-- 
     1234 -->
-    <div class="editimages">
-      <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit">
+    <div class="editimages" @keyup.enter="submit">
+      <p class="editHtml" ref="editCons" v-html="editHtml" @input.stop="blurEdit">
 
       </p>
     </div>

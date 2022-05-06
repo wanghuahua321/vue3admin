@@ -1,7 +1,7 @@
 <template>
   <!-- 编辑器 -->
   <div ref='editor'></div>
-  <span class="iconfont icon-send" @click="submit">
+  <span class="iconfont icon-send" @click="submit" @keyup.enter="submit">
     发送
   </span>
   <!-- <div :innerHTML='content.html'></div> -->

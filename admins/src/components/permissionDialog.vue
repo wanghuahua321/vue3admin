@@ -226,4 +226,9 @@ export default {
   },
 };
 </script>
+<style lang="less" scoped>
+/deep/.ant-row {
+  display: inherit !important;
+}
+</style>
 

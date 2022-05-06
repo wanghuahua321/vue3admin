@@ -197,6 +197,11 @@ export default {
       certification.tenant
         .addTenant(addParams)
         .then((res) => {
+          if (res.error) {
+            message.error(res.error.message);
+          } else {
+            message.success("保存成功");
+          }
           getTenants();
           ctx.emit("closedia");
         })
@@ -209,6 +214,11 @@ export default {
       certification.tenant
         .updataTenant(params.id, params)
         .then((res) => {
+          if (res.error) {
+            message.error(res.error.message);
+          } else {
+            message.success("保存成功");
+          }
           getTenants();
           ctx.emit("closedia");
         })
@@ -235,6 +245,7 @@ export default {
           .delConnect(createRoleform.id)
           .then((res) => {
             ctx.emit("closedia");
+            message.success("保存成功");
           })
           .catch((error) => {
             console.log(error);
