@@ -33,17 +33,17 @@
         </a-form-item>
 
       </a-tab-pane>
-      <a-tab-pane key="2" tab="角色">
-        <a-form-item>
-          <!-- {{assignableRoles}} -->
-          <a-checkbox-group v-model:value="value2" :options="plainOptions" />
-          <!-- <a-checkbox-group v-model:value="createRoleform.roleNames" :options="plainOptions"></a-checkbox-group> -->
-          <!-- <a-checkbox-group :value="createRoleform.roleNames" @change="changeRoles" v-if="assignableRoles">
+      <!-- <a-tab-pane key="2" tab="角色">
+        <a-form-item> -->
+      <!-- {{assignableRoles}} -->
+      <!-- <a-checkbox-group v-model:value="value2" :options="plainOptions" /> -->
+      <!-- <a-checkbox-group v-model:value="createRoleform.roleNames" :options="plainOptions"></a-checkbox-group> -->
+      <!-- <a-checkbox-group :value="createRoleform.roleNames" @change="changeRoles" v-if="assignableRoles">
             <a-checkbox v-for="role in 3" :key="role.id" :value="role.name" style="width:100%;margin-left: 15px;padding: 5px 0;">
               123</a-checkbox>
           </a-checkbox-group> -->
-        </a-form-item>
-      </a-tab-pane>
+      <!-- </a-form-item>
+      </a-tab-pane> -->
     </a-tabs>
   </a-form>
 
@@ -150,10 +150,12 @@ export default {
     });
     if (props.isEdit) {
       //新增
-      console.log("999", store.state.editClick);
-      pagedata.createRoleform = { ...store.state.editClick };
+      pagedata.createRoleform = {
+        lockoutEnabled: "",
+      };
     } else {
-      console.log("999000", store.state.editClick);
+      console.log("pagedata.createRoleform", store.state.editClick);
+
       pagedata.createRoleform = { ...store.state.editClick };
     }
 

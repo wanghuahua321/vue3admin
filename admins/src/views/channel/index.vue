@@ -198,7 +198,7 @@ export default {
         message: "Please input name",
       },
       channelConfiguration: {
-        password: {
+        PassWord: {
           required: true,
           message: "Please input password",
         },

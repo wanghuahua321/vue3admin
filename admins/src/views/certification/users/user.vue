@@ -209,7 +209,7 @@ export default {
         .updataUser(addUserPar.id, addUserPar)
         .then((res) => {
           getUser();
-          if (!res) {
+          if (res.error) {
             message.error("修改用户保存失败");
           } else {
             message.success("修改用户保存成功");

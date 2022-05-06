@@ -203,6 +203,7 @@ export default {
           //   message.success("保存失败");
           // }
           message.success("保存成功");
+          ctx.emit("closes");
         })
         .catch((error) => {
           console.log(error);
