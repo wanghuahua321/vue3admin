@@ -35,10 +35,10 @@
       <template #postInx="{record}">
         <div class="posting">
           <div class="p_img">
-            <div class="imgs">
-              <img
-                :src="record.full_picture?record.full_picture:'https://scontent-nrt1-1.xx.fbcdn.net/v/t39.30808-6/278728548_130870952865902_8921852071585078014_n.png?_nc_cat=111&ccb=1-5&_nc_sid=2d5d41&_nc_ohc=U_xhxwbUr_cAX_tbpmK&_nc_ht=scontent-nrt1-1.xx&edm=AKIiGfEEAAAA&oh=00_AT_311buYnBzTWLZNcPm7W2BaezpU5FqZyLOEykyQis1ag&oe=626A0CE0'" />
+            <div v-if="record.full_picture" class="imgs">
+              <img :src="record.full_picture" alt="发帖图片" />
             </div>
+            <div class="txts" v-else>文本</div>
           </div>
           <div class="p_fig">
             <span class="span1">{{record.message?record.message:"--"}}</span>
@@ -242,6 +242,7 @@ export default {
   :deep(.ant-tag) {
     border-radius: 6px;
     font-weight: 600;
+    cursor: pointer;
   }
 }
 .tagalls {
@@ -299,7 +300,15 @@ export default {
     img {
       height: 100%;
     }
+    .txts {
+      min-width: 80%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
   }
+
   .p_fig {
     display: flex;
     flex-direction: column;

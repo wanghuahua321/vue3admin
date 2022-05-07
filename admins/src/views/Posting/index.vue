@@ -231,7 +231,6 @@ export default {
       // for (let j = 0; j < formData.getAll("files").length; j++) {
       //   flists.push(formData.getAll("files")[j]);
       // }
-      console.log("formData");
 
       sentPosts(params, formData);
     };
@@ -246,6 +245,7 @@ export default {
     };
     const choseTab = (data) => {
       pagedata.choseOne = data;
+      pagedata.pagination.current = 1;
       getPostdata();
     };
     const changePage = (pagedatas) => {
@@ -270,20 +270,16 @@ export default {
           }
         })
         .catch((error) => {
-          console.log(error);
-          message.error("获取列表失败");
+          console.log("999", error);
         });
     };
     const getPostdata = () => {
       Posting.getPostdata(pagedata.choseOne.page_id)
         .then((res) => {
-          if (res) {
-            pagedata.postData = res[0].posts;
-          }
+          pagedata.postData = res[0].posts;
         })
         .catch((error) => {
-          console.log(error);
-          message.error("获取列表失败");
+          console.log("999", error);
         });
     };
 
@@ -334,6 +330,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+:deep(.ant-tooltip) {
+  display: none !important;
+}
 .Posting {
   width: 100%;
   height: 100%;

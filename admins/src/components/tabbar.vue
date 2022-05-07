@@ -65,6 +65,7 @@ export default {
   border: 1px solid rgba(255, 107, 72, 1);
   border-radius: 10px;
   justify-content: space-between;
+  cursor: pointer;
   .tabBar_li {
     flex: 1;
     display: flex;
