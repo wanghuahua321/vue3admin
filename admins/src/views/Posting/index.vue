@@ -23,10 +23,10 @@
     <modalCon titles="添加新帖" :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
       <template #modalCon>
         <div class="diaforms">
-          <a-checkbox-group :options="checkedList" @change="onChange" />
+          <a-checkbox-group v-model:value="hasCheck" :options="checkedList" @change="onChange" />
           <div class="sentValue">
             <span class="spans">内容:</span>
-            <a-textarea v-model:value="textarea" placeholder="Basic usage" :rows="4" />
+            <a-textarea v-model:value="textarea" placeholder="请输入内容" :rows="4" />
           </div>
 
           <div v-if="showupImgs" class="uploads">
@@ -237,7 +237,7 @@ export default {
     const closeDia = () => {
       // 取消按钮
       pagedata.showDialogue = false;
-      // formRef.value.resetFields();
+      cleanValues();
     };
 
     const upImgs = () => {
@@ -296,12 +296,20 @@ export default {
           isPost ? message.success("发帖成功") : "";
           pagedata.previewVisible = false;
           pagedata.showDialogue = false;
+          cleanValues();
           getPostdata();
         })
         .catch((error) => {
           console.log(error);
         });
     };
+
+    function cleanValues() {
+      pagedata.fileList.length = 0;
+      pagedata.textarea = "";
+      pagedata.hasCheck.length = 0;
+      pagedata.showupImgs = false;
+    }
 
     const onChange = (checkedValue) => {
       pagedata.hasCheck = checkedValue;
@@ -332,6 +340,12 @@ export default {
 <style scoped lang="scss">
 :deep(.ant-tooltip) {
   display: none !important;
+}
+:deep(.ant-checkbox-inner) {
+  border: 1px solid #ff6b48;
+}
+:deep(.ant-checkbox-group-item) {
+  margin-bottom: 6px;
 }
 .Posting {
   width: 100%;

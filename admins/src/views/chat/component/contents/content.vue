@@ -97,7 +97,6 @@ export default ({
     }
   },
   setup (props, ctx) {
-    // const { chatData, selectinx } = toRefs(props)
 
     const msgContent = ref();
     const ws = useWebSocket(handleMessage)
@@ -144,9 +143,6 @@ export default ({
     // };
 
     onMounted(() => {
-
-
-
     })
 
 
@@ -199,7 +195,7 @@ export default ({
     }
 
     const sents = (data) => {
-      console.log("data", data);
+      console.log("datas", data);
       let datas = {
         contact_id: pageData.contactId,
         messageType: data.messageType,

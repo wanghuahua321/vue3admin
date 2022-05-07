@@ -1,6 +1,6 @@
 <template>
   <div class="modals" ref="mod">
-    <a-modal :title="titles" :getContainer='()=>$refs.mod' :visible="showDialogue" @cancel="onCancel" @ok="handleOk">
+    <a-modal :title="titles" :getContainer='()=>$refs.mod' :visible="showDialogue" @cancel="onCancel" @ok="handleOk" ok-text="确认" cancel-text="取消">
       <slot name="modalCon"></slot>
     </a-modal>
 

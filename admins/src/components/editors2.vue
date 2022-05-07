@@ -45,6 +45,7 @@ export default {
       default: ""
     },
   },
+  emits: ['sents'],
   setup (props, ctx) {
     const editCons = ref(null);
     const route = useRoute()
