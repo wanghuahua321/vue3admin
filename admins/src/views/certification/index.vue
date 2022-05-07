@@ -97,7 +97,6 @@ export default {
 
     const choseTab = (data) => {
       pageData.choseOne = data;
-      console.log("pageData.choseOne", pageData.choseOne);
     };
     const addRoles = () => {
       let dialogMsg = {
