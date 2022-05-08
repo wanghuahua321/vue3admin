@@ -46,17 +46,17 @@ export const certification={
     deleteUser:(id)=>http.delete(portalBasicApi + `/identity/users/${id}`), // 删除
     addUser:(params)=>http.post(portalBasicApi + "/app/user/rpa",params), //新增
     updataUser:(id,params)=>http.put(portalBasicApi + "/identity/users/"+id+"",params), // 修改
-
+    getUsersRole:()=>http.get(portalBasicApi + "/identity/users/assignable-roles"),
+    getRolesByUserId:(id)=>http.get(portalBasicApi + `/identity/users/${id}/roles`),
+    
   },
   tenant:{
     getTenant:(params)=>http.get(portalBasicApi + "/multi-tenancy/tenants",params), // 获取用户列表
     delTenant:(id)=>http.delete(portalBasicApi + "/app/tenant/"+id+"/rpa"), // 删除
     addTenant:(params)=>http.post(portalBasicApi + "/app/tenant/rpa",params), //新增
     updataTenant:(id,params)=>http.put(portalBasicApi + "/app/tenant/"+id+"/rpa",params), // 修改
-
     getFeatures:(params)=>http.get(portalBasicApi + `/feature-management/features`,params), // 获取管理功能 
     updataFeatures:(query,params)=>http.puts(portalBasicApi + "/feature-management/features",query,params), // 修改管理功能 
- 
     getConnection:(id)=>http.get(portalBasicApi + `/multi-tenancy/tenants/${id}/default-connection-string`), // 获取连接字符串
     updataConnection:(id,params)=>http.puts(portalBasicApi + `/multi-tenancy/tenants/${id}/default-connection-string`,params), // 修改连接字符串
     delConnect:(id)=>http.delete(portalBasicApi + `/multi-tenancy/tenants/${id}/default-connection-string`), // 删除

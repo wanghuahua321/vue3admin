@@ -33,17 +33,19 @@
         </a-form-item>
 
       </a-tab-pane>
-      <!-- <a-tab-pane key="2" tab="角色">
-        <a-form-item> -->
-      <!-- {{assignableRoles}} -->
-      <!-- <a-checkbox-group v-model:value="value2" :options="plainOptions" /> -->
-      <!-- <a-checkbox-group v-model:value="createRoleform.roleNames" :options="plainOptions"></a-checkbox-group> -->
-      <!-- <a-checkbox-group :value="createRoleform.roleNames" @change="changeRoles" v-if="assignableRoles">
-            <a-checkbox v-for="role in 3" :key="role.id" :value="role.name" style="width:100%;margin-left: 15px;padding: 5px 0;">
-              123</a-checkbox>
-          </a-checkbox-group> -->
-      <!-- </a-form-item>
-      </a-tab-pane> -->
+      <a-tab-pane key="2" tab="角色">
+        <a-form-item>
+          <!-- {{assignableRoles}} -->
+          <!-- <a-checkbox-group v-model:value="value2" :options="plainOptions" /> -->
+          <!-- <a-checkbox-group v-model:value="createRoleform.roleNames" :options="plainOptions"></a-checkbox-group> -->
+          <a-checkbox-group v-model:value="createRoleform.roleNames" @change="changeRoles" v-if="plainOptions.length>0">
+            <a-checkbox v-for="role in plainOptions" :key="role.id" v-model:checked="role.isDefault" :value="role.name"
+              style="width:100%;margin-left: 15px;padding: 5px 0;">
+              {{ role.name?role.name:'--'  }}
+            </a-checkbox>
+          </a-checkbox-group>
+        </a-form-item>
+      </a-tab-pane>
     </a-tabs>
   </a-form>
 
@@ -107,7 +109,8 @@ export default {
     const pagedata = reactive({
       formDatas: {},
       createRoleform: {
-        lockoutEnabled: "",
+        lockoutEnabled: true,
+        roleNames: ["00055555", "0426", "1416"],
       },
       extraProperties: {
         Title: "",
@@ -151,30 +154,48 @@ export default {
     if (props.isEdit) {
       //新增
       pagedata.createRoleform = {
-        lockoutEnabled: "",
+        lockoutEnabled: true,
+        roleNames: [],
       };
     } else {
       console.log("pagedata.createRoleform", store.state.editClick);
 
       pagedata.createRoleform = { ...store.state.editClick };
+      getRolesByUserIds((pagedata.createRoleform as any).id);
     }
 
     onMounted(() => {
-      // console.log("99999999", pagedata.formData);
-      // console.log("isEdit", props.formData);
-      // if (pagedata.formDatas) {
-      // }
+      getUsersRole();
     });
 
     const okHandels = (vals) => {
       pagedata.extraProperties.Title = vals;
     };
+    const changeRoles = (val) => {
+      console.log("9999", val);
+
+      pagedata.createRoleform.roleNames = val;
+    };
+
+    const getUsersRole = () => {
+      certification.user.getUsersRole().then((res) => {
+        pagedata.plainOptions = res.items;
+      });
+    };
+
+    function getRolesByUserIds(ids) {
+      certification.user.getRolesByUserId(ids).then((res) => {
+        console.log("res", res);
+      });
+    }
 
     return {
       ...toRefs(pagedata),
       roleForm,
       imgCroppers,
       okHandels,
+      getUsersRole,
+      changeRoles,
     };
   },
 };

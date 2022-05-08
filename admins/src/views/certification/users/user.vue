@@ -7,7 +7,7 @@
     </permissionDialog>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
-      @ok="handleOk" @cancel="handleCancel">
+      @ok="handleOk" @cancel="handleCancel" ok-text="确认" cancel-text="取消">
       <userForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole"></userForm>
     </a-modal>
 

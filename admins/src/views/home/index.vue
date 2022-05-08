@@ -1,8 +1,8 @@
 <template>
   <div class="Homepage">
     <div class="banners">
-      <h2>Hi，Mae Reeves</h2>
-      <p>2022.02.22 12:22</p>
+      <h2>Hi，{{$store.state.userInfo.name?$store.state.userInfo.name:'--'}}</h2>
+      <p>2022.05.08 12:22</p>
       <div class="banner_img">
         <!-- alt 是图片无法正常加载  鼠标hover 显示的值 -->
         <img src="@/assets/images/main.png" alt="" title="" />
@@ -13,7 +13,7 @@
           <p>最新信息</p>
           <div class="newsInfo_cons">
             <!-- <a-carousel> -->
-            <div class="person_info" v-for="item in 4" :key="item">
+            <div class="person_info" v-for="item in 1" :key="item">
               <span class="points"></span>
               <div class="p_info_left">
                 <img src="@/assets/images/person.png" alt="" />
@@ -33,11 +33,11 @@
         <div class="platform">
           <p>集成平台</p>
           <div class="platform_con">
-            <div class="platform_item" v-for="items in 5" :key="items">
+            <div class="platform_item" v-for="items in 1" :key="items">
               <div class="plat_img">
                 <img src="@/assets/images/facebook.png" alt="" />
               </div>
-              <span class="plat_span">dsadsa;dkagdgdgdgdgdgdgdda</span>
+              <span class="plat_span">facebook</span>
             </div>
           </div>
         </div>

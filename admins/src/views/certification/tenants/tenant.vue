@@ -4,7 +4,7 @@
       @refrcoshAgain="getTenants()" @changePage="changePage"></tables>
 
     <a-modal :title="dialogMsgs.addTit" :visible="dialogMsgs.addvisible" :maskClosable="dialogMsgs.confirmLoading" :confirm-loading="confirmLoading"
-      @ok="handleOk" @cancel="handleCancel">
+      @ok="handleOk" @cancel="handleCancel" ok-text="确认" cancel-text="取消">
       <tenantForm v-if="dialogMsgs.addvisible" :isEdit="dialogMsgs.isAdd" ref="createRole" :types="types" :editsId="editsId"></tenantForm>
     </a-modal>
 
