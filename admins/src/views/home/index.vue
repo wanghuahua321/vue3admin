@@ -11,24 +11,24 @@
         <div class="newsInfo">
 
           <p>最新信息</p>
-          <div class="newsInfo_cons">
-            <!-- <a-carousel> -->
-            <div class="person_info" v-for="item in 1" :key="item">
-              <span class="points"></span>
-              <div class="p_info_left">
-                <img src="@/assets/images/person.png" alt="" />
-              </div>
-              <div class="p_info_rig">
-                <div class="prig_tit">
-                  <p>雒君山</p>
-                  <span>2月3日</span>
+          <a-carousel autoplay>
+            <div class="newsInfo_cons" v-for="items in 3" :key="items">
+
+              <div class="person_info" v-for="item in 3" :key="item">
+                <span class="points"></span>
+                <div class="p_info_left">
+                  <img src="@/assets/images/person.png" alt="" />
                 </div>
-                <span class="p_content">主管要学会三个方向的沟通：向上沟通向下沟…</span>
+                <div class="p_info_rig">
+                  <div class="prig_tit">
+                    <p>雒君山</p>
+                    <span>2月3日</span>
+                  </div>
+                  <span class="p_content">主管要学会三个方向的沟通：向上沟通向下沟…</span>
+                </div>
               </div>
             </div>
-
-            <!-- </a-carousel> -->
-          </div>
+          </a-carousel>
         </div>
         <div class="platform">
           <p>集成平台</p>
@@ -94,11 +94,19 @@ export default {
 
 <style scoped lang="scss">
 .ant-carousel :deep(.slick-slide) {
-  // text-align: center;
-  // height: 160px;
-  // line-height: 160px;
-  background: #364d79;
+  width: 100vh;
+  background: #fe8d5f;
   overflow: hidden;
+  position: relative;
+  left: -1px;
+}
+.ant-carousel :deep(.slick-list) {
+  width: 100vh;
+  overflow: hidden;
+}
+
+.ant-carousel :deep(.custom-slick-arrow:before) {
+  display: none;
 }
 
 .ant-carousel :deep(.slick-slide h3) {
@@ -129,7 +137,7 @@ export default {
 
 .Homepage {
   display: flex;
-  width: 100%;
+  width: 101%;
   .banners {
     width: 68%;
     margin-right: 3%;
@@ -162,10 +170,13 @@ export default {
       }
       .newsInfo {
         width: 46%;
+        overflow: hidden;
         // border: 1px solid;
         .newsInfo_cons {
+          // width: 50% !important;
+          margin-bottom: 5%;
           box-sizing: border-box;
-          padding: 0 4.5%;
+
           background: #fff;
         }
         .person_info {
@@ -174,8 +185,10 @@ export default {
           margin: 0 auto;
           align-items: center;
           box-sizing: border-box;
-          padding: 12px 1px;
-
+          padding: 6px 4.5%;
+          &:nth-child(2n) {
+            background-color: #f8f9fb;
+          }
           .points {
             width: 8px;
             height: 8px;
