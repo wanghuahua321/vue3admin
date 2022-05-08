@@ -158,7 +158,7 @@ export default {
       p {
         font-size: 14px;
         color: $cFontcolor;
-        padding: 6px 0px 14px 0px;
+        padding: 6px 0px 6px 0px;
       }
       .newsInfo {
         width: 46%;
@@ -173,7 +173,8 @@ export default {
           // width: 91% !important;
           margin: 0 auto;
           align-items: center;
-          padding-top: 12px;
+          box-sizing: border-box;
+          padding: 12px 1px;
 
           .points {
             width: 8px;

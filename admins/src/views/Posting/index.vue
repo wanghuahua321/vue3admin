@@ -31,7 +31,7 @@
 
           <div v-if="showupImgs" class="uploads">
             <a-upload list-type="picture-card" v-model:file-list="fileList" @preview="handlePreview" @change="handleChange">
-              <div v-if="fileList.length <3">
+              <div v-if="fileList.length <9">
                 <plus-outlined />
               </div>
             </a-upload>
@@ -336,6 +336,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.ant-tooltip {
+  display: none !important;
+}
+</style>
 
 <style scoped lang="scss">
 :deep(.ant-tooltip) {

@@ -13,7 +13,8 @@
           <a-tag v-for="tag in tagList" :key="tag" :color="tag.colors" @click="editTagClick(tag,record)">
             <div class="taglis" :style="filterChange(tag.colors)">
 
-              <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" @confirm.stop="() => del_role_click(tag,record)">
+              <a-popconfirm class="tagspan" v-if="tag.ktit=='删除'" title="确定要删除吗?" ok-text="确定" cancel-text="取消"
+                @confirm.stop="() => del_role_click(tag,record)">
                 <div class="icons">
                   <svg-icon style="height:18px" :iconName="tag.icons" />
                   <span class="ospan">删除</span>
@@ -48,7 +49,7 @@
         <!--  -->
       </template>
       <template #operation1="{record}">
-        <a-popconfirm class="tagspan1" title="确定要删除吗?" @confirm.stop="() => del_role_click1(record)">
+        <a-popconfirm class="tagspan1" title="确定要删除吗?" ok-text="确定" cancel-text="取消" @confirm.stop="() => del_role_click1(record)">
           <div class="icons1">
             <svg-icon style="height:18px" iconName="sc_17" />
             <span class="ospan">删除</span>
@@ -335,7 +336,7 @@ export default {
   bottom: 20px;
 }
 :deep(.ant-table-tbody > tr > td) {
-  padding: 12px 12px;
+  padding: 14px 12px;
   border-bottom: 10px solid #f8f9fb !important;
   color: #3e414a;
   font-weight: 500;

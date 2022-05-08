@@ -2,7 +2,7 @@
   <a-form class="createForm" ref="roleForm" :model="createRoleform" :rules="rules">
     <a-form-item class="formItems" ref="names" name="name">
       <template #label>角色名称</template>
-      <a-input v-model:value="createRoleform.name" placeholder="请输入渠道名称" />
+      <a-input style="marginTop:8px" v-model:value="createRoleform.name" placeholder="请输入渠道名称" />
     </a-form-item>
 
     <a-form-item class="checks">
@@ -93,5 +93,6 @@ export default {
 }
 .checks {
   padding-top: 26px;
+  padding-bottom: 10px;
 }
 </style>

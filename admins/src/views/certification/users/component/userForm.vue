@@ -35,15 +35,11 @@
       </a-tab-pane>
       <a-tab-pane key="2" tab="角色">
         <a-form-item>
-          <!-- {{assignableRoles}} -->
-          <!-- <a-checkbox-group v-model:value="value2" :options="plainOptions" /> -->
-          <!-- <a-checkbox-group v-model:value="createRoleform.roleNames" :options="plainOptions"></a-checkbox-group> -->
-          <a-checkbox-group v-model:value="createRoleform.roleNames" @change="changeRoles" v-if="plainOptions.length>0">
-            <a-checkbox v-for="role in plainOptions" :key="role.id" v-model:checked="role.isDefault" :value="role.name"
-              style="width:100%;margin-left: 15px;padding: 5px 0;">
-              {{ role.name?role.name:'--'  }}
-            </a-checkbox>
+          <a-checkbox-group :value="createRoleform.roleNames" @change="changeRoles">
+            <a-checkbox v-for="role in plainOptions" :key="role.id" :value="role.name" style="width:100%;margin-left: 15px;padding: 5px 0;">
+              {{ role.name }}</a-checkbox>
           </a-checkbox-group>
+
         </a-form-item>
       </a-tab-pane>
     </a-tabs>
@@ -110,7 +106,7 @@ export default {
       formDatas: {},
       createRoleform: {
         lockoutEnabled: true,
-        roleNames: ["00055555", "0426", "1416"],
+        roleNames: ["0426"] as any,
       },
       extraProperties: {
         Title: "",
@@ -158,9 +154,10 @@ export default {
         roleNames: [],
       };
     } else {
-      console.log("pagedata.createRoleform", store.state.editClick);
-
-      pagedata.createRoleform = { ...store.state.editClick };
+      pagedata.createRoleform = {
+        ...store.state.editClick,
+        roleNames: [],
+      };
       getRolesByUserIds((pagedata.createRoleform as any).id);
     }
 
@@ -185,7 +182,13 @@ export default {
 
     function getRolesByUserIds(ids) {
       certification.user.getRolesByUserId(ids).then((res) => {
-        console.log("res", res);
+        if (res.items.length > 0) {
+          res.items.forEach((ress) => {
+            pagedata.createRoleform.roleNames.push(ress.name);
+          });
+        } else {
+          pagedata.createRoleform.roleNames.length = 0;
+        }
       });
     }
 

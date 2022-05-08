@@ -97,14 +97,14 @@ export default {
       pagination: {
         current: 1,
         total: 0,
-        pageSize: 8, //每页中显示10条数据
+        pageSize: 6, //每页中显示10条数据
         showSizeChanger: true,
-        pageSizeOptions: ["8", "10", "20", "50", "100"], //每页中显示的数据
+        pageSizeOptions: ["6", "10", "20", "50", "100"], //每页中显示的数据
         showTotal: (total) => `共有 ${total} 条数据`, //分页中显示总的数据
       },
       pageParms: {
         SkipCount: 0, //跳过1页就传10
-        MaxResultCount: 8, //每页的数据
+        MaxResultCount: 6, //每页的数据
       },
       // dialogMsgs: {},
     });
