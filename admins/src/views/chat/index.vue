@@ -7,6 +7,7 @@
             <!-- fix -->
             <img :src="item.phoneurl" />
           </div>
+
           <div class="fence_info">
             <div class="chatname">
               <b>{{item.display_name}}</b>
@@ -60,6 +61,14 @@ export default {
       isChang: false,
     });
 
+    watch(
+      () => store.state.randDoms,
+      (newsvalue, oldvalues) => {
+        pagesDatas.fencesData.items[pagesDatas.selectinx].lastMessage =
+          store.state.wsdata;
+      }
+    );
+
     const fences = (inx, item, isexit?) => {
       if (isexit) {
         pagesDatas.isChang = true;
@@ -70,6 +79,10 @@ export default {
         pagesDatas.fencesData.items.unshift(item);
 
         pagesDatas.selectinx = 0;
+        console.log(
+          "pagesDatas.fencesData+++++88888",
+          pagesDatas.fencesData.items[pagesDatas.selectinx]
+        );
       } else {
         pagesDatas.selectinx = inx;
         pagesDatas.isChang = false;

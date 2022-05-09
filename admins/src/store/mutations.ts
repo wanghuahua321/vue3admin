@@ -43,5 +43,12 @@ const mutations = {
   setloadding(state,count){
     state.loadding=count
   },
+  setWsdata(state,count){
+    state.wsdata=count
+  },
+  setrandDoms(state,count){
+    state.randDoms=count
+  }
+  
 };
 export default mutations;

@@ -1,7 +1,7 @@
 import { handleError } from "vue";
 
-const WS_HTTPS = 'ws'
-const WS_BASEURL = "www.16hedron.com:6800"
+const WS_HTTPS = 'wss'
+const WS_BASEURL = "www.16hedron.com:8080"
 const WS_ADDRESS = `${WS_HTTPS}://${WS_BASEURL}/Chat?ContactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER`
 
 function useWebSocket (handleMessage) {

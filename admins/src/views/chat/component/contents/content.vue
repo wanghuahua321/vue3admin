@@ -189,6 +189,8 @@ export default ({
           return
         } else {
           pageData.chatRecord.push(JSON.parse(e.data))
+          store.commit('setrandDoms', Math.random())
+          store.commit('setWsdata', JSON.parse(e.data))
           ctx.emit("doneSent",)
         }
       }

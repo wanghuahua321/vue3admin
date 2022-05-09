@@ -14,8 +14,9 @@
   <div class="editCon">
     <!-- 
     1234 -->
-    <div class="editimages" @keyup.enter="submit">
-      <p class="editHtml" ref="editCons" v-html="editHtml" @input.stop="blurEdit">
+    <!-- @keyup.enter="submit" -->
+    <div class="editimages">
+      <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit">
 
       </p>
     </div>
@@ -61,14 +62,14 @@ export default {
       messageTypess: "TextMessage",
       focus: false,
       fileList: [
-        {
-          messageType: "PhotoMessage",
-          url: "https://192.168.0.120:8080/Avatars/8.png"
-        },
-        {
-          messageType: "FileMessage",
-          url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
-        }
+        // {
+        //   messageType: "PhotoMessage",
+        //   url: "https://192.168.0.120:8080/Avatars/8.png"
+        // },
+        // {
+        //   messageType: "FileMessage",
+        //   url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
+        // }
 
         // <FileTextOutlined />
       ],
@@ -101,39 +102,42 @@ export default {
 
 
     const submit = () => {
-      console.log("999");
+      setTimeout(function () {
+        if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
+          message.error("不能发送空白消息")
+        } else {
+          let sentvalue = {}
 
-      if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
-        message.error("不能发送空白消息")
-      } else {
-        let sentvalue = {}
-
-        for (let i = 0; i < pageData.sentResults.length; i++) {
-          console.log("pageData.sentResults[i].constructor.name", pageData.sentResults[i].constructor.name);
-          if (pageData.sentResults[i].constructor.name == 'HTMLImageElement') {
-            sentvalue.messageType = "PhotoMessage"
-            sentvalue.url = document.querySelector(".fileimg").src
-            ctx.emit('sents', sentvalue)
-          } else if (pageData.sentResults[i].constructor.name == 'HTMLDivElement') {
-            sentvalue.messageType = "FileMessage"
-            sentvalue.url = document.querySelector(".fileimg2").src
-            ctx.emit('sents', sentvalue)
-          } else {
-            sentvalue.messageType = "TextMessage"
-            sentvalue.url = pageData.sentResults[i].data
-            ctx.emit('sents', sentvalue)
+          for (let i = 0; i < pageData.sentResults.length; i++) {
+            console.log("pageData.sentResults[i].constructor.name", pageData.sentResults[i].constructor.name);
+            if (pageData.sentResults[i].constructor.name == 'HTMLImageElement') {
+              sentvalue.messageType = "PhotoMessage"
+              sentvalue.url = document.querySelector(".fileimg").src
+              ctx.emit('sents', sentvalue)
+            } else if (pageData.sentResults[i].constructor.name == 'HTMLDivElement') {
+              sentvalue.messageType = "FileMessage"
+              sentvalue.url = document.querySelector(".fileimg2").src
+              ctx.emit('sents', sentvalue)
+            } else {
+              sentvalue.messageType = "TextMessage"
+              sentvalue.url = pageData.sentResults[i].data
+              ctx.emit('sents', sentvalue)
+            }
+            // console.log("0000000000000000", document.getElementsByClassName("fileimg")[0].constructor.value);
           }
-          // console.log("0000000000000000", document.getElementsByClassName("fileimg")[0].constructor.value);
+
+          pageData.editHtml = ""
+          pageData.sentResults.length = 0;
+          pageData.fileList.length = 0
+          editCons.value.innerHTML = ""
+          // pageData.fileList.length = 0;
+          // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
+
         }
 
-        pageData.editHtml = ""
-        pageData.sentResults.length = 0;
-        pageData.fileList.length = 0
-        editCons.value.innerHTML = ""
-        // pageData.fileList.length = 0;
-        // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
+      }, 1000)
 
-      }
+
     }
 
     const smileClick = () => {
@@ -166,14 +170,14 @@ export default {
       console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
-      // pageData.fileList.length = 0
-      // await uploads.fileUpload(props.contactId, formData).then((res) => {
-      //   pageData.upResults = res
-      //   pageData.fileList.push(res)
-      //   // pageData.sentResults.push(res)
-      // }).catch((error) => {
-      //   console.log(error);
-      // })
+      pageData.fileList.length = 0
+      await uploads.fileUpload(props.contactId, formData).then((res) => {
+        pageData.upResults = res
+        pageData.fileList.push(res)
+        // pageData.sentResults.push(res)
+      }).catch((error) => {
+        console.log(error);
+      })
 
       dealHtml()
 
