@@ -41,7 +41,7 @@
             <p>1分钟完成配置</p>
           </div>
           <div class="addchan">
-            <a-button type="primary" @click="addchannel('news','')">添加</a-button>
+            <a-button type="primary" @click="addchannel('news','','添加')">添加</a-button>
           </div>
         </div>
 
@@ -66,13 +66,13 @@
           </div>
 
           <div class="handles">
-            <a-button @click="addchannel('edit',items)" shape="round">
+            <a-button @click="addchannel('edit',items,'修改')" shape="round">
               <template #icon>
                 <EditOutlined />
                 修改
               </template>
             </a-button>
-            <a-button @click="addchannel('delete',items)" shape="circle">
+            <a-button @click="addchannel('delete',items,'删除')" shape="circle">
               <template #icon>
                 <DeleteOutlined />
                 删除
@@ -83,7 +83,7 @@
 
       </div>
 
-      <modalCon :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
+      <modalCon :titles="titles" :showDialogue="showDialogue" @closeDia="closeDia" @confimAdd="confimAdd">
         <template #modalCon>
           <div v-if="dialogType=='delete'" class="diaforms">
             确定删除该渠道？
@@ -190,6 +190,7 @@ export default {
         title: "全部",
       },
       showCom: "alls",
+      titles: "添加Fancebook Messager",
     });
 
     const rules = {
@@ -237,7 +238,8 @@ export default {
       },
     };
 
-    const addchannel = (type, value) => {
+    const addchannel = (type, value, tits) => {
+      pagedata.titles = `${tits}Fancebook Messager`;
       pagedata.dialogType = type;
       pagedata.seletItems = value;
       pagedata.seletItemsId = value.id;

@@ -94,7 +94,7 @@ export default {
       if (pageData.permissionsQuery.providerName === "R") {
         pageData.permissionsQuery.providerKey = row.name;
       } else if (pageData.permissionsQuery.providerName === "U") {
-        pageData.permissionsQuery.providerKey = row.id;
+        pageData.permissionsQuery.providerKey = row.userName;
       }
       certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
