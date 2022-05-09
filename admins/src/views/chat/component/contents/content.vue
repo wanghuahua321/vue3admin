@@ -121,7 +121,6 @@ export default ({
       return filenames
     };
 
-    console.log("storestorestore", store.state.chatPerson)
 
     // let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
     // wss.onopen = ((res) => {

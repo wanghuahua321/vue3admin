@@ -79,7 +79,6 @@ export default defineComponent({
     watch(
       () => route.params,
       (newsvalue, oldvalues) => {
-        console.log("newsssss", newsvalue);
         data.uploads.contactId = newsvalue.type
         data.fileUploads = data.fileUploads + newsvalue.type
         // getChatMsg()

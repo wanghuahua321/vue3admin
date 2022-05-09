@@ -77,12 +77,7 @@ export default {
         });
         pagesDatas.fencesData.items.splice(ids, 1);
         pagesDatas.fencesData.items.unshift(item);
-
         pagesDatas.selectinx = 0;
-        console.log(
-          "pagesDatas.fencesData+++++88888",
-          pagesDatas.fencesData.items[pagesDatas.selectinx]
-        );
       } else {
         pagesDatas.selectinx = inx;
         pagesDatas.isChang = false;

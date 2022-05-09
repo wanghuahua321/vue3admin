@@ -90,7 +90,7 @@ export default {
     watch(
       () => route.params,
       (newsvalue, oldvalues) => {
-        console.log("newsssss", newsvalue);
+
         pageData.uploads.contactId = newsvalue.type
         // getChatMsg()
       }, {

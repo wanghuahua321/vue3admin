@@ -86,7 +86,6 @@ export default {
     watch(
       () => store.state.dialogMsg,
       (newsvalue, oldvalues) => {
-        console.log("newsssss", newsvalue);
         pageData.dialogMsg = store.state.dialogMsg;
       },
       {
