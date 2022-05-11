@@ -116,6 +116,7 @@ export default ({
       displayName: "",
       oldScrollTop: 0,
       scrollFlag: true,
+      moreChat: true
 
     });
     const filename = (val) => {
@@ -131,22 +132,24 @@ export default ({
         pageData.oldScrollTop = scrollTops;
 
         if (isup < 0) {
-          console.log("upup", scrollTops);
+
           if (scrollTops < 200) {
             if (!pageData.scrollFlag) {
               return false
             } else {
               setTimeout(() => {
-                getChatMsg()
+                if (pageData.moreChat) {
+                  console.log("upup", scrollTops);
+                  getChatMsg('chats')
+                }
                 pageData.scrollFlag = true
               }, 1500)
               pageData.scrollFlag = false
             }
           }
 
-        } else {
-          console.log("dowms");
         }
+
       });
     }
 
@@ -196,18 +199,38 @@ export default ({
 
 
     /*  获取聊天记录 */
-    const getChatMsg = () => {
-      // pageData.chatRecord.length = 0;
+    const getChatMsg = (kinds) => {
+      let copedata
+      if (kinds == 'user') {
+        pageData.chatRecord.length = 0;
+        copedata = []
+        pageData.nextPageToken = ""
+      } else {
+        copedata = JSON.parse(JSON.stringify(pageData.chatRecord));
+        pageData.chatRecord.length = 0;
+      }
+
       let params = {
         page_token: pageData.nextPageToken,
         pageSize: 20,
         contactId: pageData.contactId ? pageData.contactId : '',
       };
-      console.log("+++++++++++", params);
+
       Message.contactId(params).then((res) => {
         if (res.data && res.isSuccess) {
-          pageData.chatRecord.push(...res.data.messageList)
-          pageData.nextPageToken = res.data.nextPageToken;
+          if (res.data.nextPageToken) {
+            pageData.nextPageToken = res.data.nextPageToken;
+            if (res.data.messageList.length < 20) {
+              pageData.moreChat = false
+            } else {
+              pageData.moreChat = true
+            }
+          } else {
+            pageData.moreChat = false
+          }
+          pageData.chatRecord.push(...res.data.messageList, ...copedata)
+          console.log("pageData.chatRecord", pageData.chatRecord);
+
           pageData.displayName = res.data.displayName
         }
       }).catch((error) => {
@@ -219,7 +242,7 @@ export default ({
       () => route.params,
       (newsvalue, oldvalues) => {
         pageData.contactId = newsvalue.type
-        getChatMsg()
+        getChatMsg('user')
       }, {
       immediate: true
     }
