@@ -179,19 +179,27 @@ export default ({
         "scroll",
         () => {
           scrollBottoms();
+
         },
-        false
+        true
       );
 
-      nextTick(() => {
-        let doms = document.querySelector(".message-group");
-        doms.scrollTop = doms.scrollHeight;
-        console.log("DOMS---", doms.scrollTop);
-        console.log("999995--", doms.scrollHeight);
-      });
+      let doms = document.querySelector(".message-group");
+      doms.scrollTop = doms.scrollHeight;
+
+
+
     })
 
+    const scrollBot = () => {
+      nextTick(() => {
+        // let doms = document.querySelector(".message-group");
+        // doms.scrollTop = doms.scrollHeight;
+        // console.log("DOMS---", doms.scrollTop);
+        // console.log("999995--", doms.scrollHeight);
+      });
 
+    };
 
     onUnmounted(() => {
       window.removeEventListener('scroll', scrollBottoms(), false);
@@ -301,9 +309,7 @@ export default ({
     // }
 
     return {
-      // user,
-      // detailVisible,
-      // detailHandle
+      scrollBot,
       filename,
       msgContent,
       sents,
@@ -407,7 +413,7 @@ $height: 50px;
 
 .message-group-box {
   padding: 0 20px;
-  height: 352px;
+  // height: 352px;
 }
 .tips {
   font-size: 12px;
