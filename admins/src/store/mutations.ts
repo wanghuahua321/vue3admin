@@ -48,6 +48,9 @@ const mutations = {
   },
   setrandDoms(state,count){
     state.randDoms=count
+  },
+  setcontIds(state,count){
+    state.contIds=count
   }
   
 };

@@ -20,7 +20,7 @@ const state={
     toContactIdList: ["01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER"]
   },
   randDoms:"", //随机数
-  
+  contIds:"01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER",
 };
 
 export default state

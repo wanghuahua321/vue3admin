@@ -16,7 +16,7 @@
               <div class="message-container">
                 <!-- class="message-wrap message-wrap_sender" -->
                 <div class="senttimes">
-                  <!-- 09:30 -->
+                  {{nextPageToken?nextPageToken:"--"}}
                 </div>
                 <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`"
                   v-for="currentUser in chatRecord" :key="currentUser.message_Id">
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted } from 'vue'
+import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted, nextTick } from 'vue'
 import { useStore } from 'vuex'
 import { UserOutlined, FileTextOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
@@ -113,13 +113,42 @@ export default ({
       nextPageToken: "", //获取聊天记录第二页需要token
       contactId: "",
       chatDatas: {},
-      displayName: ""
+      displayName: "",
+      oldScrollTop: 0,
+      scrollFlag: true,
+
     });
     const filename = (val) => {
       let filenames = val.substring(val.lastIndexOf("/") + 1)
       // str.subString()
       return filenames
     };
+
+    const scrollBottoms = () => {
+      nextTick(() => {
+        let scrollTops = document.querySelector(".message-group").scrollTop;
+        let isup = scrollTops - pageData.oldScrollTop;
+        pageData.oldScrollTop = scrollTops;
+
+        if (isup < 0) {
+          console.log("upup", scrollTops);
+          if (scrollTops < 200) {
+            if (!pageData.scrollFlag) {
+              return false
+            } else {
+              setTimeout(() => {
+                getChatMsg()
+                pageData.scrollFlag = true
+              }, 1500)
+              pageData.scrollFlag = false
+            }
+          }
+
+        } else {
+          console.log("dowms");
+        }
+      });
+    }
 
 
     // let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
@@ -141,24 +170,40 @@ export default ({
     //   console.log("连接已关闭...");
     // };
 
+
     onMounted(() => {
+      document.querySelector(".message-group").addEventListener(
+        "scroll",
+        () => {
+          scrollBottoms();
+        },
+        false
+      );
+
+      nextTick(() => {
+        let doms = document.querySelector(".message-group");
+        doms.scrollTop = doms.scrollHeight;
+        console.log("DOMS---", doms.scrollTop);
+        console.log("999995--", doms.scrollHeight);
+      });
     })
 
 
+
     onUnmounted(() => {
-      // window.removeEventListener('scroll', scrollBottom, true);
+      window.removeEventListener('scroll', scrollBottoms(), false);
     });
 
 
     /*  获取聊天记录 */
     const getChatMsg = () => {
-      pageData.chatRecord.length = 0;
-      pageData.nextPageToken = ""
+      // pageData.chatRecord.length = 0;
       let params = {
-        page_token: "",
+        page_token: pageData.nextPageToken,
         pageSize: 20,
         contactId: pageData.contactId ? pageData.contactId : '',
       };
+      console.log("+++++++++++", params);
       Message.contactId(params).then((res) => {
         if (res.data && res.isSuccess) {
           pageData.chatRecord.push(...res.data.messageList)
@@ -241,6 +286,7 @@ export default ({
       sents,
       ...toRefs(pageData),
       getChatMsg,
+      scrollBottoms
 
     }
   }

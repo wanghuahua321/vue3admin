@@ -13,7 +13,7 @@
               <b>{{item.display_name}}</b>
               <p>{{item.lastMessage? item.lastMessage.receviedDate :'--'}}</p>
             </div>
-            <div class="chatMsg">
+            <div class="chatMsgs">
               <p>{{item.lastMessage? item.lastMessage.message:'--'}}</p>
             </div>
           </div>
@@ -22,7 +22,7 @@
 
       </div>
       <div class="chatMsg">
-        <contents :chatData="chatData" :selectinx="selectinx" @doneSent="doneSent"></contents>
+        <contents ref="contentRef" :chatData="chatData" :selectinx="selectinx" @doneSent="doneSent"></contents>
       </div>
       <div class="msgPage">
         <msgPagecon></msgPagecon>
@@ -33,7 +33,15 @@
 </template>
 
 <script lang='ts'>
-import { reactive, onMounted, toRefs, watch, provide } from "vue";
+import {
+  reactive,
+  onMounted,
+  toRefs,
+  watch,
+  provide,
+  nextTick,
+  ref,
+} from "vue";
 import { DownOutlined } from "@ant-design/icons-vue";
 import { Message } from "@/utils/api";
 import msgPagecon from "./component/magPerson.vue";
@@ -50,6 +58,7 @@ export default {
   setup() {
     const store = useStore();
     const router = useRouter();
+    const contentRef = ref();
     const pagesDatas = reactive<any>({
       selectinx:
         sessionStorage.getItem("initSelectinx") == null
@@ -70,6 +79,12 @@ export default {
     );
 
     const fences = (inx, item, isexit?) => {
+      nextTick(() => {
+        console.log("12", contentRef.value);
+        // console.log("123", document.querySelector(".chatMsg").scrollTop);
+        // console.log("12", document.querySelector(".chatMsg").scrollHeight);
+      });
+
       if (isexit) {
         pagesDatas.isChang = true;
         let ids = pagesDatas.fencesData.items.findIndex((value) => {
@@ -94,6 +109,9 @@ export default {
       await Message.contacts().then((res) => {
         if (!pagesDatas.isChang) {
           pagesDatas.fencesData = res;
+          if (res.items.length > 0) {
+            store.commit("setcontIds", res.items[0].serverContactId);
+          }
           fences(
             pagesDatas.selectinx,
             pagesDatas.fencesData.items[pagesDatas.selectinx]
@@ -126,6 +144,7 @@ export default {
       fences,
       contactsLeft,
       doneSent,
+      contentRef,
     };
   },
 };

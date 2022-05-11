@@ -1,5 +1,5 @@
 <template>
-  <a-modal :title=" '权限-'+ permissionsQuery.providerKey" v-model:visible="diaVisible" :maskClosable="false" @cancel="cancels">
+  <a-modal :title=" '权限-'+ permissionsQuery.providerKey2" v-model:visible="diaVisible" :maskClosable="false" @cancel="cancels">
     <a-form label-position="top">
       <a-tabs tab-position="left">
         <a-tab-pane v-for="group in permissionData.groups" :key="group.name" :tab="group.displayName">
@@ -58,6 +58,7 @@ export default {
       activeKey: "role",
       permissionsQuery: {
         providerKey: "",
+        providerKey2: "",
         providerName: "",
       },
       checkedKeys: [],
@@ -93,8 +94,10 @@ export default {
     function handleUpdatePermission(row: any) {
       if (pageData.permissionsQuery.providerName === "R") {
         pageData.permissionsQuery.providerKey = row.name;
+        pageData.permissionsQuery.providerKey2 = row.name;
       } else if (pageData.permissionsQuery.providerName === "U") {
-        pageData.permissionsQuery.providerKey = row.userName;
+        pageData.permissionsQuery.providerKey = row.id;
+        pageData.permissionsQuery.providerKey2 = row.userName;
       }
       certification.Permissions.getPermissions(pageData.permissionsQuery)
         .then((res) => {
