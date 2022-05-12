@@ -98,7 +98,7 @@ export default ({
   },
   setup (props, ctx) {
 
-    const msgContent = ref();
+    const msgContent = ref(null);
     const ws = useWebSocket(handleMessage)
     const store = useStore()
     const route = useRoute();
@@ -129,6 +129,9 @@ export default ({
       nextTick(() => {
         let scrollTops = document.querySelector(".message-group").scrollTop;
         let isup = scrollTops - pageData.oldScrollTop;
+        console.log("scrollTops", scrollTops);
+        console.log("oldScrollTop", pageData.oldScrollTop);
+        console.log("isup777", isup);
         pageData.oldScrollTop = scrollTops;
 
         if (isup < 0) {
@@ -143,7 +146,7 @@ export default ({
                   getChatMsg('chats')
                 }
                 pageData.scrollFlag = true
-              }, 1500)
+              }, 2000)
               pageData.scrollFlag = false
             }
           }
@@ -175,28 +178,22 @@ export default ({
 
 
     onMounted(() => {
-      document.querySelector(".message-group").addEventListener(
-        "scroll",
-        () => {
-          scrollBottoms();
-
-        },
-        true
-      );
-
-      let doms = document.querySelector(".message-group");
-      doms.scrollTop = doms.scrollHeight;
-
-
+      // document.querySelector(".message-group").addEventListener(
+      //   "scroll",
+      //   () => {
+      //     scrollBottoms();
+      //   },
+      //   false
+      // );
 
     })
 
     const scrollBot = () => {
       nextTick(() => {
-        // let doms = document.querySelector(".message-group");
-        // doms.scrollTop = doms.scrollHeight;
-        // console.log("DOMS---", doms.scrollTop);
-        // console.log("999995--", doms.scrollHeight);
+        msgContent.value.scrollTop = msgContent.value.scrollHeight - msgContent.value.clientHeight;
+        console.log("111", msgContent.value.scrollTop);
+        console.log(")22)", msgContent.value.scrollHeight);
+        console.log(")33)", msgContent.value.clientHeight);
       });
 
     };
@@ -240,6 +237,11 @@ export default ({
           console.log("pageData.chatRecord", pageData.chatRecord);
 
           pageData.displayName = res.data.displayName
+
+          if (kinds == 'user') {
+            scrollBot()
+          }
+
         }
       }).catch((error) => {
         console.log(error);
@@ -287,6 +289,8 @@ export default ({
           isRight: true,// 发送方
         }
         let sentdata = { ...res.data, ...params }
+        scrollBot()
+        console.log("+++_");
         // pageData.chatRecord.push(sentdata)
         // ws.send(data)
         /* 已经发送过消息，要刷新左边菜单栏 */
@@ -335,6 +339,10 @@ export default ({
 }
 
 $height: 50px;
+
+body {
+  overflow: hidden;
+}
 
 @mixin pseudo {
   content: "";
@@ -391,12 +399,25 @@ $height: 50px;
   // height: calc(100% - 190px);
   height: 68%;
   overflow: auto;
+  transition: 2s;
 
   &::-webkit-scrollbar {
-    // 纵向滚动条和横向滚动条宽度
-    width: 6px;
-    height: 1px;
+    width: 0;
   }
+
+  &:hover {
+    &::-webkit-scrollbar {
+      // 纵向滚动条和横向滚动条宽度
+      width: 6px;
+      height: 1px;
+    }
+  }
+
+  // &::-webkit-scrollbar {
+  //   // 纵向滚动条和横向滚动条宽度
+  //   width: 6px;
+  //   height: 1px;
+  // }
   &::-webkit-scrollbar-thumb {
     // 滚动条背景条样式
     border-radius: 6px;

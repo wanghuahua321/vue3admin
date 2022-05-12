@@ -14,9 +14,9 @@
   <div class="editCon">
     <!-- 
     1234 -->
-    <!-- @keyup.enter="submit" -->
+    <!-- @keyup.enter="submit"        @input="blurEdit" -->
     <div class="editimages">
-      <p class="editHtml" ref="editCons" v-html="editHtml" @input="blurEdit">
+      <p style="white-space: nowrap;" class="editHtml" ref="editCons" v-html="editHtml" @keydown="keydowns">
 
       </p>
     </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs, inject } from 'vue';
+import { onMounted, onBeforeUnmount, ref, reactive, watch, toRefs, inject, nextTick } from 'vue';
 import { uploads } from '@/utils/api'
 import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
@@ -90,9 +90,12 @@ export default {
     watch(
       () => route.params,
       (newsvalue, oldvalues) => {
-
         pageData.uploads.contactId = newsvalue.type
         // getChatMsg()
+        nextTick(() => {
+          pageData.editHtml = ""
+          editCons.value.innerHTML = ""
+        })
       }, {
       immediate: true
     }
@@ -135,7 +138,7 @@ export default {
 
         }
 
-      }, 1000)
+      }, 500)
 
 
     }
@@ -145,12 +148,31 @@ export default {
 
     }
 
+    const keydowns = (event) => {
+      // console.log("999999", event);
+      // console.log("editCons.value.innerHTML", editCons.value.innerHTML);
+      let keyCode = event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
+      let altKey = event.ctrlKey || event.metaKey;
+      // console.log("000000", altKey);
+      if (keyCode == 13 && altKey) {
+        //换行
+
+      } else if (keyCode == 13) {
+        blurEdit()
+        submit()
+      }
+
+    }
+
 
     var timer
-    function blurEdit () {
+    function blurEdit (e) {
       clearTimeout(timer)
       timer = setTimeout(function () {
+        console.log("editCons.value.innerHTML", editCons.value.innerHTML);
         const domss = new DOMParser().parseFromString(editCons.value.innerHTML, 'text/html')
+        console.log("domssdomss", domss);
+        console.log("domss.body.childNodes", domss.body.childNodes);
         pageData.sentResults = [...domss.body.childNodes]
 
       }, 1000)
@@ -232,6 +254,7 @@ export default {
       editCons,
       smileClick,
       ...toRefs(pageData),
+      keydowns
     };
   },
 };
