@@ -14,7 +14,7 @@
               <p>{{item.lastMessage? item.lastMessage.receviedDate :'--'}}</p>
             </div>
             <div class="chatMsgs">
-              <p>{{item.lastMessage? item.lastMessage.message:'--'}}</p>
+              <p class="chatMsgs_p">{{item.lastMessage? item.lastMessage.message:'--'}}</p>
             </div>
           </div>
           <!-- <b class="unread">4</b> -->
@@ -151,6 +151,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.chatMsgs_p {
+  font-size: 12px;
+  color: #4d574f;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .reports_li {
   position: relative;
   width: 100%;
@@ -240,6 +247,9 @@ export default {
           display: flex;
           width: 100%;
           justify-content: space-between;
+          b {
+            font-size: 14px;
+          }
           p {
             color: #999999;
           }
