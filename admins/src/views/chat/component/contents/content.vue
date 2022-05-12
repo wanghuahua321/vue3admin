@@ -403,22 +403,22 @@ body {
   transition: 2s;
 
   &::-webkit-scrollbar {
-    width: 0;
+    width: 6px;
+    display: none;
   }
 
   &:hover {
     &::-webkit-scrollbar {
-      // 纵向滚动条和横向滚动条宽度
       width: 6px;
-      height: 1px;
+      display: block;
     }
   }
 
-  // &::-webkit-scrollbar {
-  //   // 纵向滚动条和横向滚动条宽度
-  //   width: 6px;
-  //   height: 1px;
-  // }
+  &::-webkit-scrollbar {
+    // 纵向滚动条和横向滚动条宽度
+    width: 6px;
+    height: 1px;
+  }
   &::-webkit-scrollbar-thumb {
     // 滚动条背景条样式
     border-radius: 6px;
@@ -532,7 +532,8 @@ body {
         span {
           position: relative;
           padding: 0px 10px;
-          font-size: 14px;
+          font-size: 12px;
+          letter-spacing: 1px;
           color: #333629;
           text-align: left;
           background-color: #fbebe6;
