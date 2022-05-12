@@ -15,11 +15,12 @@
     <!-- 
     1234 -->
     <!-- @keyup.enter="submit"        @input="blurEdit" -->
-    <div class="editimages">
-      <p style="white-space: nowrap;" class="editHtml" ref="editCons" v-html="editHtml" @keydown="keydowns">
+    <div class="editimages" contenteditable="plaintext-only" v-html="editHtml" ref="editCons" @keydown="keydowns">
 
-      </p>
     </div>
+    <!-- <p style="white-space: nowrap;" class="editHtml" ref="editCons" v-html="editHtml" @keydown="keydowns">
+
+      </p> -->
     <div class="sents" @click="submit">发送</div>
   </div>
 
@@ -150,7 +151,7 @@ export default {
 
     const keydowns = (event) => {
       // console.log("999999", event);
-      // console.log("editCons.value.innerHTML", editCons.value.innerHTML);
+      console.log("editCons.value.innerHTML", editCons.value.innerHTML);
       let keyCode = event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
       let altKey = event.ctrlKey || event.metaKey;
       // console.log("000000", altKey);
@@ -159,7 +160,7 @@ export default {
 
       } else if (keyCode == 13) {
         blurEdit()
-        submit()
+        // submit()
       }
 
     }
@@ -281,7 +282,29 @@ export default {
   position: relative;
   .editimages {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 40px);
+    overflow-y: auto;
+    word-break: normal;
+    user-select: text;
+    white-space: pre-wrap;
+    outline: 1px solid #ffffff;
+    &::-webkit-scrollbar {
+      // 纵向滚动条和横向滚动条宽度
+      width: 3px;
+      height: 1px;
+    }
+    &::-webkit-scrollbar-thumb {
+      // 滚动条背景条样式
+      border-radius: 6px;
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      background: #ccc;
+    }
+    &::-webkit-scrollbar-track {
+      // 滚动条按钮样式
+      -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+      border-radius: 6px;
+      background: #ffffff;
+    }
   }
   .editHtml {
     width: 100%;
