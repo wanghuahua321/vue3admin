@@ -268,6 +268,9 @@ export default ({
           pageData.chatRecord.push(JSON.parse(e.data))
           store.commit('setrandDoms', Math.random())
           store.commit('setWsdata', JSON.parse(e.data))
+          nextTick(() => {
+            msgContent.value.scrollTop = msgContent.value.scrollHeight - msgContent.value.clientHeight;
+          });
           ctx.emit("doneSent",)
         }
       }
@@ -289,8 +292,6 @@ export default ({
           isRight: true,// 发送方
         }
         let sentdata = { ...res.data, ...params }
-        scrollBot()
-        console.log("+++_");
         // pageData.chatRecord.push(sentdata)
         // ws.send(data)
         /* 已经发送过消息，要刷新左边菜单栏 */

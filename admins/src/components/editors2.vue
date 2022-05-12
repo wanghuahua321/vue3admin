@@ -175,7 +175,7 @@ export default {
         console.log("domss.body.childNodes", domss.body.childNodes);
         pageData.sentResults = [...domss.body.childNodes]
 
-      }, 1000)
+      }, 500)
     }
     // https://192.168.0.120:8080/Avatars/8.png
     const beforeUpload = (file) => {
