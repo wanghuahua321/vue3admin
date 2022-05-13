@@ -78,7 +78,6 @@ import editors from "@/components/editors2.vue"
 export default ({
   components: {
     FileTextOutlined,
-    msginput,
     UserOutlined,
     editors
   },
