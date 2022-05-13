@@ -26,8 +26,8 @@
                     <a-avatar :size="50">
                       <template #icon>
                         <!-- fix -->
-                        <!-- <a-image :width="50" :src="$store.state.chatPerson.phoneurl" /> -->
-                        <UserOutlined />
+                        <a-image :width="50" :src="currentUser.isRight ? avatarUrl : $store.state.chatPerson.phoneurl" />
+                        <!-- <UserOutlined /> -->
                       </template>
                     </a-avatar>
 
@@ -47,7 +47,7 @@
                           <b class="file_b">
                             <FileTextOutlined class="icons_sty" />
                           </b>
-                          <dl class="files">
+                          <dl class="files" @click="openUrl(currentUser.message)">
                             <dt>{{ filename(currentUser.message)}}</dt>
                             <dd>1k</dd>
                           </dl>
@@ -121,23 +121,36 @@ export default ({
       displayName: "",
       oldScrollTop: 0,
       scrollFlag: true,
-      moreChat: true
+      moreChat: true,
+      default: require('@/assets/images/person.png')
 
     });
     const filename = (val) => {
+      console.log("valval", val);
       let filenames = val.substring(val.lastIndexOf("/") + 1)
       // str.subString()
       return filenames
     };
+    const avatarUrl = computed(() => {
+      let vals = ""
+      if (store.state.userInfo.extraProperties && store.state.userInfo.extraProperties.Title) {
+        vals = store.state.userInfo.extraProperties.Title
+      } else {
+        vals = pageData.default
+      }
+      return vals
+    })
+
+    const openUrl = (urls) => {
+      console.log("urls", urls);
+      window.open(urls)
+    }
 
     const scrollBottoms = () => {
       nextTick(() => {
         pageData.scrollFlag = true
         let scrollTops = document.querySelector(".message-group").scrollTop;
         let isup = scrollTops - pageData.oldScrollTop;
-        console.log("scrollTops", scrollTops);
-        console.log("oldScrollTop", pageData.oldScrollTop);
-        console.log("isup777", isup);
         pageData.oldScrollTop = scrollTops;
 
         if (isup < 0 && scrollTops != 0) {
@@ -323,7 +336,9 @@ export default ({
       sents,
       ...toRefs(pageData),
       getChatMsg,
-      scrollBottoms
+      scrollBottoms,
+      openUrl,
+      avatarUrl
 
     }
   }

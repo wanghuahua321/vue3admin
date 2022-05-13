@@ -87,7 +87,7 @@
 
 // }
 
-import { ref, createVNode, reactive, toRef, toRefs, onMounted } from 'vue'
+import { ref, createVNode, reactive, toRef, toRefs, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 import { Modal } from 'ant-design-vue'
@@ -132,9 +132,20 @@ export default {
     const store = useStore()
     const router = useRouter()
     const pageDatas = reactive({
-      UserInfo: {}
+      UserInfo: {},
+      default: require('@/assets/images/person.png')
     })
-    const avatarUrl = ref(require('@/assets/images/person.png'))
+
+    const avatarUrl = computed(() => {
+      let vals = ""
+      if (store.state.userInfo.extraProperties && store.state.userInfo.extraProperties.Title) {
+        vals = store.state.userInfo.extraProperties.Title
+      } else {
+        vals = pageDatas.default
+      }
+      return vals
+    })
+
     const jcMsgPopover = ref('jc-msg-popover')
     const data = ref([
       {
