@@ -54,18 +54,7 @@ export default {
       },
       messageTypess: "TextMessage",
       focus: false,
-      fileList: [
-        // {
-        //   messageType: "PhotoMessage",
-        //   url: "https://192.168.0.120:8080/Avatars/8.png"
-        // },
-        // {
-        //   messageType: "FileMessage",
-        //   url: "http://192.168.0.120:8080/01FYNSN02RGTW6ETXZBMSYJQRX/MESSENGER/2022-04/123.png"
-        // }
-
-        // <FileTextOutlined />
-      ],
+      fileList: [],
       uploads: {
         contactId: ''
       },

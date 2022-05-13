@@ -19,12 +19,12 @@ module.exports = defineConfig({
   // 生产环境是否生成 sourceMap 文件
   chainWebpack: config => {
     config.plugin('html').tap(args => { console.log('[ args ] >', args); args[0].title = "Marketing"; return args })
-    config.module.rules.delete("svg"); //重点:删除默认配置中处理svg,
+    config.module.rules.delete("svg");
     config.module
       .rule('svg-sprite-loader')
       .test(/\.svg$/)
       .include
-      .add(path.resolve('src/assets/icons')) //处理svg目录
+      .add(path.resolve('src/assets/icons'))
       .end()
       .use('svg-sprite-loader')
       .loader('svg-sprite-loader')
