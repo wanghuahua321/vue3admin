@@ -3,7 +3,6 @@
   <div class="menus">
     <div>
       <a-upload name="file" :show-upload-list="false" :file-list="fileList" :before-upload="beforeUpload" :customRequest="FilesCustomRequest">
-        <!-- list-type="picture" :action='fileUploads' :header="{token:$store}" :action="fileUploads" :data="uploads" -->
         <svg-icon style="cursor: pointer;" iconName="wj" />
       </a-upload>
     </div>
@@ -12,19 +11,11 @@
     </div>
   </div>
   <div class="editCon">
-    <!-- 
-    1234 -->
-    <!-- @keyup.enter="submit"        @input="blurEdit" -->
     <div class="editimages" contenteditable="plaintext-only" v-html="editHtml" ref="editCons" @keydown="keydowns">
 
     </div>
-    <!-- <p style="white-space: nowrap;" class="editHtml" ref="editCons" v-html="editHtml" @keydown="keydowns">
-
-      </p> -->
     <div class="sents" @click="submit">发送</div>
   </div>
-
-  <!-- <div :innerHTML='content.html'></div> -->
 </template>
 
 <script>
@@ -34,6 +25,7 @@ import { useRoute } from 'vue-router'
 import { SmileOutlined, PictureOutlined } from '@ant-design/icons-vue';
 import { message } from "ant-design-vue";
 import { FileTextOutlined } from '@ant-design/icons-vue';
+import { imgbaseUrl } from "@/utils/baseurl"
 
 export default {
   name: 'app',
@@ -152,8 +144,8 @@ export default {
         //换行
 
       } else if (keyCode == 13) {
-        // blurEdit()
-        // submit()
+        blurEdit()
+        submit()
       }
 
     }
@@ -211,12 +203,12 @@ export default {
             doms = `<div class="filespans">
                 <div class="filespan">     
                  <b class="files">
-                 <img  src="https://192.168.0.120:8080/resource/file.png" />
+                 <img  :src="${imgbaseUrl}/resource/file.png"  alt="图片显示错误" />
                  </b>
                  
                 <b class="_text">
                 <i>文件夹</i>
-                <i>222</i>
+                <i>${filename(res.url)}</i>
                 </b></div>
                 <img  class="fileimg2" style="display:none"  src="${res.url}" />
                 </div>`
@@ -230,6 +222,13 @@ export default {
       pageData.sentResults = [...domss.body.childNodes]
     }
 
+    const filename = (val) => {
+
+      let filenames = val.substring(val.lastIndexOf("/") + 1)
+      // str.subString()
+      return filenames
+    };
+
 
 
 
@@ -242,7 +241,8 @@ export default {
       editCons,
       smileClick,
       ...toRefs(pageData),
-      keydowns
+      keydowns,
+      filename
     };
   },
 };
@@ -335,6 +335,14 @@ export default {
 }
 </style>
 <style>
+.filespans {
+  /* margin: 0 2px 0 2px;
+  position: relative;
+  width: 70%;
+  overflow: hidden;
+  height: 60px;
+  display: flex; */
+}
 .filespan {
   -webkit-user-modify: read-only;
   cursor: default;
@@ -343,7 +351,7 @@ export default {
   line-height: 0;
   margin: 0 2px 0 2px;
   position: relative;
-  width: 70%;
+  width: 56%;
   overflow: hidden;
   height: 60px;
   display: flex;
