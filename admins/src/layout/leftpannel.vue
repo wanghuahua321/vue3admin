@@ -161,8 +161,6 @@ export default {
     watch(
       () => pagedata.openKeys,
       (val, oldVal) => {
-        console.log("oldValoldVal", oldVal);
-        console.log("val", val);
         pagedata.preOpenKeys = oldVal;
       }
     );
@@ -173,17 +171,12 @@ export default {
     };
 
     const selects = (items, inx) => {
-      console.log("888", items);
-
       pagedata.selectedKeys.length = 0;
       pagedata.selectedKeys.push(items.key);
-      sessionStorage.setItem("itemskey", items.key);
-
       ctx.emit("menuSel", items.key);
     };
 
     const openChange = (openKeys: string[]) => {
-      console.log("openKeysopenKeys", openKeys);
       let latestOpenKey = openKeys.find((key) => {
         pagedata.openKeys.indexOf(key) === -1;
       });

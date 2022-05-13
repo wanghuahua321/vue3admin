@@ -184,8 +184,6 @@ export default {
       pagedata.formData = val;
       pagedata.editsId = val.id;
       pagedata.types = ktit;
-      console.log("formData", val);
-      console.log("vals", kinds);
     };
     const addUsers = (addUserPar) => {
       certification.user

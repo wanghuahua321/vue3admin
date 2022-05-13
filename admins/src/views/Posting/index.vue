@@ -189,8 +189,6 @@ export default {
       getPostdata();
     });
     const addPost = () => {
-      console.log("checkedList", pagedata.checkedList);
-
       pagedata.showDialogue = true;
     };
     // function getBase64(file: any) {
@@ -207,7 +205,6 @@ export default {
     };
     const handlePreview = async (file: any) => {
       getBase64(file.originFileObj, (imgUrl) => {
-        console.log("imgUrl", imgUrl);
         pagedata.previewImage = imgUrl;
       });
       pagedata.previewVisible = true;

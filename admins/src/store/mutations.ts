@@ -36,9 +36,7 @@ const mutations = {
     state.dialogMsg.addvisible=count
   },
   setDialogMsgTit(state:any,count:string){ //修改tit
-    state.dialogMsg.addTit=count
-    console.log("00000",state.dialogMsg.addTit);
-    
+    state.dialogMsg.addTit=count 
   },
   setloadding(state,count){
     state.loadding=count

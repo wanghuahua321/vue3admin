@@ -40,8 +40,6 @@ export default {
     pageData.activeKey = props.activeKeys;
 
     const changeTabs = (val) => {
-      console.log("props.tabKinds", props.tabKinds);
-
       props.tabKinds == "certification"
         ? (pageData.activeKey = val.key)
         : (pageData.activeKey = val.page_id);

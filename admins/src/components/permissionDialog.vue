@@ -52,8 +52,6 @@ export default {
     },
   },
   setup(props, ctx) {
-    // console.log("999", props.providerName);
-
     const pageData = reactive({
       activeKey: "role",
       permissionsQuery: {
@@ -79,7 +77,6 @@ export default {
     pageData.permissionsQuery.providerName = props.providerName as string;
     const onCheck = (checkedKeys) => {
       pageData.checkedKeys = checkedKeys || [];
-      console.log("checkedKeys", pageData.checkedKeys);
     };
 
     const getPermission = () => {
@@ -193,8 +190,6 @@ export default {
           }
         }
       }
-
-      console.log("permissionsQuery", tempData);
 
       certification.Permissions.updataPermissions(pageData.permissionsQuery, {
         permissions: tempData,

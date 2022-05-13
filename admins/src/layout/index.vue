@@ -57,11 +57,7 @@ export default {
           default:
             switchValue = "home";
         }
-        //  homeinx home chatinx chat postIndex posting certification identity channelIndex channel
-        // console.log("valvava", val);
         sessionStorage.setItem("itemskey", switchValue);
-
-        // store.commit("setLeftIcons", val);
       },
       { immediate: true, deep: true }
     );

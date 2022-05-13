@@ -84,7 +84,6 @@ export default {
     const beforeUpload = () => {};
     const handleChange = (info) => {
       getBase64(info.file.originFileObj, (imgUrl) => {
-        console.log("imgUrl", imgUrl);
         ctx.emit("okHandels", imgUrl);
         let target = {
           name: info.file.name,

@@ -81,10 +81,6 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    nextTick(() => {
-      console.log("12", loginForms.value);
-    });
-
     // onMounted(() => {});
     const logins = () => {
       loginForms.value

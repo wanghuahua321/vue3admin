@@ -137,12 +137,8 @@ export default {
       }
       return `color:${resoults}`;
     }
-    const permissions = () => {
-      console.log("permissions");
-    };
+    const permissions = () => {};
     const editTagClick = (types, rows) => {
-      console.log("typestypes", types);
-
       if (types.keys == 0) {
         //编辑
         ctx.emit("editClick", rows, types.kinds, types.ktit);
@@ -203,7 +199,6 @@ export default {
     };
 
     const del_role_click1 = (record) => {
-      console.log("record", record);
       Posting.delPost(record.post_id)
         .then((res) => {
           if (res.isSuccess) {

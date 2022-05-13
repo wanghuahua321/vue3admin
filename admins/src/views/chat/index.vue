@@ -79,12 +79,6 @@ export default {
     );
 
     const fences = (inx, item, isexit?) => {
-      nextTick(() => {
-        console.log("12", contentRef.value);
-        // console.log("123", document.querySelector(".chatMsg").scrollTop);
-        // console.log("12", document.querySelector(".chatMsg").scrollHeight);
-      });
-
       if (isexit) {
         pagesDatas.isChang = true;
         let ids = pagesDatas.fencesData.items.findIndex((value) => {

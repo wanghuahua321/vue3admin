@@ -14,8 +14,6 @@
             <div class="message-group-box" ref="refScrollbar">
 
               <div class="message-container">
-                <!-- class="message-wrap message-wrap_sender" -->
-
                 <div v-for="currentUser in chatRecord" :key="currentUser.message_Id">
 
                   <div class="senttimes">
@@ -25,18 +23,13 @@
                   <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`">
                     <a-avatar :size="50">
                       <template #icon>
-                        <!-- fix -->
                         <a-image :width="50" :src="currentUser.isRight ? avatarUrl : $store.state.chatPerson.phoneurl" />
-                        <!-- <UserOutlined /> -->
                       </template>
                     </a-avatar>
 
                     <div class="message-box">
                       <div class="details">
-                        <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
-
                         <span class="time">
-                          <!-- {{currentUser.receviedDate?currentUser.receviedDate:'--'}} -->
                         </span>
                       </div>
 
@@ -52,11 +45,10 @@
                             <dd>1k</dd>
                           </dl>
                         </span>
-                        <!-- <a-image v-else :width="100" :src="currentUser.message" /> -->
+
                       </div>
                     </div>
                   </div>
-                  <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
 
                 </div>
               </div>
@@ -65,7 +57,6 @@
           </div>
           <div class="message-input">
             <editors @sents="sents" :contactId="contactId"></editors>
-            <!-- <msginput @sents="sents" sentTime="20:9"></msginput> -->
           </div>
         </div>
       </div>
@@ -126,7 +117,6 @@ export default ({
 
     });
     const filename = (val) => {
-      console.log("valval", val);
       let filenames = val.substring(val.lastIndexOf("/") + 1)
       // str.subString()
       return filenames
@@ -142,7 +132,6 @@ export default ({
     })
 
     const openUrl = (urls) => {
-      console.log("urls", urls);
       window.open(urls)
     }
 
@@ -161,7 +150,6 @@ export default ({
             } else {
               setTimeout(() => {
                 if (pageData.moreChat) {
-                  console.log("upup", scrollTops);
                   getChatMsg('chats')
                 }
                 pageData.scrollFlag = true
@@ -176,28 +164,8 @@ export default ({
     }
 
 
-    // let wss = new WebSocket("ws://192.168.0.115:6800/Chat?contactId=01FXRNXY02TEX69Z81KJP5NKXE-MESSENGER");
-    // wss.onopen = ((res) => {
-    //   console.log(res, "连接成功");
-    // })
-
-    // wss.onerror = ((res) => {
-    //   console.log(res, '=====err');
-    // })
-
-    // wss.onmessage = ((res) => {
-    //   console.log(res.data, "接受数据123");
-
-    // })
-
-    // wss.onclose = function () {
-    //   // 关闭 websocket
-    //   console.log("连接已关闭...");
-    // };
-
 
     onMounted(() => {
-      console.log("mounted");
       document.querySelector(".message-group").addEventListener(
         "scroll",
         () => {
@@ -275,8 +243,6 @@ export default ({
     );
 
     function handleMessage (e) {
-      console.log("收到信息");
-      console.log('[  JSON.parse(e.data)] >', JSON.parse(e.data))
       if (JSON.parse(e.data)) {
         if (JSON.parse(e.data).messageType == 'DeliveryMessage') {
           return
@@ -293,7 +259,6 @@ export default ({
     }
 
     const sents = (data) => {
-      console.log("datas", data);
       let datas = {
         contact_id: pageData.contactId,
         messageType: data.messageType,

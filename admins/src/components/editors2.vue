@@ -139,7 +139,6 @@ export default {
     const keydowns = (event) => {
       let keyCode = event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
       let altKey = event.ctrlKey || event.metaKey;
-      // console.log("000000", altKey);
       if (keyCode == 13 && altKey) {
         //换行
 
@@ -155,19 +154,14 @@ export default {
     function blurEdit (e) {
       clearTimeout(timer)
       timer = setTimeout(function () {
-
         const domss = new DOMParser().parseFromString(editCons.value.innerHTML, 'text/html')
-        console.log("domssdomss", domss);
-        console.log("domss.body.childNodes", domss.body.childNodes);
         pageData.sentResults = [...domss.body.childNodes]
 
       }, 500)
     }
     // https://192.168.0.120:8080/Avatars/8.png
     const beforeUpload = (file) => {
-      console.log("file55", file);
       if (file.type.indexOf('image') == -1) {
-        console.log("图片");
 
       } else {
         // if(file.type)

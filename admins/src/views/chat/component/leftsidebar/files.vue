@@ -40,8 +40,6 @@ export default {
     let hua = inject("appId");
 
     const filesItem = (items) => {
-      console.log("itemsitems", items);
-
       router.push({
         name: "chatinx",
         params: { type: items.id },

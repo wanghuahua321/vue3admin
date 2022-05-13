@@ -75,17 +75,8 @@ export default {
     const router = useRouter();
     const store = useStore();
 
-    nextTick(() => {
-      console.log("12", loginForms.value);
-    });
-
     // onMounted(() => {});
     const logins = () => {
-      console.log("  loginForm.value", loginForms.value);
-      // router.push({
-      //   path: "/home",
-      // });
-
       loginForms.value
         .validate() /*  */
         .then(() => {
@@ -98,8 +89,6 @@ export default {
             scope: "Basic",
           };
 
-          console.log("1234");
-          // router.push({ path: redirect.value || "/", query: otherQuery.value });
           LoginInfo.Login(data).then((res) => {
             store.commit("setToken", res.token);
             getUsers();

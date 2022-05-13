@@ -136,14 +136,6 @@ export default {
         });
     };
 
-    // watch(
-    //   () => pagedata.dialogMsgs,
-    //   (newsvalue) => {
-    //     console.log("999", newsvalue);
-    //   },
-    //   { immediate: true, deep: true }
-    // );
-
     const handleOk = () => {
       createRole.value.roleForm
         .validate()
@@ -185,8 +177,6 @@ export default {
       pagedata.formData = val;
       pagedata.editsId = val.id;
       pagedata.types = ktit;
-      console.log("formData", val);
-      console.log("vals", kinds);
     };
     const editInterface = () => {
       certification.roles
