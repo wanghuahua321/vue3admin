@@ -203,7 +203,7 @@ export default {
             doms = `<div class="filespans">
                 <div class="filespan">     
                  <b class="files">
-                 <img  :src="${imgbaseUrl}/resource/file.png"  alt="图片显示错误" />
+                 <img src="${imgbaseUrl}/resource/file.png"  alt="图片显示错误" />
                  </b>
                  
                 <b class="_text">
@@ -358,9 +358,13 @@ export default {
 }
 .filespan .files {
   width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .filespan .files img {
-  width: 76%;
+  width: 56%;
+  height: 82%;
 }
 
 .filespan ._img {
