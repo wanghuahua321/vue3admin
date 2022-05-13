@@ -70,7 +70,6 @@ import { computed, ref, reactive, toRefs, onMounted, watch, onUnmounted, nextTic
 import { useStore } from 'vuex'
 import { UserOutlined, FileTextOutlined } from '@ant-design/icons-vue';
 import { Message } from "@/utils/api"
-import msginput from './msginput.vue'
 import { useWebSocket } from "../../../../hookes";
 import { useRouter, useRoute } from 'vue-router'
 import editors from "@/components/editors2.vue"
