@@ -82,6 +82,7 @@ export default {
       upResults: {},
       sentResults: [],
       isup: false,
+      filename: []
     });
 
     onMounted(() => {
@@ -106,6 +107,7 @@ export default {
 
 
     const submit = () => {
+      blurEdit()
       setTimeout(function () {
         if (editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') == "") {
           message.error("不能发送空白消息")
@@ -113,7 +115,6 @@ export default {
           let sentvalue = {}
 
           for (let i = 0; i < pageData.sentResults.length; i++) {
-            console.log("pageData.sentResults[i].constructor.name", pageData.sentResults[i].constructor.name);
             if (pageData.sentResults[i].constructor.name == 'HTMLImageElement') {
               sentvalue.messageType = "PhotoMessage"
               sentvalue.url = document.querySelector(".fileimg").src
@@ -127,16 +128,12 @@ export default {
               sentvalue.url = pageData.sentResults[i].data
               ctx.emit('sents', sentvalue)
             }
-            // console.log("0000000000000000", document.getElementsByClassName("fileimg")[0].constructor.value);
           }
 
           pageData.editHtml = ""
           pageData.sentResults.length = 0;
           pageData.fileList.length = 0
           editCons.value.innerHTML = ""
-          // pageData.fileList.length = 0;
-          // editCons.value.innerHTML.replace(/[ ]|[&nbsp;]/g, '') = ""
-
         }
 
       }, 500)
@@ -145,13 +142,9 @@ export default {
     }
 
     const smileClick = () => {
-      console.log("999999");
-
     }
 
     const keydowns = (event) => {
-      // console.log("999999", event);
-      console.log("editCons.value.innerHTML", editCons.value.innerHTML);
       let keyCode = event.keyCode ? event.keyCode : (event.which ? event.which : event.charCode);
       let altKey = event.ctrlKey || event.metaKey;
       // console.log("000000", altKey);
@@ -159,7 +152,7 @@ export default {
         //换行
 
       } else if (keyCode == 13) {
-        blurEdit()
+        // blurEdit()
         // submit()
       }
 
@@ -170,7 +163,7 @@ export default {
     function blurEdit (e) {
       clearTimeout(timer)
       timer = setTimeout(function () {
-        console.log("editCons.value.innerHTML", editCons.value.innerHTML);
+
         const domss = new DOMParser().parseFromString(editCons.value.innerHTML, 'text/html')
         console.log("domssdomss", domss);
         console.log("domss.body.childNodes", domss.body.childNodes);
@@ -190,7 +183,6 @@ export default {
     };
 
     const FilesCustomRequest = async (info) => {
-      console.log("infoinfo", info);
       let formData = new FormData()
       formData.append('file', info.file)
       pageData.fileList.length = 0
@@ -210,8 +202,6 @@ export default {
       let doms = ""
       pageData.editHtml = editCons.value.innerHTML
 
-      console.log(" pageData.fileList", pageData.fileList);
-
       if (pageData.fileList.length > 0) {
         pageData.fileList.map((res) => {
           if (res.messageType == "PhotoMessage") {
@@ -220,8 +210,8 @@ export default {
           } else if (res.messageType == "FileMessage") {
             doms = `<div class="filespans">
                 <div class="filespan">     
-                 <b>
-                 <img  src="../images/txt.png" />
+                 <b class="files">
+                 <img  src="https://192.168.0.120:8080/resource/file.png" />
                  </b>
                  
                 <b class="_text">
@@ -236,11 +226,8 @@ export default {
 
       }
 
-      console.log("pageData.editHtml77", pageData.editHtml);
       const domss = new DOMParser().parseFromString(pageData.editHtml, 'text/html')
       pageData.sentResults = [...domss.body.childNodes]
-      console.log('[ domss ] >', domss)
-      console.log('[ eleNodes ] >', pageData.sentResults)
     }
 
 
@@ -352,14 +339,22 @@ export default {
   -webkit-user-modify: read-only;
   cursor: default;
   border: 1px solid gray;
-  display: inline-block;
+  /* display: inline-block; */
   line-height: 0;
   margin: 0 2px 0 2px;
   position: relative;
   width: 70%;
   overflow: hidden;
   height: 60px;
+  display: flex;
 }
+.filespan .files {
+  width: 50%;
+}
+.filespan .files img {
+  width: 76%;
+}
+
 .filespan ._img {
   width: 32%;
   float: left;

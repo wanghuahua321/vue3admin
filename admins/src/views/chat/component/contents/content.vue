@@ -15,44 +15,49 @@
 
               <div class="message-container">
                 <!-- class="message-wrap message-wrap_sender" -->
-                <div class="senttimes">
-                  {{nextPageToken?nextPageToken:"--"}}
-                </div>
-                <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`"
-                  v-for="currentUser in chatRecord" :key="currentUser.message_Id">
-                  <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
-                  <a-avatar :size="50">
-                    <template #icon>
-                      <!-- fix -->
-                      <!-- <a-image :width="50" :src="$store.state.chatPerson.phoneurl" /> -->
-                      <UserOutlined />
-                    </template>
-                  </a-avatar>
 
-                  <div class="message-box">
-                    <div class="details">
-                      <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
+                <div v-for="currentUser in chatRecord" :key="currentUser.message_Id">
 
-                      <span class="time">
-                        <!-- {{currentUser.receviedDate?currentUser.receviedDate:'--'}} -->
-                      </span>
-                    </div>
+                  <div class="senttimes">
+                    {{currentUser.receviedDate? currentUser.receviedDate:"--"}}
+                  </div>
 
-                    <div class="content margin_t-10">
-                      <span v-if="currentUser.messageType=='TextMessage'">{{currentUser.message}}</span>
-                      <a-image v-else-if="currentUser.messageType=='PhotoMessage'" :width="100" :src="currentUser.message" />
-                      <span class="con_file" v-else>
-                        <b class="file_b">
-                          <FileTextOutlined class="icons_sty" />
-                        </b>
-                        <dl class="files">
-                          <dt>{{ filename(currentUser.message)}}</dt>
-                          <dd>1k</dd>
-                        </dl>
-                      </span>
-                      <!-- <a-image v-else :width="100" :src="currentUser.message" /> -->
+                  <div :class="`message-wrap ${currentUser.isRight ? 'message-wrap_sender' : 'message-wrap_recipient'}`">
+                    <a-avatar :size="50">
+                      <template #icon>
+                        <!-- fix -->
+                        <!-- <a-image :width="50" :src="$store.state.chatPerson.phoneurl" /> -->
+                        <UserOutlined />
+                      </template>
+                    </a-avatar>
+
+                    <div class="message-box">
+                      <div class="details">
+                        <!-- <span class="nickname">{{1 === currentUser.id ? currentUser.nickname : friend.nickname}}</span> -->
+
+                        <span class="time">
+                          <!-- {{currentUser.receviedDate?currentUser.receviedDate:'--'}} -->
+                        </span>
+                      </div>
+
+                      <div class="content margin_t-10">
+                        <span v-if="currentUser.messageType=='TextMessage'">{{currentUser.message}}</span>
+                        <a-image v-else-if="currentUser.messageType=='PhotoMessage'" :width="100" :src="currentUser.message" />
+                        <span class="con_file" v-else>
+                          <b class="file_b">
+                            <FileTextOutlined class="icons_sty" />
+                          </b>
+                          <dl class="files">
+                            <dt>{{ filename(currentUser.message)}}</dt>
+                            <dd>1k</dd>
+                          </dl>
+                        </span>
+                        <!-- <a-image v-else :width="100" :src="currentUser.message" /> -->
+                      </div>
                     </div>
                   </div>
+                  <!-- <a-avatar class=" avatar width-50" :size="50" :src="1 === currentUser.id ? currentUser.avatar : friend.avatar" /> -->
+
                 </div>
               </div>
 
@@ -127,6 +132,7 @@ export default ({
 
     const scrollBottoms = () => {
       nextTick(() => {
+        pageData.scrollFlag = true
         let scrollTops = document.querySelector(".message-group").scrollTop;
         let isup = scrollTops - pageData.oldScrollTop;
         console.log("scrollTops", scrollTops);
@@ -134,7 +140,7 @@ export default ({
         console.log("isup777", isup);
         pageData.oldScrollTop = scrollTops;
 
-        if (isup < 0) {
+        if (isup < 0 && scrollTops != 0) {
 
           if (scrollTops < 200) {
             if (!pageData.scrollFlag) {
@@ -178,22 +184,20 @@ export default ({
 
 
     onMounted(() => {
-      // document.querySelector(".message-group").addEventListener(
-      //   "scroll",
-      //   () => {
-      //     scrollBottoms();
-      //   },
-      //   false
-      // );
+      console.log("mounted");
+      document.querySelector(".message-group").addEventListener(
+        "scroll",
+        () => {
+          scrollBottoms();
+        },
+        true
+      );
 
     })
 
     const scrollBot = () => {
       nextTick(() => {
         msgContent.value.scrollTop = msgContent.value.scrollHeight - msgContent.value.clientHeight;
-        console.log("111", msgContent.value.scrollTop);
-        console.log(")22)", msgContent.value.scrollHeight);
-        console.log(")33)", msgContent.value.clientHeight);
       });
 
     };
@@ -234,7 +238,6 @@ export default ({
             pageData.moreChat = false
           }
           pageData.chatRecord.push(...res.data.messageList, ...copedata)
-          console.log("pageData.chatRecord", pageData.chatRecord);
 
           pageData.displayName = res.data.displayName
 
@@ -442,7 +445,7 @@ body {
   color: $darkColor-6;
 }
 .senttimes {
-  width: 50px;
+  width: 68px;
   background: #dadada;
   margin: 10px auto;
   text-align: center;
