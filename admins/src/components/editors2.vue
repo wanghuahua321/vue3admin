@@ -113,7 +113,7 @@ export default {
               ctx.emit('sents', sentvalue)
             } else if (pageData.sentResults[i].constructor.name == 'HTMLDivElement') {
               sentvalue.messageType = "FileMessage"
-              sentvalue.url = document.querySelector(".fileimg2").src
+              sentvalue.url = document.querySelector(".fileimg2").innerHTML
               ctx.emit('sents', sentvalue)
             } else {
               sentvalue.messageType = "TextMessage"
@@ -208,9 +208,9 @@ export default {
                  
                 <b class="_text">
                 <i>文件夹</i>
-                <i>${filename(res.url)}</i>
+                <i>${filenames(res.url)}</i>
                 </b></div>
-                <img  class="fileimg2" style="display:none"  src="${res.url}" />
+                <div  class="fileimg2" style="display:none">${res.url}</div>
                 </div>`
             pageData.editHtml += doms
           }
@@ -222,7 +222,7 @@ export default {
       pageData.sentResults = [...domss.body.childNodes]
     }
 
-    const filename = (val) => {
+    const filenames = (val) => {
 
       let filenames = val.substring(val.lastIndexOf("/") + 1)
       // str.subString()
@@ -242,7 +242,7 @@ export default {
       smileClick,
       ...toRefs(pageData),
       keydowns,
-      filename
+      filenames
     };
   },
 };

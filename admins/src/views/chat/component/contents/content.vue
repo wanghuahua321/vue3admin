@@ -585,6 +585,10 @@ body {
             dt {
               font-size: 14px;
               color: #333629;
+              max-width: 300px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
             dd {
               font-size: 12px;
