@@ -13,10 +13,10 @@
         </template>
       </a-button>
     </div>
-    <span class="small_tit">备注</span>
+    <!-- <span class="small_tit">备注</span>
     <div class="note">
       <a-textarea readOnly placeholder="Basic usage" :rows="3" />
-    </div>
+    </div> -->
     <span class="small_tit">会员信息</span>
     <dl>
       <dt>{{user.display_name}}</dt>

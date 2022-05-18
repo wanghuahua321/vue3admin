@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory,createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import routers from './routers';
 import store from '@/store';
 
 /* hash模式中url路径中的# */
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(),
   routes:routers
 })
 

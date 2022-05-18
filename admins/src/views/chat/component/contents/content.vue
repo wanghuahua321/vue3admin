@@ -241,6 +241,7 @@ export default ({
     );
 
     function handleMessage (e) {
+      console.log("shoudaol", e);
       if (JSON.parse(e.data)) {
         if (JSON.parse(e.data).messageType == 'DeliveryMessage') {
           return
